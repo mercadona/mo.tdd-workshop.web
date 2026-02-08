@@ -1,3 +1,3 @@
-import { Routes } from 'pages/routes'
+import { AppRoutes } from 'pages/routes'
 
-export const App = () => <Routes />
+export const App = () => <AppRoutes />

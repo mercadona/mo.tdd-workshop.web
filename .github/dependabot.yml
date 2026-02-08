@@ -27,6 +27,11 @@ updates:
           - "@testing-library/*"
           - "vitest"
           - "jsdom"
+    ignore:
+      # @eslint/js v10 requires eslint v10, but @typescript-eslint/eslint-plugin@8.47.0 only supports v9
+      # Keep @eslint/js on v9 until @typescript-eslint is updated to support eslint v10
+      - dependency-name: "@eslint/js"
+        versions: [">=10.0.0"]
 
   - package-ecosystem: github-actions
     directory: "/"

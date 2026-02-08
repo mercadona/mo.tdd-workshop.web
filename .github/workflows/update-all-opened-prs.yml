@@ -1,0 +1,10 @@
+name: Auto Update All Opened Pull Requests
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-opened-pull-requests:
+    uses: mercadona/github-actions/.github/workflows/update-opened-pull-request.yml@4a8afe770a771b51f009cc9d489d3be931229c74 # 1.7.2
+    secrets: inherit

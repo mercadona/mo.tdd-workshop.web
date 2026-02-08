@@ -1,0 +1,13 @@
+name: Publish Release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  publish:
+    uses: mercadona/github-actions/.github/workflows/create-frontend-release.yml@4a8afe770a771b51f009cc9d489d3be931229c74 # v1.7.2
+    with:
+      application_name: 'mo-boilerplate-react-vite'
+      dockerfile_path: 'Dockerfile'
+      environment: 'stable'

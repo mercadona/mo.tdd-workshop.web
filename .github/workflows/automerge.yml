@@ -1,0 +1,7 @@
+on:
+  pull_request:
+
+jobs:
+  automerge:
+    uses: mercadona/github-actions/.github/workflows/automerge-dependabot.yml@4a8afe770a771b51f009cc9d489d3be931229c74 # v1.6.1
+    secrets: inherit

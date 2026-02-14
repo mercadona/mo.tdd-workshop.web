@@ -26,3 +26,7 @@ build
 
 
 /.eslintcache
+
+# Workshop instructor files (not for attendees)
+/CLAUDE.md
+/.aiplan

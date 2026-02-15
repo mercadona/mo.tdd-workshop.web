@@ -120,9 +120,9 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 
 > **Nota:** Los asistentes parten de `iteration-1-start` (= master) y escriben ellos mismos los tests y la implementación. Las ramas `solution` son las que mostramos como referencia. No proporcionamos tests, ni siquiera `it` vacíos.
 
-### 1.0 Crear rama `iteration-1-start`
-- [ ] Crear rama desde master: `git checkout -b iteration-1-start`
-- [ ] Push rama (snapshot limpio, sin tests ni implementación)
+### 1.0 Crear rama `iteration-1-start` ✅ COMPLETADO
+- [x] Crear rama desde master: `git checkout -b iteration-1-start`
+- [x] Push rama (snapshot limpio, sin tests ni implementación)
 
 ### 1.1 Test (ROJO) — solo en `iteration-1-solution`
 - [ ] Crear `src/pages/home/__tests__/Home.test.tsx` (ampliar el existente):

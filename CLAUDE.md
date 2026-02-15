@@ -12,7 +12,7 @@ Este repositorio es la base para un workshop práctico de TDD (Test-Driven Devel
 - **Proponer antes de modificar**: Esperar confirmación SOLO antes de operaciones de escritura/modificación (crear/editar archivos, instalar dependencias, commits, etc.)
 - **Libertad para leer**: NO pedir confirmación para operaciones de lectura (Read, Glob, Grep, git status, git diff, ejecutar tests, etc.)
 - **Commits frecuentes**: Crear un commit por cada unidad de trabajo completada
-- **Checkboxes del plan**: Actualizar las checkboxes en `.aiplan/workshop-plan.md` conforme se completan tareas
+- **Plan y código juntos**: Actualizar el plan (.aiplan/workshop-plan.md) en el MISMO commit que el código implementado, no en commits separados. El plan refleja el estado real del código.
 - **Pasos pequeños**: Proponer modificaciones concretas, no múltiples cambios a la vez
 
 Este flujo garantiza control total del usuario sobre el proceso y permite revisión en cada etapa.
@@ -60,7 +60,7 @@ Ver `CONTEXT.md` para el detalle completo de cada iteración.
 - Punto de partida "cocinado" para los asistentes
 - Incluye:
   - MSW configurado y levantado
-  - Componentes base: `<Navigation />` y `<Toggle />` (solo UI, sin lógica)
+  - Componentes base: `<Navigation />`, `<Toggle />` y `<Layout />` (solo UI, sin lógica)
   - Routing esquelético configurado
   - Todos los estilos CSS (BEM) listos para ambos modos: Card y List
   - Algunos handlers de MSW proporcionados
@@ -108,6 +108,7 @@ iteration-5-solution
 - Usar patrón **Object Mother** para fixtures de datos
 
 ### Clean Code
+- **DRY (Don't Repeat Yourself)**: Evitar duplicación de código. Extraer componentes/CSS comunes cuando se detecte repetición (ej: Layout component para estilos de página)
 - Extraer custom hooks para lógica reutilizable
 - Componentes pequeños y enfocados
 - No crear helpers prematuros (esperar al refactor)
@@ -123,6 +124,7 @@ iteration-5-solution
 ```
 src/
 ├── components/
+│   ├── Layout/
 │   ├── Navigation/
 │   ├── Toggle/
 │   ├── ProductCard/

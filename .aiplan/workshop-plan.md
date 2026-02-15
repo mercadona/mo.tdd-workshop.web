@@ -12,21 +12,21 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
 
 ## Fase 0: Preparar rama `master` (punto de partida para asistentes)
 
-### 0.1 Instalar MSW
-- [ ] `npm install msw --save-dev`
-- [ ] Crear `src/mocks/handlers.ts` con handlers pre-cocinados:
+### 0.1 Instalar MSW ✅ COMPLETADO
+- [x] `npm install msw --save-dev`
+- [x] Crear `src/mocks/handlers.ts` con handlers pre-cocinados:
   - `GET /categories` → devuelve lista de categorías (handler completo con fixtures)
   - **NO** incluir handlers de productos (los crean los asistentes en las iteraciones 2 y 5)
-- [ ] Crear `src/mocks/browser.ts` (setupWorker para dev)
-- [ ] Crear `src/mocks/server.ts` (setupServer para tests)
-- [ ] Integrar MSW en `setupTests.ts` (beforeAll/afterEach/afterAll)
-- [ ] Integrar MSW browser worker en `src/index.tsx` (solo en dev)
+- [x] Crear `src/mocks/browser.ts` (setupWorker para dev)
+- [x] Crear `src/mocks/server.ts` (setupServer para tests)
+- [x] Integrar MSW en `setupTests.ts` (beforeAll/afterEach/afterAll)
+- [x] Integrar MSW browser worker en `src/index.tsx` (solo en dev)
 
-### 0.2 Definir tipos
-- [ ] Crear `src/types/index.ts` con interfaces:
+### 0.2 Definir tipos ✅ COMPLETADO
+- [x] Crear `src/types/index.ts` con interfaces:
   ```typescript
-  interface Category { id: number; name: string; slug: string }
-  interface Product { id: number; name: string; price: number; description: string; image: string; categoryId: number }
+  interface Category { id: number; displayName: string; slug: string }
+  interface Product { id: number; slug: string; displayName: string; nutriscore: string; image: string; thumbnail: string; price: number; referenceFormat: string; categoryId: number; description?: string }
   ```
 
 ### 0.3 Crear datos mock (fixtures)
@@ -55,23 +55,25 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
 - Handler de productos: Iteración 2 (los asistentes lo crean)
 - Handlers de detalle: Iteraciones 3 y 5
 
-### 0.4 Componentes base (solo UI, sin lógica)
-- [ ] `src/components/Navigation/Navigation.tsx` + `index.ts`
+### 0.4 Componentes base (solo UI, sin lógica) ✅ COMPLETADO
+- [x] `src/components/Navigation/Navigation.tsx` + `index.ts`
   - Componente visual con nav, logo/título del workshop
   - Sin lógica de categorías (eso se hace en iteración 1)
-- [ ] `src/components/Toggle/Toggle.tsx` + `index.ts`
+- [x] `src/components/Toggle/Toggle.tsx` + `index.ts`
   - Componente switch visual (Card/List)
   - Props: `checked`, `onChange`, label
   - Sin conexión a Context (eso se hace en iteración 4)
 
-### 0.5 CSS completo (BEM)
-- [ ] Estilos globales / variables CSS
-- [ ] `Navigation.css` - estilos del nav
+### 0.5 CSS completo (BEM) 🔄 EN PROGRESO
+- [x] Estilos globales / variables CSS (`src/styles/globals.css` creado e importado en index.tsx - ⚠️ SIN COMMIT)
+- [x] `Navigation.css` - estilos del nav (creado - ⚠️ SIN IMPORTAR ni COMMIT)
 - [ ] `Toggle.css` - estilos del switch
 - [ ] `ProductCard.css` - estilos para modo Card Y modo List (ambos listos)
 - [ ] `ProductDetail.css` - estilos para el modal/dialog
 - [ ] `Home.css` - layout de la página principal
 - [ ] `CategoryDetail.css` - layout de página de categoría
+
+**Nota:** Se instalará el skill `frontend-design` antes de continuar con el CSS restante.
 
 ### 0.6 Routing esquelético
 - [ ] Añadir ruta `/categories/:slug` en Routes.tsx (con componente placeholder)

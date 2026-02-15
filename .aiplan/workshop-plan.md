@@ -30,9 +30,30 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
   ```
 
 ### 0.3 Crear datos mock (fixtures)
-- [ ] Definir datos realistas:
-  - **En handlers de MSW:** Categorías completas (Frutas, Verduras, Lácteos, Carnes, Panadería con slugs)
-  - **Como fixtures exportables:** Productos (al menos 3-4 por categoría, con precios, descripciones e imágenes) — se proporcionan los datos para que los asistentes los usen al crear sus propios handlers, pero NO se crean handlers de productos en master
+
+**✅ Completado en sesión anterior**
+
+- [x] **Fixtures de categorías** (`src/mocks/categories-fixtures.json`):
+  - 3 categorías: "Fruta y verdura", "Cereales", "Aperitivos"
+  - Cada categoría tiene: `id`, `displayName`, `slug`
+
+- [x] **Fixtures de productos** (`src/mocks/products-fixtures.json`):
+  - 24 productos en total (8 por categoría)
+  - Campos: `id`, `slug`, `displayName`, `nutriscore`, `image`, `thumbnail`, `price`, `referenceFormat`, `categoryId`
+  - Distribución:
+    - Fruta y verdura (categoryId: 1): 8 productos
+    - Cereales (categoryId: 7): 8 productos
+    - Aperitivos (categoryId: 15): 8 productos
+
+- [x] **Imágenes de productos** (`public/images/`):
+  - 48 archivos de imagen (24 productos × 2 versiones)
+  - Cada producto tiene: versión normal + thumbnail (`_thumb.jpg`)
+  - Imágenes reales de productos Mercadona
+
+**Nota:** Las fixtures están listas para usar en los handlers MSW que se crearán progresivamente:
+- Handler de categorías: Fase 0 (master)
+- Handler de productos: Iteración 2 (los asistentes lo crean)
+- Handlers de detalle: Iteraciones 3 y 5
 
 ### 0.4 Componentes base (solo UI, sin lógica)
 - [ ] `src/components/Navigation/Navigation.tsx` + `index.ts`

@@ -6,6 +6,21 @@ Este repositorio es la base para un workshop práctico de TDD (Test-Driven Devel
 
 **⚠️ IMPORTANTE: Este archivo NO debe estar visible para los asistentes del workshop. Está en `.gitignore`.**
 
+## Plan de Implementación
+
+Este proyecto sigue un plan detallado de implementación documentado en `.aiplan/workshop-plan.md`.
+
+**IMPORTANTE:**
+- Consultar el plan al inicio de cada sesión
+- Usar las checkboxes del plan para hacer seguimiento del progreso
+- Seguir el orden de las fases y tareas según están definidas
+- Actualizar las checkboxes conforme se completan las tareas
+
+El plan define:
+- Fase 0: Preparación de la rama `master` (punto de partida)
+- Fases 1-5: Creación de las ramas `iteration-X-start` e `iteration-X-solution`
+- Verificaciones y tests para cada fase
+
 ## Estructura del Workshop
 
 El workshop está diseñado en **5 iteraciones progresivas** siguiendo el ciclo Rojo-Verde-Refactor:

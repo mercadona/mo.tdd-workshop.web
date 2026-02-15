@@ -84,12 +84,12 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
 - [x] Crear componente `<Layout />` para centralizar estilos comunes (max-width, padding)
 - [x] Refactorizar Home.css y CategoryDetail.css para eliminar duplicación
 
-### 0.8 Verificación de Fase 0
-- [ ] `npm test` → tests existentes siguen pasando
-- [ ] `npm run typecheck` → sin errores de tipos
-- [ ] `npm run lint` → sin errores de linting
-- [ ] `npm start` → la app arranca y muestra el layout base
-- [ ] Commit y tag del estado de master
+### 0.8 Verificación de Fase 0 ✅ COMPLETADO
+- [x] `npm test` → tests existentes siguen pasando
+- [x] `npm run typecheck` → sin errores de tipos
+- [x] `npm run lint` → sin errores de linting
+- [x] `npm start` → la app arranca y muestra el layout base
+- [x] Commit y tag del estado de master
 
 ---
 

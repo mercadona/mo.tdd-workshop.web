@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "displayName": "Fruta y verdura",
+    "slug": "fruta-y-verdura"
+  },
+  {
+    "id": 7,
+    "displayName": "Cereales",
+    "slug": "cereales"
+  },
+  {
+    "id": 15,
+    "displayName": "Aperitivos",
+    "slug": "aperitivos"
+  }
+]

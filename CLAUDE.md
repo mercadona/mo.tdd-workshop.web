@@ -9,10 +9,11 @@ Este repositorio es la base para un workshop práctico de TDD (Test-Driven Devel
 ## Flujo de Trabajo Preferido
 
 **Metodología de trabajo incremental:**
-- **Progreso paso a paso**: Proponer cada acción y esperar confirmación del usuario antes de ejecutar
+- **Proponer antes de modificar**: Esperar confirmación SOLO antes de operaciones de escritura/modificación (crear/editar archivos, instalar dependencias, commits, etc.)
+- **Libertad para leer**: NO pedir confirmación para operaciones de lectura (Read, Glob, Grep, git status, git diff, ejecutar tests, etc.)
 - **Commits frecuentes**: Crear un commit por cada unidad de trabajo completada
 - **Checkboxes del plan**: Actualizar las checkboxes en `.aiplan/workshop-plan.md` conforme se completan tareas
-- **Sin autonomía excesiva**: NO ejecutar múltiples pasos o tomar decisiones sin consultar primero
+- **Pasos pequeños**: Proponer modificaciones concretas, no múltiples cambios a la vez
 
 Este flujo garantiza control total del usuario sobre el proceso y permite revisión en cada etapa.
 

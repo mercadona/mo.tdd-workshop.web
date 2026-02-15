@@ -73,14 +73,14 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
 - [x] `Home.css` - layout de la página principal
 - [x] `CategoryDetail.css` - layout de página de categoría
 
-### 0.6 Routing esquelético
-- [ ] Añadir ruta `/categories/:slug` en Routes.tsx (con componente placeholder)
-- [ ] Actualizar `paths.ts` con la nueva ruta
-- [ ] Crear `src/pages/category-detail/CategoryDetail.tsx` (placeholder vacío)
+### 0.6 Routing esquelético ✅ COMPLETADO
+- [x] Añadir ruta `/categories/:slug` en Routes.tsx (con componente placeholder)
+- [x] Actualizar `paths.ts` con la nueva ruta
+- [x] Crear `src/pages/category-detail/CategoryDetail.tsx` (placeholder vacío)
 
-### 0.7 HTML base
-- [ ] Integrar `<Navigation />` en el layout de App
-- [ ] Estructura HTML semántica (header, main, etc.)
+### 0.7 HTML base ✅ COMPLETADO
+- [x] Integrar `<Navigation />` en el layout de App
+- [x] Estructura HTML semántica (header, main, etc.)
 
 ### 0.8 Verificación de Fase 0
 - [ ] `npm test` → tests existentes siguen pasando

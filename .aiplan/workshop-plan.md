@@ -81,6 +81,8 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
 ### 0.7 HTML base ✅ COMPLETADO
 - [x] Integrar `<Navigation />` en el layout de App
 - [x] Estructura HTML semántica (header, main, etc.)
+- [x] Crear componente `<Layout />` para centralizar estilos comunes (max-width, padding)
+- [x] Refactorizar Home.css y CategoryDetail.css para eliminar duplicación
 
 ### 0.8 Verificación de Fase 0
 - [ ] `npm test` → tests existentes siguen pasando

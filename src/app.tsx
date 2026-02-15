@@ -1,3 +1,4 @@
+import { Layout } from 'components/layout'
 import { Navigation } from 'components/navigation'
 import { AppRoutes } from 'pages/routes'
 
@@ -8,7 +9,9 @@ export const App = () => {
         <Navigation />
       </header>
       <main>
-        <AppRoutes />
+        <Layout>
+          <AppRoutes />
+        </Layout>
       </main>
     </>
   )

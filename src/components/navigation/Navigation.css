@@ -1,0 +1,18 @@
+.navigation {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-md) 0;
+  box-shadow: var(--shadow-md);
+}
+
+.navigation__container {
+  max-width: var(--max-width-container);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.navigation__title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin: 0;
+}

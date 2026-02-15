@@ -64,16 +64,14 @@ Actualmente `master` es un esqueleto mínimo (React + Vite + Router + Tests bás
   - Props: `checked`, `onChange`, label
   - Sin conexión a Context (eso se hace en iteración 4)
 
-### 0.5 CSS completo (BEM) 🔄 EN PROGRESO
-- [x] Estilos globales / variables CSS (`src/styles/globals.css` creado e importado en index.tsx - ⚠️ SIN COMMIT)
-- [x] `Navigation.css` - estilos del nav (creado - ⚠️ SIN IMPORTAR ni COMMIT)
-- [ ] `Toggle.css` - estilos del switch
-- [ ] `ProductCard.css` - estilos para modo Card Y modo List (ambos listos)
-- [ ] `ProductDetail.css` - estilos para el modal/dialog
-- [ ] `Home.css` - layout de la página principal
-- [ ] `CategoryDetail.css` - layout de página de categoría
-
-**Nota:** Se instalará el skill `frontend-design` antes de continuar con el CSS restante.
+### 0.5 CSS completo (BEM) ✅ COMPLETADO
+- [x] Estilos globales / variables CSS (`src/styles/globals.css` creado e importado en index.tsx)
+- [x] `Navigation.css` - estilos del nav (creado e importado)
+- [x] `Toggle.css` - estilos del switch
+- [x] `ProductCard.css` - estilos para modo Card Y modo List (ambos listos)
+- [x] `ProductDetail.css` - estilos para el modal/dialog
+- [x] `Home.css` - layout de la página principal
+- [x] `CategoryDetail.css` - layout de página de categoría
 
 ### 0.6 Routing esquelético
 - [ ] Añadir ruta `/categories/:slug` en Routes.tsx (con componente placeholder)

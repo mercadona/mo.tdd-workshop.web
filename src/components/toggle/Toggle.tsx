@@ -1,3 +1,5 @@
+import './Toggle.css'
+
 interface ToggleProps {
   checked: boolean
   onChange: (checked: boolean) => void

@@ -231,6 +231,15 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 - [x] `npm run typecheck` → OK
 - [x] `npm run lint` → OK
 
+### 2.8 Retrospectiva de Fase 2 ✅ COMPLETADO
+- [x] Identificar aprendizajes de la sesión
+- [x] Actualizar CLAUDE.md con nueva sección "Testing Semántico y Accesibilidad":
+  - Usar `aria-labelledby` para vincular article con heading
+  - Buscar elementos por su nombre accesible (NO usar `.closest()`)
+  - Usar `within` para verificar contenido en contexto específico
+  - Evitar non-null assertions en tests
+- [x] Commit y push de mejoras
+
 ---
 
 ## Fase 3: Iteración 3 - Navegación y routing + helpers DSL

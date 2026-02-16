@@ -161,6 +161,38 @@ iteration-5-solution
 - **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
 - **Usar patrón Object Mother** para fixtures de datos
 
+### Testing Semántico y Accesibilidad
+- **Usar atributos ARIA para vincular elementos relacionados:**
+  - Usar `aria-labelledby` en componentes tipo card/article para vincular con su heading
+  - Esto mejora tanto la accesibilidad real como la testabilidad
+  - Ejemplo:
+    ```typescript
+    const headingId = `product-heading-${id}`
+    <article aria-labelledby={headingId}>
+      <h3 id={headingId}>{displayName}</h3>
+    </article>
+    ```
+- **Buscar elementos por su nombre accesible:**
+  - Usar `getByRole('article', { name: 'Nombre del producto' })` en lugar de `.closest('article')`
+  - NO acoplarse a la estructura HTML con selectores como `.closest()`
+  - Ejemplo:
+    ```typescript
+    const productCard = await screen.findByRole('article', {
+      name: 'Aceitunas verdes rellenas de anchoa Hacendado',
+    })
+    ```
+- **Usar `within` para verificar contenido en contexto específico:**
+  - Cuando hay múltiples elementos con el mismo texto, usar `within` para especificar contexto
+  - NO usar `getAllByText()[0]` como workaround
+  - Ejemplo:
+    ```typescript
+    const productCard = await screen.findByRole('article', { name: 'Producto X' })
+    expect(within(productCard).getByText('3,00 €')).toBeVisible()
+    ```
+- **Evitar non-null assertions en tests:**
+  - NO usar `productCard!` - es difícil de leer
+  - Buscar elementos por queries semánticas que no requieran assertions
+
 ### Clean Code
 - **DRY (Don't Repeat Yourself)**: Evitar duplicación de código. Extraer componentes/CSS comunes cuando se detecte repetición (ej: Layout component para estilos de página)
 - **Extraer custom hooks** para lógica reutilizable

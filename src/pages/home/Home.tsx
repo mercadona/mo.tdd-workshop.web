@@ -1,5 +1,18 @@
+import { ProductCard } from 'components/product-card'
+import { useProducts } from 'hooks/useProducts'
+
 const Home = () => {
-  return <h1>Hello World!</h1>
+  const { products } = useProducts()
+
+  return (
+    <div>
+      <div className="products-grid">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
+  )
 }
 
 export { Home }

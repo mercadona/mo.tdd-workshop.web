@@ -186,72 +186,50 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 
 ---
 
-## Fase 2: Iteración 2 - Listado de productos + formateo + Object Mother
+## Fase 2: Iteración 2 - Listado de productos + formateo + Object Mother ✅ COMPLETADO
 
 **Concepto:** Componente ProductCard, Intl.NumberFormat, patrón Object Mother
 **Ramas:** `iteration-2-start`, `iteration-2-solution`
 
-### 2.0 Crear rama `iteration-2-start`
-- [ ] `git checkout -b iteration-2-start` (desde iteration-1-solution)
-- [ ] Push rama (snapshot limpio, sin tests ni implementación de esta iteración)
+### 2.0 Crear rama `iteration-2-start` ✅ COMPLETADO
+- [x] `git checkout -b iteration-2-start` (desde iteration-1-solution)
+- [x] Push rama (snapshot limpio, sin tests ni implementación de esta iteración)
 
-### 2.1 Crear handler MSW — solo en `iteration-2-solution`
-- [ ] Añadir handler `GET /products` en handlers.ts (los asistentes crean este handler)
+### 2.1 Crear handler MSW — solo en `iteration-2-solution` ✅ COMPLETADO
+- [x] Añadir handler `GET /products` en handlers.ts (los asistentes crean este handler)
   - Devuelve lista de productos con price, name, description, image, categoryId
   - Usa las fixtures de productos proporcionadas en master
 
-### 2.2 Crear Object Mother — solo en `iteration-2-solution`
-- [ ] `src/test/mothers/ProductMother.ts`:
-  ```typescript
-  export const ProductMother = {
-    create: (overrides?: Partial<Product>): Product => ({
-      id: 1,
-      name: 'Manzana Royal Gala',
-      price: 2.49,
-      description: 'Manzana dulce y crujiente',
-      image: '/images/manzana.jpg',
-      categoryId: 1,
-      ...overrides
-    })
-  }
-  ```
+### 2.2 Crear Object Mother — solo en `iteration-2-solution` ✅ COMPLETADO
+- [x] `src/test/mothers/ProductMother.ts` creado con patrón de factory
 
-### 2.3 Test (ROJO) — solo en `iteration-2-solution`
-- [ ] Test en Home:
-  ```typescript
-  it('should display the products with their prices correctly formatted', async () => {
-    render(<App />)
+### 2.3 Test (ROJO) — solo en `iteration-2-solution` ✅ COMPLETADO
+- [x] Test en Home que verifica productos con precios formateados
+- [x] Test usa `aria-labelledby` para encontrar article por su heading
+- [x] Test usa `within` para verificar precio dentro del contexto del producto específico
 
-    // Esperar a que carguen los productos
-    await screen.findByText('Manzana Royal Gala')
-
-    // Verificar precio formateado en EUR
-    expect(screen.getByText('2,49 €')).toBeVisible()
-    // ... más productos
-  })
-  ```
-
-### 2.4 Implementación (VERDE)
-- [ ] `src/components/ProductCard/ProductCard.tsx`:
+### 2.4 Implementación (VERDE) ✅ COMPLETADO
+- [x] `src/components/ProductCard/ProductCard.tsx`:
   - Muestra nombre, precio formateado con `Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' })`
-  - Muestra imagen
+  - Muestra imagen y nutriscore
+  - `aria-labelledby` vinculado al heading para accesibilidad
   - NO muestra descripción (eso es para modo List en iteración 4)
-- [ ] Fetch de productos en Home (o hook)
-- [ ] Renderizar lista de `<ProductCard />`
+- [x] Fetch de productos en Home con async/await
+- [x] Renderizar lista de `<ProductCard />`
 
-### 2.5 Refactor
-- [ ] Extraer `src/hooks/useProducts.ts`
-- [ ] Extraer función de formateo si procede
-- [ ] Tests siguen en verde
+### 2.5 Refactor ✅ COMPLETADO
+- [x] Extraer `src/hooks/useProducts.ts`
+- [x] Función `formatPrice` extraída en ProductCard
+- [x] Tests siguen en verde
 
-### 2.6 Crear rama solución
-- [ ] Commit todo el trabajo (handler + tests + implementación + refactor)
-- [ ] `git checkout -b iteration-2-solution` → Push
+### 2.6 Crear rama solución ✅ COMPLETADO
+- [x] Commit todo el trabajo (handler + tests + implementación + refactor)
+- [x] Push rama `iteration-2-solution`
 
-### 2.7 Verificación
-- [ ] `npm test` → pasa
-- [ ] `npm run typecheck` → OK
-- [ ] `npm run lint` → OK
+### 2.7 Verificación ✅ COMPLETADO
+- [x] `npm test` → pasa
+- [x] `npm run typecheck` → OK
+- [x] `npm run lint` → OK
 
 ---
 

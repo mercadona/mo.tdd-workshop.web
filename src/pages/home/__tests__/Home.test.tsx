@@ -10,12 +10,13 @@ it('should render correctly the home', () => {
   expect(homeTitle).toBeInTheDocument()
 })
 
-it('should render the list of categories on initial load', async () => {
+it('should render the list of categories in the navigation', async () => {
   render(<App />)
 
-  const categoryList = await screen.findByRole('list')
+  const nav = screen.getByRole('navigation')
+  const categoryList = await within(nav).findByRole('list')
   const categories = within(categoryList).getAllByRole('listitem')
 
   expect(categories).toHaveLength(3)
-  expect(screen.getByText('Fruta y verdura')).toBeVisible()
+  expect(within(nav).getByText('Fruta y verdura')).toBeVisible()
 })

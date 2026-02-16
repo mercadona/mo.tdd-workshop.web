@@ -14,6 +14,7 @@ Este repositorio es la base para un workshop práctico de TDD (Test-Driven Devel
 - **Commits frecuentes**: Crear un commit por cada unidad de trabajo completada
 - **Plan y código juntos**: Actualizar el plan (.aiplan/workshop-plan.md) en el MISMO commit que el código implementado, no en commits separados. El plan refleja el estado real del código.
 - **Pasos pequeños**: Proponer modificaciones concretas, no múltiples cambios a la vez
+- **Retrospectiva al finalizar cada fase**: Después de completar cada fase (Fase 0, Fase 1, etc.), hacer retrospectiva para identificar aprendizajes, fricciones o mejoras a incorporar en CLAUDE.md
 
 Este flujo garantiza control total del usuario sobre el proceso y permite revisión en cada etapa.
 
@@ -112,26 +113,65 @@ iteration-5-start
 iteration-5-solution
 ```
 
-**Flujo de trabajo:**
+**Flujo de trabajo de ramas (CRÍTICO):**
 1. Los asistentes parten de `master`
 2. En el workshop mostramos las soluciones desde las ramas `iteration-X-solution`
 3. No escribimos código en vivo (no hay tiempo físico)
 4. Explicamos la solución ya implementada en cada rama
 
+**Flujo de trabajo para implementación (desarrollo de soluciones):**
+1. **SIEMPRE** crear la rama `-solution` ANTES de empezar a escribir código
+   ```bash
+   git checkout -b iteration-X-solution  # Desde iteration-X-start o desde la solution anterior
+   ```
+2. **TODO** el trabajo TDD (tests + implementación + refactor) se hace EN la rama `-solution`
+3. **NUNCA** modificar master después de completar la Fase 0
+4. Master se mantiene limpio como punto de partida para los asistentes
+5. Cada rama `-start` es un snapshot limpio (sin código nuevo, solo hereda de soluciones anteriores)
+
 ## Prácticas de Código
 
+### Data Fetching
+- **Usar async/await** en lugar de Promise.then()
+- **No usar try/catch** si no vamos a manejar el error (código más limpio)
+- Ejemplo preferido:
+  ```typescript
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/api/data')
+      const data = await response.json()
+      setData(data)
+    }
+    fetchData()
+  }, [])
+  ```
+
 ### Testing
-- Renderizar siempre `<App />` completo (no aislar componentes)
-- No usar `data-testid` → usar roles semánticos y queries accesibles
-- Crear helpers de testing (DSL) para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
-- Usar patrón **Object Mother** para fixtures de datos
+- **Renderizar siempre `<App />` completo** (no aislar componentes)
+- **No usar `data-testid`** → usar roles semánticos y queries accesibles
+- **Verificar ejemplos representativos, no todos los datos:**
+  - Verificar la cantidad total (ej: `expect(items).toHaveLength(3)`)
+  - Verificar 1-2 ejemplos representativos para confirmar el contenido
+  - NO verificar todos los items individualmente (no escala, frágil, acoplado a fixtures)
+  - Ejemplo:
+    ```typescript
+    expect(categories).toHaveLength(3)
+    expect(screen.getByText('Fruta y verdura')).toBeVisible() // Solo 1 ejemplo
+    ```
+- **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
+- **Usar patrón Object Mother** para fixtures de datos
 
 ### Clean Code
 - **DRY (Don't Repeat Yourself)**: Evitar duplicación de código. Extraer componentes/CSS comunes cuando se detecte repetición (ej: Layout component para estilos de página)
-- Extraer custom hooks para lógica reutilizable
-- Componentes pequeños y enfocados
-- No crear helpers prematuros (esperar al refactor)
-- Preferir APIs nativas sobre librerías cuando sea posible
+- **Extraer custom hooks** para lógica reutilizable
+- **Componentes pequeños y enfocados**
+- **No crear helpers prematuros** (esperar al refactor)
+- **Preferir APIs nativas** sobre librerías cuando sea posible
+- **Comentarios solo cuando sean estrictamente necesarios:**
+  - El código debe ser auto-documentado
+  - Solo añadir comentarios cuando la lógica NO sea obvia
+  - Los tests bien escritos no necesitan comentarios
+  - Evitar comentarios que solo repiten lo que el código ya dice
 
 ### Refactoring
 - El refactor es una fase explícita del ciclo (Rojo-Verde-**Refactor**)

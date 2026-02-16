@@ -124,8 +124,8 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 - [x] Crear rama desde master: `git checkout -b iteration-1-start`
 - [x] Push rama (snapshot limpio, sin tests ni implementación)
 
-### 1.1 Test (ROJO) — solo en `iteration-1-solution`
-- [ ] Crear `src/pages/home/__tests__/Home.test.tsx` (ampliar el existente):
+### 1.1 Test (ROJO) — solo en `iteration-1-solution` ✅ COMPLETADO
+- [x] Crear `src/pages/home/__tests__/Home.test.tsx` (ampliar el existente):
   ```typescript
   it('should render the list of categories on initial load', async () => {
     render(<App />)
@@ -133,22 +133,20 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
     const categoryList = await screen.findByRole('list')
     const categories = within(categoryList).getAllByRole('listitem')
 
-    expect(categories).toHaveLength(5) // o el número de categorías mock
-    expect(screen.getByText('Frutas')).toBeVisible()
-    expect(screen.getByText('Verduras')).toBeVisible()
-    // ... etc
+    expect(categories).toHaveLength(3)
+    expect(screen.getByText('Fruta y verdura')).toBeVisible()
   })
   ```
-- [ ] Verificar que el test falla (ROJO)
+- [x] Verificar que el test falla (ROJO)
 
-### 1.2 Implementación (VERDE)
-- [ ] Implementar fetch de categorías directamente en `Home.tsx`:
-  - `useState` + `useEffect` para fetch a `/categories`
+### 1.2 Implementación (VERDE) ✅ COMPLETADO
+- [x] Implementar fetch de categorías directamente en `Home.tsx`:
+  - `useState` + `useEffect` para fetch a `/categories` con async/await
   - Renderizar `<ul>` con `<li>` por cada categoría
-- [ ] Verificar que el test pasa (VERDE)
+- [x] Verificar que el test pasa (VERDE)
 
-### 1.3 Refactor
-- [ ] Extraer lógica a `src/hooks/useCategories.ts`:
+### 1.3 Refactor ✅ COMPLETADO
+- [x] Extraer lógica a `src/hooks/useCategories.ts`:
   ```typescript
   export const useCategories = () => {
     const [categories, setCategories] = useState<Category[]>([])
@@ -156,18 +154,18 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
     return { categories }
   }
   ```
-- [ ] Home.tsx usa `useCategories()` en lugar de lógica inline
-- [ ] Tests siguen en verde
+- [x] Home.tsx usa `useCategories()` en lugar de lógica inline
+- [x] Tests siguen en verde
 
-### 1.4 Crear rama solución
-- [ ] Commit todo el trabajo (tests + implementación + refactor)
-- [ ] `git checkout -b iteration-1-solution`
-- [ ] Push rama solución
+### 1.4 Crear rama solución ✅ COMPLETADO
+- [x] Commit todo el trabajo (tests + implementación + refactor)
+- [x] `git checkout -b iteration-1-solution`
+- [x] Push rama solución
 
-### 1.5 Verificación
-- [ ] `npm test` → pasa
-- [ ] `npm run typecheck` → OK
-- [ ] `npm run lint` → OK
+### 1.5 Verificación ✅ COMPLETADO
+- [x] `npm test` → pasa
+- [x] `npm run typecheck` → OK
+- [x] `npm run lint` → OK
 
 ---
 

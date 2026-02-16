@@ -167,6 +167,23 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 - [x] `npm run typecheck` → OK
 - [x] `npm run lint` → OK
 
+### 1.6 Ciclo 2: Mover categorías a Navigation ✅ COMPLETADO
+- [x] **Test (ROJO):** Actualizar test para buscar categorías dentro del `<nav>`
+- [x] **Implementación (VERDE):** Mover `useCategories()` de Home a Navigation
+- [x] **Refactor:** Código ya limpio, no necesita cambios
+- [x] Verificación completa (tests, typecheck, lint)
+- [x] Commit y push
+
+### 1.7 Retrospectiva de Fase 1 ✅ COMPLETADO
+- [x] Identificar aprendizajes de la sesión
+- [x] Actualizar CLAUDE.md con mejores prácticas:
+  - Flujo estricto de ramas (crear `-solution` antes de codificar)
+  - Data fetching con async/await (sin try/catch)
+  - Testing: ejemplos representativos vs verificar todos los datos
+  - Comentarios solo cuando sean necesarios
+  - Retrospectiva obligatoria al final de cada fase
+- [x] Commit y push de mejoras
+
 ---
 
 ## Fase 2: Iteración 2 - Listado de productos + formateo + Object Mother

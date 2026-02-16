@@ -17,6 +17,25 @@ Este repositorio es la base para un workshop práctico de TDD (Test-Driven Devel
 
 Este flujo garantiza control total del usuario sobre el proceso y permite revisión en cada etapa.
 
+## Selección de Modelo
+
+Para optimizar coste y velocidad según el tipo de tarea:
+
+**Usar Opus (`/model opus`):**
+- Planificación de iteraciones y fases del workshop
+- Diseño arquitectónico y decisiones estructurales
+- Análisis complejo de patrones de testing
+- Retrospectivas y auditorías de convenciones
+- Cuando necesites razonamiento profundo o decisiones estratégicas
+
+**Usar Sonnet (`/model sonnet`):**
+- Implementación de código siguiendo planes establecidos
+- Ejecución del ciclo TDD (Rojo-Verde-Refactor)
+- Refactorización directa con objetivos claros
+- Iteraciones rápidas y ajustes
+
+**Nota:** Esta es una guía, no una regla estricta. Si durante la implementación surgen insights que requieren replanificación, es válido usar Opus en cualquier momento.
+
 ## Plan de Implementación
 
 Este proyecto sigue un plan detallado de implementación documentado en `.aiplan/workshop-plan.md`.

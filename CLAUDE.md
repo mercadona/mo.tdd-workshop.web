@@ -195,7 +195,130 @@ iteration-5-solution
 
 **Regla de oro:** Si no hay un test rojo que lo requiera, no lo implementes todavía.
 
+### Ejemplo de incrementalidad extrema
+
+Cuando implementes un componente, hazlo en ciclos estrictos:
+
+**❌ Incorrecto** (implementar todo de una vez):
+```typescript
+// Implementar el componente completo con todas las props desde el inicio
+export const ProductDetail = ({ product, onClose }: Props) => {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (product) dialogRef.current?.showModal()
+  }, [product])
+
+  const handleClose = () => {
+    dialogRef.current?.close()
+    onClose()
+  }
+
+  return <dialog ref={dialogRef}>...</dialog>
+}
+```
+
+**✅ Correcto** (ciclo por ciclo):
+
+**Ciclo 1** - Test: "should show product details"
+```typescript
+// Implementar SOLO lo que pide el test: mostrar datos
+export const ProductDetail = ({ product }: Props) => {
+  return (
+    <dialog open>
+      <h2>{product.displayName}</h2>
+      <p>{product.price}</p>
+    </dialog>
+  )
+}
+```
+
+**Ciclo 2** - Test: "should close dialog when clicking button"
+```typescript
+// AHORA añadir el callback onClose que el segundo test requiere
+export const ProductDetail = ({ product, onClose }: Props) => {
+  return (
+    <dialog open>
+      <button onClick={onClose}>Cerrar</button>
+      <h2>{product.displayName}</h2>
+      <p>{product.price}</p>
+    </dialog>
+  )
+}
+```
+
+**NO añadir props, callbacks o lógica que "vas a necesitar luego"**. Espera a que un test lo requiera.
+
 ## Prácticas de Código
+
+### Componentes Controlados
+
+**Principio:** Los componentes deben ser controlados por el padre mediante estado/props, evitando refs y métodos imperativos.
+
+**❌ Evitar refs y métodos imperativos:**
+```typescript
+// NO hacer esto
+const dialogRef = useRef<HTMLDialogElement>(null)
+dialogRef.current?.showModal()
+dialogRef.current?.close()
+```
+
+**✅ Estado declarativo controlado por el padre:**
+```typescript
+// El componente hijo es simple y controlado
+export const ProductDetail = ({ product, onClose }: Props) => {
+  return (
+    <dialog open>
+      <button onClick={onClose}>Cerrar</button>
+      {/* contenido */}
+    </dialog>
+  )
+}
+
+// El padre controla el estado y el renderizado
+const Parent = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+
+  return (
+    <>
+      {/* Renderizado condicional con && */}
+      {selectedProduct && (
+        <ProductDetail
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </>
+  )
+}
+```
+
+**Excepción:** Usar refs solo para casos de integración con APIs nativas que no se pueden controlar declarativamente (ej: `focus()`, `scrollIntoView()`).
+
+### Componentes Modales y Dialogs
+
+Para componentes tipo modal/dialog, seguir este patrón:
+
+1. **El padre controla el estado de visibilidad** (`useState` para el producto/dato seleccionado)
+2. **El padre renderiza condicionalmente con `&&`** (no pasar prop `open`/`isOpen`)
+3. **El componente hijo recibe solo datos y callbacks** (no maneja su propia visibilidad)
+4. **Usar `<dialog open>` sin refs** (el atributo `open` es estático, el renderizado es condicional)
+
+**Ejemplo completo:**
+
+```typescript
+// ❌ NO hacer esto (prop booleana de visibilidad)
+<ProductDetail product={product} isOpen={isOpen} onClose={...} />
+
+// ✅ Hacer esto (renderizado condicional en el padre)
+{selectedProduct && <ProductDetail product={selectedProduct} onClose={...} />}
+```
+
+**Beneficios:**
+- Componente hijo simple y sin estado interno
+- Padre tiene control total sobre la visibilidad
+- No requiere mocks en tests (no hay `showModal()` ni `close()`)
+- El dialog no está en el DOM cuando no se usa
 
 ### Data Fetching
 - **Usar async/await** en lugar de Promise.then()
@@ -337,6 +460,9 @@ it('should handle 404 for invalid URL', async () => {
 - El refactor es una fase explícita del ciclo (Rojo-Verde-**Refactor**)
 - Solo refactorizar cuando los tests están en verde
 - Tests deben seguir pasando después del refactor
+- **NO preoptimizar:** Solo refactorizar cuando hay duplicación REAL o código sucio, nunca por anticipación
+- **Esperar a la duplicación:** Si una lógica solo existe en un lugar, no extraer hooks/helpers "por si acaso"
+- **Regla de tres:** Considera refactorizar cuando veas la misma lógica repetida 2-3 veces, no antes
 
 ## Estructura de Archivos Esperada
 

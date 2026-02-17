@@ -8,7 +8,8 @@ import './Home.css'
 
 const Home = () => {
   const { products } = useProducts()
-  const { selectedProduct, handleProductClick, handleClose } = useProductDialog()
+  const { selectedProduct, handleProductClick, handleClose } =
+    useProductDialog()
   const { viewMode } = useViewMode()
 
   return (

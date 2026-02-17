@@ -10,7 +10,8 @@ import './CategoryDetail.css'
 export const CategoryDetail = () => {
   const { slug } = useParams<{ slug: string }>()
   const { category, notFound } = useCategoryWithProducts(slug)
-  const { selectedProduct, handleProductClick, handleClose } = useProductDialog()
+  const { selectedProduct, handleProductClick, handleClose } =
+    useProductDialog()
   const { viewMode } = useViewMode()
 
   if (notFound) {

@@ -14,6 +14,7 @@ Este repositorio es la base para un workshop práctico de TDD (Test-Driven Devel
 - **Commits frecuentes**: Crear un commit por cada unidad de trabajo completada
 - **Plan y código juntos**: Actualizar el plan (.aiplan/workshop-plan.md) en el MISMO commit que el código implementado, no en commits separados. El plan refleja el estado real del código.
 - **Pasos pequeños**: Proponer modificaciones concretas, no múltiples cambios a la vez
+- **Retrospectiva al finalizar cada fase**: Después de completar cada fase (Fase 0, Fase 1, etc.), hacer retrospectiva para identificar aprendizajes, fricciones o mejoras a incorporar en CLAUDE.md
 
 Este flujo garantiza control total del usuario sobre el proceso y permite revisión en cada etapa.
 
@@ -73,6 +74,56 @@ Ver `CONTEXT.md` para el detalle completo de cada iteración.
 - **Context API** para estado global (sin Redux ni Zustand)
 - **APIs Nativas:** `Intl.NumberFormat`, `<dialog>`, etc.
 
+### Estructura de React Router
+
+**Patrón estándar con layout routes:**
+
+```typescript
+// App.tsx - punto de entrada simple
+export const App = () => <AppRoutes />
+
+// Routes.tsx - contiene el Router y define rutas
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
+export const AppRoutes = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route element={<RootLayout />}>  {/* Layout compartido */}
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
+}
+
+// RootLayout.tsx - layout con Outlet para rutas hijas
+import { Outlet } from 'react-router-dom'
+
+export const RootLayout = () => {
+  return (
+    <>
+      <header><Navigation /></header>
+      <main>
+        <Layout>
+          <Outlet />  {/* Aquí se renderizan las páginas */}
+        </Layout>
+      </main>
+    </>
+  )
+}
+```
+
+**Beneficios:**
+- Layout compartido (header/footer) en un solo lugar
+- Páginas individuales no duplican estructura
+- Provider contexts se pueden anidar en el layout route
+
+**Convención de imports:**
+- **SIEMPRE importar de `react-router-dom`**, nunca de `react-router`
+- Ejemplo: `import { Link, useParams, BrowserRouter, Outlet } from 'react-router-dom'`
+
 ## Estrategia de Ramas
 
 ### Rama `master`
@@ -112,46 +163,450 @@ iteration-5-start
 iteration-5-solution
 ```
 
-**Flujo de trabajo:**
+**Flujo de trabajo de ramas (CRÍTICO):**
 1. Los asistentes parten de `master`
 2. En el workshop mostramos las soluciones desde las ramas `iteration-X-solution`
 3. No escribimos código en vivo (no hay tiempo físico)
 4. Explicamos la solución ya implementada en cada rama
 
+**Flujo de trabajo para implementación (desarrollo de soluciones):**
+1. **SIEMPRE** crear la rama `-solution` ANTES de empezar a escribir código
+   ```bash
+   git checkout -b iteration-X-solution  # Desde iteration-X-start o desde la solution anterior
+   ```
+2. **TODO** el trabajo TDD (tests + implementación + refactor) se hace EN la rama `-solution`
+3. **NUNCA** modificar master después de completar la Fase 0
+4. Master se mantiene limpio como punto de partida para los asistentes
+5. Cada rama `-start` es un snapshot limpio (sin código nuevo, solo hereda de soluciones anteriores)
+
+## TDD Estricto
+
+**Principio fundamental: NO anticipar código que no pide ningún test**
+
+- **Incrementalidad:** Implementar solo lo que el test actual requiere
+- **Orden correcto:**
+  1. Test del caso feliz → implementación mínima para ese caso
+  2. Test del caso de error → añadir manejo del error
+- **Ejemplo práctico (Handler MSW con 404):**
+  - ❌ **Incorrecto:** Implementar el handler completo con manejo de 404 desde el inicio
+  - ✅ **Correcto:**
+    1. Test que espera categoría válida → Handler que devuelve la categoría
+    2. Test que espera 404 para slug inexistente → Añadir `if (!category) return 404`
+
+**Regla de oro:** Si no hay un test rojo que lo requiera, no lo implementes todavía.
+
+### Ejemplo de incrementalidad extrema
+
+Cuando implementes un componente, hazlo en ciclos estrictos:
+
+**❌ Incorrecto** (implementar todo de una vez):
+```typescript
+// Implementar el componente completo con todas las props desde el inicio
+export const ProductDetail = ({ product, onClose }: Props) => {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (product) dialogRef.current?.showModal()
+  }, [product])
+
+  const handleClose = () => {
+    dialogRef.current?.close()
+    onClose()
+  }
+
+  return <dialog ref={dialogRef}>...</dialog>
+}
+```
+
+**✅ Correcto** (ciclo por ciclo):
+
+**Ciclo 1** - Test: "should show product details"
+```typescript
+// Implementar SOLO lo que pide el test: mostrar datos
+export const ProductDetail = ({ product }: Props) => {
+  return (
+    <dialog open>
+      <h2>{product.displayName}</h2>
+      <p>{product.price}</p>
+    </dialog>
+  )
+}
+```
+
+**Ciclo 2** - Test: "should close dialog when clicking button"
+```typescript
+// AHORA añadir el callback onClose que el segundo test requiere
+export const ProductDetail = ({ product, onClose }: Props) => {
+  return (
+    <dialog open>
+      <button onClick={onClose}>Cerrar</button>
+      <h2>{product.displayName}</h2>
+      <p>{product.price}</p>
+    </dialog>
+  )
+}
+```
+
+**NO añadir props, callbacks o lógica que "vas a necesitar luego"**. Espera a que un test lo requiera.
+
 ## Prácticas de Código
 
+### Componentes Controlados
+
+**Principio:** Los componentes deben ser controlados por el padre mediante estado/props, evitando refs y métodos imperativos.
+
+**❌ Evitar refs y métodos imperativos:**
+```typescript
+// NO hacer esto
+const dialogRef = useRef<HTMLDialogElement>(null)
+dialogRef.current?.showModal()
+dialogRef.current?.close()
+```
+
+**✅ Estado declarativo controlado por el padre:**
+```typescript
+// El componente hijo es simple y controlado
+export const ProductDetail = ({ product, onClose }: Props) => {
+  return (
+    <dialog open>
+      <button onClick={onClose}>Cerrar</button>
+      {/* contenido */}
+    </dialog>
+  )
+}
+
+// El padre controla el estado y el renderizado
+const Parent = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+
+  return (
+    <>
+      {/* Renderizado condicional con && */}
+      {selectedProduct && (
+        <ProductDetail
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </>
+  )
+}
+```
+
+**Excepción:** Usar refs solo para casos de integración con APIs nativas que no se pueden controlar declarativamente (ej: `focus()`, `scrollIntoView()`).
+
+### Componentes Modales y Dialogs
+
+Para componentes tipo modal/dialog, seguir este patrón:
+
+1. **El padre controla el estado de visibilidad** (`useState` para el producto/dato seleccionado)
+2. **El padre renderiza condicionalmente con `&&`** (no pasar prop `open`/`isOpen`)
+3. **El componente hijo recibe solo datos y callbacks** (no maneja su propia visibilidad)
+4. **Usar `<dialog open>` sin refs** (el atributo `open` es estático, el renderizado es condicional)
+
+**Ejemplo completo:**
+
+```typescript
+// ❌ NO hacer esto (prop booleana de visibilidad)
+<ProductDetail product={product} isOpen={isOpen} onClose={...} />
+
+// ✅ Hacer esto (renderizado condicional en el padre)
+{selectedProduct && <ProductDetail product={selectedProduct} onClose={...} />}
+```
+
+**Beneficios:**
+- Componente hijo simple y sin estado interno
+- Padre tiene control total sobre la visibilidad
+- No requiere mocks en tests (no hay `showModal()` ni `close()`)
+- El dialog no está en el DOM cuando no se usa
+
+### Convenciones de Imports
+
+**Preferir imports absolutos desde `src` sobre imports relativos con `../`:**
+
+```typescript
+// ✅ Correcto - import absoluto desde src
+import { clickCategory, clickProduct } from 'test/helpers'
+import { ProductCard } from 'components/product-card'
+import { useProducts } from 'hooks/useProducts'
+import type { Product } from 'types'
+
+// ❌ Evitar - imports relativos con múltiples niveles
+import { clickCategory } from '../../../test/helpers'
+import { ProductCard } from '../../components/product-card'
+```
+
+**Beneficios:**
+- Código más limpio y legible
+- Fácil de mover archivos entre directorios sin romper imports
+- Más fácil de entender la estructura del proyecto
+- Evita errores por contar mal los niveles de `../`
+
+**Nota:** El proyecto tiene configurado el path alias para que `src` sea la raíz de imports absolutos.
+
+### Data Fetching
+- **Usar async/await** en lugar de Promise.then()
+- **No usar try/catch** si no vamos a manejar el error (código más limpio)
+- Ejemplo preferido:
+  ```typescript
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/api/data')
+      const data = await response.json()
+      setData(data)
+    }
+    fetchData()
+  }, [])
+  ```
+
+### Clases CSS Dinámicas
+- **Usar librería `classnames`** para manejar clases CSS con lógica condicional
+- **NO usar template literals** para clases dinámicas
+- Ejemplo:
+  ```typescript
+  // ✅ Correcto
+  import classNames from 'classnames'
+
+  className={classNames('product-card', {
+    'product-card--card': viewMode === 'card',
+    'product-card--list': viewMode === 'list',
+  })}
+
+  // ❌ Incorrecto
+  className={`product-card product-card--${viewMode}`}
+  ```
+
 ### Testing
-- Renderizar siempre `<App />` completo (no aislar componentes)
-- No usar `data-testid` → usar roles semánticos y queries accesibles
-- Crear helpers de testing (DSL) para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
-- Usar patrón **Object Mother** para fixtures de datos
+
+#### Filosofía: Tests agnósticos de implementación
+
+- **Los tests no deben saber sobre detalles de implementación:** No deben conocer sobre routers, providers, contexts, o estructura interna de componentes
+- **Un `<Link>` es un anchor para el test:** Se renderiza como `<a>` y se clickea normalmente, sin conocer que usa React Router
+- **`render(<App />)` debe funcionar tal cual:** NO crear custom renders con wrappers de Router/Context/Provider
+- **Simular comportamiento de usuario real:** Si el usuario hace click en un link, el test hace `user.click()`. Si el usuario abre una URL directamente, el test usa `window.history.pushState()`
+
+#### Prácticas de testing
+
+- **Renderizar siempre `<App />` completo** (no aislar componentes)
+- **No usar `data-testid`** → usar roles semánticos y queries accesibles
+- **NO usar `describe` cuando el test está en su propio archivo:** El nombre del archivo ya indica qué se testea (`CategoryDetail.test.tsx`). Solo usar `describe` cuando múltiples componentes/funciones se testean en un mismo archivo.
+- **Verificar ejemplos representativos, no todos los datos:**
+  - Verificar la cantidad total (ej: `expect(items).toHaveLength(3)`)
+  - Verificar 1-2 ejemplos representativos para confirmar el contenido
+  - NO verificar todos los items individualmente (no escala, frágil, acoplado a fixtures)
+  - Ejemplo:
+    ```typescript
+    expect(categories).toHaveLength(3)
+    expect(screen.getByText('Fruta y verdura')).toBeVisible() // Solo 1 ejemplo
+    ```
+- **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleViewMode()`, `clickProduct()`
+- **Helpers deben usar queries asíncronas cuando sea necesario:**
+  - **Usar `findBy*`** cuando el elemento puede no estar disponible inmediatamente (requiere fetch, renderizado tras operación asíncrona)
+  - **Usar `getBy*`** solo cuando el elemento ya está garantizado en el DOM
+  - Ejemplo:
+    ```typescript
+    // ✅ Correcto - espera a que el elemento aparezca
+    export const clickProduct = async (user: UserEvent, name: string) => {
+      const productCard = await screen.findByRole('article', { name })
+      await user.click(productCard)
+    }
+
+    // ❌ Incorrecto - falla si el elemento no está inmediatamente
+    export const clickProduct = async (user: UserEvent, name: string) => {
+      const productCard = screen.getByRole('article', { name })
+      await user.click(productCard)
+    }
+    ```
+- **Verificar datos de fixtures antes de escribir assertions:** Antes de escribir `expect(screen.getByText('2,00 €'))`, verificar el precio real en los datos de fixtures para evitar tests que fallan por datos incorrectos
+- **Usar patrón Object Mother** para fixtures de datos
+
+#### Simular navegación directa a URL
+
+Para testear que el usuario abre directamente una URL (ej: caso 404, deep links):
+
+```typescript
+it('should handle 404 for invalid URL', async () => {
+  // Simula que el usuario escribió la URL directamente en el navegador
+  window.history.pushState({}, '', '/categories/non-existent')
+
+  render(<App />)
+
+  expect(await screen.findByText(/not found/i)).toBeVisible()
+})
+```
+
+**NO usar custom wrappers con `MemoryRouter`** ni parámetros como `initialEntries` en el render. El test debe funcionar con la app real tal como la usa el usuario.
+
+### Testing Semántico y Accesibilidad
+- **Usar atributos ARIA para vincular elementos relacionados:**
+  - Usar `aria-labelledby` en componentes tipo card/article para vincular con su heading
+  - Esto mejora tanto la accesibilidad real como la testabilidad
+  - Ejemplo:
+    ```typescript
+    const headingId = `product-heading-${id}`
+    <article aria-labelledby={headingId}>
+      <h3 id={headingId}>{displayName}</h3>
+    </article>
+    ```
+- **Buscar elementos por su nombre accesible:**
+  - Usar `getByRole('article', { name: 'Nombre del producto' })` en lugar de `.closest('article')`
+  - NO acoplarse a la estructura HTML con selectores como `.closest()`
+  - Ejemplo:
+    ```typescript
+    const productCard = await screen.findByRole('article', {
+      name: 'Aceitunas verdes rellenas de anchoa Hacendado',
+    })
+    ```
+- **Usar `within` para verificar contenido en contexto específico:**
+  - **SIEMPRE usar `within`** cuando busques contenido que puede repetirse en múltiples elementos
+  - **Anticipar duplicados:** Antes de usar `getByText`, preguntarte "¿este texto/rol puede aparecer en múltiples lugares?"
+  - **Patrón estándar:**
+    ```typescript
+    const productCard = await screen.findByRole('article', { name: 'Producto X' })
+    expect(within(productCard).getByText('3,00 €')).toBeVisible()
+    expect(within(productCard).getByText(/Nutriscore: D/)).toBeVisible()
+    ```
+  - **NO usar** `getAllByText()[0]` como workaround
+  - **Cuándo aplicarlo:** Especialmente en listas de productos, categorías, o cualquier elemento que se repita en la página
+- **Evitar non-null assertions en tests:**
+  - NO usar `productCard!` - es difícil de leer
+  - Buscar elementos por queries semánticas que no requieran assertions
 
 ### Clean Code
 - **DRY (Don't Repeat Yourself)**: Evitar duplicación de código. Extraer componentes/CSS comunes cuando se detecte repetición (ej: Layout component para estilos de página)
-- Extraer custom hooks para lógica reutilizable
-- Componentes pequeños y enfocados
-- No crear helpers prematuros (esperar al refactor)
-- Preferir APIs nativas sobre librerías cuando sea posible
+- **Extraer custom hooks** para lógica reutilizable
+- **Componentes pequeños y enfocados**
+- **No crear helpers prematuros** (esperar al refactor)
+- **Preferir APIs nativas** sobre librerías cuando sea posible
+- **Comentarios solo cuando sean estrictamente necesarios:**
+  - El código debe ser auto-documentado
+  - Solo añadir comentarios cuando la lógica NO sea obvia
+  - Los tests bien escritos no necesitan comentarios
+  - Evitar comentarios que solo repiten lo que el código ya dice
+
+### Verificaciones Defensivas
+- **Ser consistente en verificaciones:** Aunque un campo sea obligatorio en el tipo TypeScript, verificarlo defensivamente en renderizado condicional para evitar errores en runtime
+- Si verificas un campo opcional, verifica también los obligatorios en el mismo contexto
+- Ejemplo:
+  ```typescript
+  // ✅ Correcto - ambos verificados consistentemente
+  {isListView && description && <p>{description}</p>}
+  {isListView && nutriscore && <span>{nutriscore}</span>}
+
+  // ❌ Inconsistente - verificar solo uno crea confusión
+  {isListView && description && <p>{description}</p>}
+  {isListView && <span>{nutriscore}</span>}
+  ```
 
 ### Refactoring
 - El refactor es una fase explícita del ciclo (Rojo-Verde-**Refactor**)
 - Solo refactorizar cuando los tests están en verde
 - Tests deben seguir pasando después del refactor
+- **NO preoptimizar:** Solo refactorizar cuando hay duplicación REAL o código sucio, nunca por anticipación
+- **Esperar a la duplicación:** Si una lógica solo existe en un lugar, no extraer hooks/helpers "por si acaso"
+- **Regla de tres:** Considera refactorizar cuando veas la misma lógica repetida 2-3 veces, no antes
+
+## Convenciones de Estructura y Organización
+
+### Nombres de Directorios
+
+**IMPORTANTE:** Los directorios de componentes y páginas usan **kebab-case**, NO PascalCase:
+
+- ✅ `src/components/product-card/`
+- ✅ `src/components/product-detail/`
+- ✅ `src/pages/category-detail/`
+- ❌ `src/components/ProductCard/` (incorrecto)
+- ❌ `src/components/ProductDetail/` (incorrecto)
+
+**Razón:** Consistencia con convenciones estándar y evitar problemas de case-sensitivity en diferentes sistemas operativos.
+
+### Colocation (co-ubicación)
+
+Cada componente debe vivir en su propio directorio junto con sus archivos relacionados:
+
+```
+src/components/product-card/
+├── ProductCard.tsx          # Componente (PascalCase)
+├── ProductCard.css          # Estilos
+├── ProductCard.test.tsx     # Tests (si los hay)
+└── index.ts                 # Barrel export
+```
+
+**Barrel export (`index.ts`):**
+```typescript
+export { ProductCard } from './ProductCard'
+```
+
+**Beneficios:**
+- Todos los archivos relacionados agrupados
+- Fácil localizar componente + estilos + tests
+- Import limpio: `import { ProductCard } from 'components/product-card'`
+- No necesitas especificar el archivo: el barrel export lo resuelve automáticamente
+
+### Uso de classnames
+
+**Usar librería `classnames`** para manejar clases CSS con lógica condicional:
+
+```typescript
+import classNames from 'classnames'
+
+// ✅ Correcto - uso de classnames para clases condicionales
+<NavLink
+  className={({ isActive }) =>
+    classNames('navigation__link', {
+      'navigation__link--active': isActive
+    })
+  }
+>
+
+// ❌ Evitar - template strings manuales
+className={`navigation__link${isActive ? ' navigation__link--active' : ''}`}
+```
 
 ## Estructura de Archivos Esperada
 
 ```
 src/
 ├── components/
-│   ├── Layout/
-│   ├── Navigation/
-│   ├── Toggle/
-│   ├── ProductCard/
-│   └── ProductDetail/
+│   ├── layout/
+│   │   ├── Layout.tsx
+│   │   ├── Layout.css
+│   │   └── index.ts
+│   ├── navigation/
+│   │   ├── Navigation.tsx
+│   │   ├── Navigation.css
+│   │   └── index.ts
+│   ├── toggle/
+│   │   ├── Toggle.tsx
+│   │   ├── Toggle.css
+│   │   └── index.ts
+│   ├── product-card/
+│   │   ├── ProductCard.tsx
+│   │   ├── ProductCard.css
+│   │   └── index.ts
+│   └── product-detail/
+│       ├── ProductDetail.tsx
+│       ├── ProductDetail.css
+│       └── index.ts
 ├── pages/
-│   ├── Home/
-│   ├── CategoryDetail/
-│   └── NotFound/
+│   ├── home/
+│   │   ├── Home.tsx
+│   │   ├── Home.css
+│   │   ├── __tests__/
+│   │   │   └── Home.test.tsx
+│   │   └── index.ts
+│   ├── category-detail/
+│   │   ├── CategoryDetail.tsx
+│   │   ├── CategoryDetail.css
+│   │   ├── __tests__/
+│   │   │   └── CategoryDetail.test.tsx
+│   │   └── index.ts
+│   └── not-found/
+│       ├── NotFound.tsx
+│       ├── NotFound.css
+│       ├── __tests__/
+│       │   └── NotFound.test.tsx
+│       └── index.ts
 ├── hooks/
 │   ├── useCategories.ts
 │   ├── useProducts.ts

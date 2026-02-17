@@ -165,14 +165,14 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 ## Fase P4: Cascade a `iteration-4-solution`
 
 ### P4.1 Merge cascade
-- [ ] `git checkout iteration-4-start && git merge iteration-3-solution`
-- [ ] Push iteration-4-start
-- [ ] `git checkout iteration-4-solution && git merge iteration-4-start`
+- [x] `git checkout iteration-4-start && git merge iteration-3-solution`
+- [x] Push iteration-4-start
+- [x] `git checkout iteration-4-solution && git merge iteration-4-start`
 
 ### P4.2 Verificación
-- [ ] `npm test` → todos los tests pasan
-- [ ] Nutriscore debería verse correctamente con el CSS pill (propagado desde master)
-- [ ] Commit y push si hubo merge
+- [x] `npm test` → todos los tests pasan
+- [x] Nutriscore debería verse correctamente con el CSS pill (propagado desde master)
+- [x] Commit y push si hubo merge
 
 **Nota:** No se requieren cambios de componentes en esta fase. El CSS del nutriscore ya se propagó desde master.
 

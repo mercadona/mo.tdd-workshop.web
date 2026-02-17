@@ -382,9 +382,13 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 - [x] `npm run typecheck` → OK
 - [x] `npm run lint` → OK (+ fix de formato)
 
-### 5.7 Retrospectiva ✅ PENDIENTE
-- [ ] Identificar aprendizajes y fricciones de la sesión
-- [ ] Actualizar CLAUDE.md con mejoras
+### 5.7 Retrospectiva ✅ COMPLETADO
+- [x] Identificar aprendizajes y fricciones de la sesión
+- [x] Actualizar CLAUDE.md con mejoras:
+  - Ampliar TDD Estricto con ejemplo de incrementalidad extrema (ciclo por ciclo)
+  - Nueva sección: Componentes Controlados (evitar refs y métodos imperativos)
+  - Nueva sección: Componentes Modales y Dialogs (patrón de renderizado condicional)
+  - Reforzar Refactoring: no preoptimizar, esperar duplicación real
 
 ---
 

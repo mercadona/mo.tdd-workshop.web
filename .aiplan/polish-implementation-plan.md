@@ -216,13 +216,35 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 ## Fase P6: Retrospectiva y verificación global
 
 ### P6.1 Verificación end-to-end
-- [ ] Recorrer TODAS las ramas `-solution` verificando tests + visual
+- [x] Recorrer TODAS las ramas `-solution` verificando tests + visual
+  - master: 2/2 tests ✓
+  - iteration-1-solution: 3/3 tests ✓
+  - iteration-2-solution: 3/3 tests ✓
+  - iteration-3-solution: 6/6 tests ✓
+  - iteration-4-solution: 9/9 tests ✓
+  - iteration-5-solution: 13/13 tests ✓
 - [ ] Recorrer TODAS las ramas `-start` verificando que NO contienen tests/código de su iteración
 
 ### P6.2 Retrospectiva
-- [ ] Identificar aprendizajes de la sesión
+- [x] Identificar aprendizajes de la sesión
 - [ ] Actualizar CLAUDE.md si procede
-- [ ] Actualizar polish-plan.md con checkboxes completados
+- [x] Actualizar polish-plan.md con checkboxes completados
+
+### Aprendizajes de la sesión
+
+1. **Uso de classnames package**: Ya está instalado en el proyecto, usar `classNames()` para clases condicionales en lugar de template strings manuales.
+
+2. **Dialog overlay con `<dialog open>`**: El atributo `open` no activa `::backdrop`, requiere div overlay manual. Opción alternativa sería `.showModal()` con refs, pero preferimos simplicidad.
+
+3. **Colocation y convenciones**: El proyecto usa kebab-case para directorios (`product-detail/`, no `ProductDetail/`). Los componentes deben vivir junto a sus CSS y barrel exports.
+
+4. **Estructura de directorios**:
+   - ✅ `src/components/product-detail/ProductDetail.tsx` + `ProductDetail.css` + `index.ts`
+   - ❌ `src/components/ProductDetail/ProductDetail.tsx` (PascalCase en directorios)
+
+5. **Merge conflicts resolution**: Los conflictos en Navigation.tsx y test files eran esperables. Resolver combinando ambas versiones lógicamente.
+
+6. **CSS propagation strategy**: Modificar CSS en master primero permite propagación limpia a todas las ramas mediante merge cascade.
 
 ---
 

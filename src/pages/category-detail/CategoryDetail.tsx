@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { ProductCard } from 'components/product-card'
-import { ProductDetail } from 'components/ProductDetail'
+import { ProductDetail } from 'components/product-detail'
 import { useCategoryWithProducts } from 'hooks/useCategoryWithProducts'
 import { useProductDialog } from 'hooks/useProductDialog'
 import './CategoryDetail.css'

@@ -181,13 +181,13 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 ## Fase P5: Cascade a `iteration-5-solution` + Fix Modal/Dialog
 
 ### P5.1 Merge cascade
-- [ ] `git checkout iteration-5-start && git merge iteration-4-solution`
-- [ ] Push iteration-5-start
-- [ ] `git checkout iteration-5-solution && git merge iteration-5-start`
+- [x] `git checkout iteration-5-start && git merge iteration-4-solution`
+- [x] Push iteration-5-start
+- [x] `git checkout iteration-5-solution && git merge iteration-5-start`
 
 ### P5.2 Fix ProductDetail: CSS import + overlay
-- [ ] Añadir import del CSS: `import 'components/product-detail/ProductDetail.css'`
-- [ ] Envolver dialog en overlay div:
+- [x] Añadir import del CSS: `import './ProductDetail.css'`
+- [x] Envolver dialog en overlay div:
   ```tsx
   <>
     <div className="product-detail__overlay" onClick={onClose} />
@@ -197,15 +197,19 @@ master (CSS puro) → merge cascade lineal por todas las ramas
   </>
   ```
   Esto mantiene el patrón de `<dialog open>` sin refs, y el overlay proporciona el fondo oscuro + centrado.
+- [x] Reorganizar estructura: mover ProductDetail.tsx e index.ts a product-detail/ (colocation)
 
 ### P5.3 Verificación final
-- [ ] `npm test` → 12/12 tests pasan (+ el nuevo de active = 13 total)
-- [ ] `npm run typecheck` + `npm run lint`
+- [x] `npm test` → 12/12 tests pasan (+ el nuevo de active = 13 total)
+- [x] `npm run typecheck` + `npm run lint`
 - [ ] `npm start` → verificación visual de TODAS las mejoras
-- [ ] Commit y push
+- [x] Commit y push
 
 **Archivos modificados:**
-- `src/components/ProductDetail/ProductDetail.tsx`
+- `src/components/product-detail/ProductDetail.tsx` (movido y actualizado)
+- `src/components/product-detail/index.ts` (movido)
+- `src/pages/home/Home.tsx` (imports actualizados)
+- `src/pages/category-detail/CategoryDetail.tsx` (imports actualizados)
 
 ---
 

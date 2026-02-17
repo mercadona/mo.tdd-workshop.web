@@ -1,5 +1,5 @@
 import { ProductCard } from 'components/product-card'
-import { ProductDetail } from 'components/ProductDetail'
+import { ProductDetail } from 'components/product-detail'
 import { useProducts } from 'hooks/useProducts'
 import { useProductDialog } from 'hooks/useProductDialog'
 import './Home.css'

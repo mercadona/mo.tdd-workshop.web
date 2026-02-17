@@ -341,9 +341,9 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 
 ---
 
-## Fase 5: Iteración 5 - Modal con `<dialog>` nativo ✅ COMPLETADO
+## Fase 5: Iteración 5 - Modal con `<dialog>` nativo 🚧 EN PROGRESO
 
-**Concepto:** Elemento `<dialog>` nativo controlado por estado del padre
+**Concepto:** Elemento `<dialog>` nativo controlado por estado del padre + refactor con custom hook
 **Ramas:** `iteration-5-start`, `iteration-5-solution`
 
 ### 5.0 Crear rama `iteration-5-start` ✅ COMPLETADO
@@ -389,6 +389,46 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
   - Nueva sección: Componentes Controlados (evitar refs y métodos imperativos)
   - Nueva sección: Componentes Modales y Dialogs (patrón de renderizado condicional)
   - Reforzar Refactoring: no preoptimizar, esperar duplicación real
+
+### 5.8 Implementar dialog en CategoryDetail — Ciclo TDD completo
+- [ ] **Tests (ROJO)** en `CategoryDetail.test.tsx`:
+  - Test: abrir dialog al hacer click en producto desde categoría
+  - Test: cerrar dialog desde categoría
+  - Reutilizar helpers `clickCategory()` y `clickProduct()`
+- [ ] **Implementación (VERDE)** en CategoryDetail:
+  - Duplicar lógica de Home: `selectedProduct` state, `handleProductClick`, `handleClose`
+  - Pasar `onClick` a ProductCard
+  - Renderizar ProductDetail condicionalmente
+- [ ] **Verificación:** Tests pasan (duplicación intencional, esperada)
+
+### 5.9 Refactor — Extraer custom hook (eliminar duplicación)
+- [ ] Crear `src/hooks/useProductDialog.ts`:
+  ```typescript
+  export const useProductDialog = () => {
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+
+    const handleProductClick = async (productId: number) => {
+      const response = await fetch(`/products/${productId}`)
+      const product = await response.json()
+      setSelectedProduct(product)
+    }
+
+    const handleClose = () => {
+      setSelectedProduct(null)
+    }
+
+    return { selectedProduct, handleProductClick, handleClose }
+  }
+  ```
+- [ ] Refactorizar Home para usar `useProductDialog()`
+- [ ] Refactorizar CategoryDetail para usar `useProductDialog()`
+- [ ] **Verificación:** Tests siguen en verde (sin duplicación)
+
+### 5.10 Verificación final completa
+- [ ] `npm test` → todos los tests pasan
+- [ ] `npm run typecheck` → OK
+- [ ] `npm run lint` → OK
+- [ ] Commit final y push
 
 ---
 

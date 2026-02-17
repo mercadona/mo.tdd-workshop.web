@@ -242,21 +242,21 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 
 ---
 
-## Fase 3: Iteración 3 - Navegación y routing + helpers DSL
+## Fase 3: Iteración 3 - Navegación y routing + helpers DSL ✅ COMPLETADO
 
 **Concepto:** React Router links, página de categoría, helpers de testing
 **Ramas:** `iteration-3-start`, `iteration-3-solution`
 
-### 3.0 Crear rama `iteration-3-start`
-- [ ] Desde iteration-2-solution
-- [ ] Push rama (snapshot limpio, sin tests ni implementación de esta iteración)
+### 3.0 Crear rama `iteration-3-start` ✅ COMPLETADO
+- [x] Desde iteration-2-solution
+- [x] Push rama (snapshot limpio, sin tests ni implementación de esta iteración)
 
-### 3.1 Crear handler MSW — solo en `iteration-3-solution`
-- [ ] `GET /categories/:slug` → devuelve categoría con sus productos
-- [ ] El handler debe devolver **404** para slugs que no coincidan con ninguna categoría
+### 3.1 Crear handler MSW — solo en `iteration-3-solution` ✅ COMPLETADO
+- [x] `GET /categories/:slug` → devuelve categoría con sus productos
+- [x] El handler debe devolver **404** para slugs que no coincidan con ninguna categoría
 
-### 3.2 Crear helpers de testing (DSL) — solo en `iteration-3-solution`
-- [ ] `src/test/helpers.ts`:
+### 3.2 Crear helpers de testing (DSL) — solo en `iteration-3-solution` ✅ COMPLETADO
+- [x] `src/test/helpers.ts`:
   ```typescript
   export const clickCategory = async (user: UserEvent, name: string) => {
     const link = screen.getByRole('link', { name })
@@ -264,49 +264,35 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
   }
   ```
 
-### 3.3 Tests (ROJO) — solo en `iteration-3-solution`
-- [ ] ```typescript
-  it('should navigate to the category page and display the category title', async () => {
-    render(<App />)
-    const user = userEvent.setup()
+### 3.3 Tests (ROJO) — solo en `iteration-3-solution` ✅ COMPLETADO
+- [x] Tests de navegación exitosa a categoría
+- [x] Test de caso 404 con mensaje de error
+- [x] Uso de helper `clickCategory()`
+- [x] Uso de `window.history.pushState()` para test de URL directa
 
-    // Esperar categorías
-    await screen.findByText('Frutas')
-
-    // Usar helper DSL
-    await clickCategory(user, 'Frutas')
-
-    // Verificar navegación
-    expect(await screen.findByRole('heading', { name: 'Frutas' })).toBeVisible()
-    // Verificar productos de la categoría
-  })
-
-  it('should display a not found message when the category does not exist', async () => {
-    render(<App />, { initialEntries: ['/categories/non-existent-slug'] })
-
-    expect(await screen.findByText(/no encontrada|not found/i)).toBeVisible()
-  })
-  ```
-
-### 3.4 Implementación (VERDE)
-- [ ] Convertir categorías en `<Link to={/categories/${slug}}>` en Home
-- [ ] Implementar `CategoryDetail.tsx`:
+### 3.4 Implementación (VERDE) ✅ COMPLETADO
+- [x] Convertir categorías en `<Link to={/categories/${slug}}>` en Navigation
+- [x] Implementar `CategoryDetail.tsx`:
   - Fetch de `/categories/:slug`
   - Muestra título + productos de esa categoría
   - Manejo del caso 404: mostrar mensaje "categoría no encontrada" cuando el slug no existe
-- [ ] Usar `useParams()` de React Router
+- [x] Usar `useParams()` de React Router
+- [x] Refactor arquitectónico: RootLayout con Outlet pattern
 
-### 3.5 Refactor
-- [ ] Extraer hooks si procede
-- [ ] CategoryMother en tests
-- [ ] Tests siguen en verde
+### 3.5 Refactor ✅ COMPLETADO
+- [x] Extraer hook `useCategoryWithProducts(slug)`
+- [x] CategoryMother en tests
+- [x] RootLayout con patrón Outlet para layouts compartidos
+- [x] Tests siguen en verde
 
-### 3.6 Crear rama solución
-- [ ] Commit todo el trabajo (handler + tests + implementación + refactor)
-- [ ] `git checkout -b iteration-3-solution` → Push
+### 3.6 Crear rama solución ✅ COMPLETADO
+- [x] Commit todo el trabajo (handler + tests + implementación + refactor)
+- [x] Push rama `iteration-3-solution`
 
-### 3.7 Verificación
-- [ ] Tests, typecheck, lint → OK
+### 3.7 Verificación ✅ COMPLETADO
+- [x] Tests (5/5 passing)
+- [x] Typecheck → OK
+- [x] Lint → OK
 
 ---
 

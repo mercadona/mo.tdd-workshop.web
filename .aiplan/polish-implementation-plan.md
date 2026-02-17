@@ -99,17 +99,17 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 ## Fase P2: Cascade a `iteration-2-solution` + Fix Home grid
 
 ### P2.1 Merge cascade
-- [ ] `git checkout iteration-2-start && git merge iteration-1-solution`
-- [ ] Push iteration-2-start
-- [ ] `git checkout iteration-2-solution && git merge iteration-2-start`
+- [x] `git checkout iteration-2-start && git merge iteration-1-solution`
+- [x] Push iteration-2-start
+- [x] `git checkout iteration-2-solution && git merge iteration-2-start`
 
 ### P2.2 Fix Home.tsx
-- [ ] Añadir `import './Home.css'`
-- [ ] Cambiar `className="products-grid"` a `className="home__products-grid"`
+- [x] Añadir `import './Home.css'`
+- [x] Cambiar `className="products-grid"` a `className="home__products-grid"`
 
 ### P2.3 Verificación
-- [ ] `npm test` → tests pasan
-- [ ] Commit y push
+- [x] `npm test` → tests pasan
+- [x] Commit y push
 
 **Archivos modificados:** `src/pages/home/Home.tsx`
 

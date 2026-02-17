@@ -30,3 +30,18 @@ it('should display a not found message when the category does not exist', async 
     await screen.findByText(/categoría no encontrada|category not found/i),
   ).toBeVisible()
 })
+
+it('should highlight the active category in the navigation', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  await screen.findByText('Fruta y verdura')
+
+  await clickCategory(user, 'Fruta y verdura')
+
+  const activeLink = screen.getByRole('link', {
+    name: 'Fruta y verdura',
+    current: 'page',
+  })
+  expect(activeLink).toBeVisible()
+})

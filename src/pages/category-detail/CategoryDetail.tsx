@@ -1,31 +1,11 @@
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ProductCard } from 'components/product-card'
-import type { Category, Product } from 'types'
+import { useCategoryWithProducts } from 'hooks/useCategoryWithProducts'
 import './CategoryDetail.css'
-
-type CategoryWithProducts = Category & { products: Product[] }
 
 export const CategoryDetail = () => {
   const { slug } = useParams<{ slug: string }>()
-  const [category, setCategory] = useState<CategoryWithProducts | null>(null)
-  const [notFound, setNotFound] = useState(false)
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      const response = await fetch(`/categories/${slug}`)
-
-      if (!response.ok) {
-        setNotFound(true)
-        return
-      }
-
-      const data = await response.json()
-      setCategory(data)
-    }
-
-    fetchCategory()
-  }, [slug])
+  const { category, notFound } = useCategoryWithProducts(slug)
 
   if (notFound) {
     return (

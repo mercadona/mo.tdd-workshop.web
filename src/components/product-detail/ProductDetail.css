@@ -1,15 +1,22 @@
+.product-detail__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
 .product-detail {
+  position: relative;
   border: none;
   border-radius: var(--border-radius-lg);
   padding: 0;
   max-width: 600px;
   width: 90vw;
   box-shadow: var(--shadow-lg);
-}
-
-.product-detail::backdrop {
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
 }
 
 .product-detail__header {

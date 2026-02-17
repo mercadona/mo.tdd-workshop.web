@@ -41,29 +41,29 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 > Solo CSS, sin cambios de componentes. Se propagan limpiamente a todas las ramas.
 
 ### P0.1 Header y Navigation CSS
-- [ ] `Navigation.css`: Cambiar fondo verde a blanco con sombra
+- [x] `Navigation.css`: Cambiar fondo verde a blanco con sombra
   - `background-color: var(--color-white)` + `border-bottom: 1px solid var(--color-border)` + `box-shadow: var(--shadow-sm)`
   - Título: `color: var(--color-primary)` (verde Mercadona para branding)
-- [ ] `Navigation.css`: Añadir estilos para links de categoría
+- [x] `Navigation.css`: Añadir estilos para links de categoría
   - `.navigation__list` (flex row, gap, align-items)
   - `.navigation__list-item` (inline)
   - `.navigation__link` (pill style, border, hover, transition)
   - `.navigation__link--active` (fondo primario, texto blanco)
 
 ### P0.2 Nutriscore CSS
-- [ ] `ProductCard.css`: Cambiar `.product-card__nutriscore` de 28x28 square a pill auto-width
+- [x] `ProductCard.css`: Cambiar `.product-card__nutriscore` de 28x28 square a pill auto-width
   - `width: auto; height: auto; padding: var(--spacing-xs) var(--spacing-sm);`
   - Así "Nutriscore: D" se lee bien sin cambiar tests
 
 ### P0.3 ProductDetail overlay CSS
-- [ ] `ProductDetail.css`: Reemplazar `::backdrop` (código muerto) con `.product-detail__overlay`
+- [x] `ProductDetail.css`: Reemplazar `::backdrop` (código muerto) con `.product-detail__overlay`
   - `.product-detail__overlay`: `position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000;`
   - `.product-detail`: `position: relative;` (centrado por overlay, sin fixed propio)
 
 ### P0.4 Verificación
-- [ ] `npm test` en master (tests existentes siguen pasando)
-- [ ] `npm run typecheck` + `npm run lint`
-- [ ] Commit y push
+- [x] `npm test` en master (tests existentes siguen pasando)
+- [x] `npm run typecheck` + `npm run lint`
+- [x] Commit y push
 
 **Archivos modificados:**
 - `src/components/navigation/Navigation.css`

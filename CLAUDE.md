@@ -212,6 +212,23 @@ iteration-5-solution
   }, [])
   ```
 
+### Clases CSS Dinámicas
+- **Usar librería `classnames`** para manejar clases CSS con lógica condicional
+- **NO usar template literals** para clases dinámicas
+- Ejemplo:
+  ```typescript
+  // ✅ Correcto
+  import classNames from 'classnames'
+
+  className={classNames('product-card', {
+    'product-card--card': viewMode === 'card',
+    'product-card--list': viewMode === 'list',
+  })}
+
+  // ❌ Incorrecto
+  className={`product-card product-card--${viewMode}`}
+  ```
+
 ### Testing
 
 #### Filosofía: Tests agnósticos de implementación
@@ -276,13 +293,16 @@ it('should handle 404 for invalid URL', async () => {
     })
     ```
 - **Usar `within` para verificar contenido en contexto específico:**
-  - Cuando hay múltiples elementos con el mismo texto, usar `within` para especificar contexto
-  - NO usar `getAllByText()[0]` como workaround
-  - Ejemplo:
+  - **SIEMPRE usar `within`** cuando busques contenido que puede repetirse en múltiples elementos
+  - **Anticipar duplicados:** Antes de usar `getByText`, preguntarte "¿este texto/rol puede aparecer en múltiples lugares?"
+  - **Patrón estándar:**
     ```typescript
     const productCard = await screen.findByRole('article', { name: 'Producto X' })
     expect(within(productCard).getByText('3,00 €')).toBeVisible()
+    expect(within(productCard).getByText(/Nutriscore: D/)).toBeVisible()
     ```
+  - **NO usar** `getAllByText()[0]` como workaround
+  - **Cuándo aplicarlo:** Especialmente en listas de productos, categorías, o cualquier elemento que se repita en la página
 - **Evitar non-null assertions en tests:**
   - NO usar `productCard!` - es difícil de leer
   - Buscar elementos por queries semánticas que no requieran assertions
@@ -298,6 +318,20 @@ it('should handle 404 for invalid URL', async () => {
   - Solo añadir comentarios cuando la lógica NO sea obvia
   - Los tests bien escritos no necesitan comentarios
   - Evitar comentarios que solo repiten lo que el código ya dice
+
+### Verificaciones Defensivas
+- **Ser consistente en verificaciones:** Aunque un campo sea obligatorio en el tipo TypeScript, verificarlo defensivamente en renderizado condicional para evitar errores en runtime
+- Si verificas un campo opcional, verifica también los obligatorios en el mismo contexto
+- Ejemplo:
+  ```typescript
+  // ✅ Correcto - ambos verificados consistentemente
+  {isListView && description && <p>{description}</p>}
+  {isListView && nutriscore && <span>{nutriscore}</span>}
+
+  // ❌ Inconsistente - verificar solo uno crea confusión
+  {isListView && description && <p>{description}</p>}
+  {isListView && <span>{nutriscore}</span>}
+  ```
 
 ### Refactoring
 - El refactor es una fase explícita del ciclo (Rojo-Verde-**Refactor**)

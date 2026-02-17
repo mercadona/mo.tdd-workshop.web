@@ -118,15 +118,15 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 ## Fase P3: Cascade a `iteration-3-solution` + Fix CategoryDetail + Active Nav
 
 ### P3.1 Merge cascade
-- [ ] `git checkout iteration-3-start && git merge iteration-2-solution`
-- [ ] Push iteration-3-start
-- [ ] `git checkout iteration-3-solution && git merge iteration-3-start`
+- [x] `git checkout iteration-3-start && git merge iteration-2-solution`
+- [x] Push iteration-3-start
+- [x] `git checkout iteration-3-solution && git merge iteration-3-start`
 
 ### P3.2 Fix CategoryDetail grid
-- [ ] `CategoryDetail.tsx`: Cambiar `className="category-detail__products"` a `className="category-detail__products-grid"`
+- [x] `CategoryDetail.tsx`: Cambiar `className="category-detail__products"` a `className="category-detail__products-grid"`
 
 ### P3.3 Active category indicator (TDD)
-- [ ] **Test (ROJO)** en `CategoryDetail.test.tsx`:
+- [x] **Test (ROJO)** en `CategoryDetail.test.tsx`:
   ```typescript
   it('should highlight the active category in the navigation', async () => {
     const user = userEvent.setup()
@@ -137,7 +137,7 @@ master (CSS puro) → merge cascade lineal por todas las ramas
     expect(activeLink).toBeVisible()
   })
   ```
-- [ ] **Implementación (VERDE)** en `Navigation.tsx`:
+- [x] **Implementación (VERDE)** en `Navigation.tsx`:
   - Reemplazar `<Link>` por `<NavLink>` de react-router-dom
   - Usar función de className para aplicar `navigation__link--active`:
     ```tsx
@@ -151,9 +151,9 @@ master (CSS puro) → merge cascade lineal por todas las ramas
   - `NavLink` añade `aria-current="page"` automáticamente cuando está activo
 
 ### P3.4 Verificación
-- [ ] `npm test` → todos los tests pasan (incluido el nuevo)
-- [ ] `npm run typecheck` + `npm run lint`
-- [ ] Commit y push
+- [x] `npm test` → todos los tests pasan (incluido el nuevo)
+- [x] `npm run typecheck` + `npm run lint`
+- [x] Commit y push
 
 **Archivos modificados:**
 - `src/pages/category-detail/CategoryDetail.tsx`

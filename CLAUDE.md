@@ -195,7 +195,154 @@ iteration-5-solution
 
 **Regla de oro:** Si no hay un test rojo que lo requiera, no lo implementes todavía.
 
+### Ejemplo de incrementalidad extrema
+
+Cuando implementes un componente, hazlo en ciclos estrictos:
+
+**❌ Incorrecto** (implementar todo de una vez):
+```typescript
+// Implementar el componente completo con todas las props desde el inicio
+export const ProductDetail = ({ product, onClose }: Props) => {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (product) dialogRef.current?.showModal()
+  }, [product])
+
+  const handleClose = () => {
+    dialogRef.current?.close()
+    onClose()
+  }
+
+  return <dialog ref={dialogRef}>...</dialog>
+}
+```
+
+**✅ Correcto** (ciclo por ciclo):
+
+**Ciclo 1** - Test: "should show product details"
+```typescript
+// Implementar SOLO lo que pide el test: mostrar datos
+export const ProductDetail = ({ product }: Props) => {
+  return (
+    <dialog open>
+      <h2>{product.displayName}</h2>
+      <p>{product.price}</p>
+    </dialog>
+  )
+}
+```
+
+**Ciclo 2** - Test: "should close dialog when clicking button"
+```typescript
+// AHORA añadir el callback onClose que el segundo test requiere
+export const ProductDetail = ({ product, onClose }: Props) => {
+  return (
+    <dialog open>
+      <button onClick={onClose}>Cerrar</button>
+      <h2>{product.displayName}</h2>
+      <p>{product.price}</p>
+    </dialog>
+  )
+}
+```
+
+**NO añadir props, callbacks o lógica que "vas a necesitar luego"**. Espera a que un test lo requiera.
+
 ## Prácticas de Código
+
+### Componentes Controlados
+
+**Principio:** Los componentes deben ser controlados por el padre mediante estado/props, evitando refs y métodos imperativos.
+
+**❌ Evitar refs y métodos imperativos:**
+```typescript
+// NO hacer esto
+const dialogRef = useRef<HTMLDialogElement>(null)
+dialogRef.current?.showModal()
+dialogRef.current?.close()
+```
+
+**✅ Estado declarativo controlado por el padre:**
+```typescript
+// El componente hijo es simple y controlado
+export const ProductDetail = ({ product, onClose }: Props) => {
+  return (
+    <dialog open>
+      <button onClick={onClose}>Cerrar</button>
+      {/* contenido */}
+    </dialog>
+  )
+}
+
+// El padre controla el estado y el renderizado
+const Parent = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+
+  return (
+    <>
+      {/* Renderizado condicional con && */}
+      {selectedProduct && (
+        <ProductDetail
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </>
+  )
+}
+```
+
+**Excepción:** Usar refs solo para casos de integración con APIs nativas que no se pueden controlar declarativamente (ej: `focus()`, `scrollIntoView()`).
+
+### Componentes Modales y Dialogs
+
+Para componentes tipo modal/dialog, seguir este patrón:
+
+1. **El padre controla el estado de visibilidad** (`useState` para el producto/dato seleccionado)
+2. **El padre renderiza condicionalmente con `&&`** (no pasar prop `open`/`isOpen`)
+3. **El componente hijo recibe solo datos y callbacks** (no maneja su propia visibilidad)
+4. **Usar `<dialog open>` sin refs** (el atributo `open` es estático, el renderizado es condicional)
+
+**Ejemplo completo:**
+
+```typescript
+// ❌ NO hacer esto (prop booleana de visibilidad)
+<ProductDetail product={product} isOpen={isOpen} onClose={...} />
+
+// ✅ Hacer esto (renderizado condicional en el padre)
+{selectedProduct && <ProductDetail product={selectedProduct} onClose={...} />}
+```
+
+**Beneficios:**
+- Componente hijo simple y sin estado interno
+- Padre tiene control total sobre la visibilidad
+- No requiere mocks en tests (no hay `showModal()` ni `close()`)
+- El dialog no está en el DOM cuando no se usa
+
+### Convenciones de Imports
+
+**Preferir imports absolutos desde `src` sobre imports relativos con `../`:**
+
+```typescript
+// ✅ Correcto - import absoluto desde src
+import { clickCategory, clickProduct } from 'test/helpers'
+import { ProductCard } from 'components/product-card'
+import { useProducts } from 'hooks/useProducts'
+import type { Product } from 'types'
+
+// ❌ Evitar - imports relativos con múltiples niveles
+import { clickCategory } from '../../../test/helpers'
+import { ProductCard } from '../../components/product-card'
+```
+
+**Beneficios:**
+- Código más limpio y legible
+- Fácil de mover archivos entre directorios sin romper imports
+- Más fácil de entender la estructura del proyecto
+- Evita errores por contar mal los niveles de `../`
+
+**Nota:** El proyecto tiene configurado el path alias para que `src` sea la raíz de imports absolutos.
 
 ### Data Fetching
 - **Usar async/await** en lugar de Promise.then()
@@ -252,7 +399,25 @@ iteration-5-solution
     expect(categories).toHaveLength(3)
     expect(screen.getByText('Fruta y verdura')).toBeVisible() // Solo 1 ejemplo
     ```
-- **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
+- **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleViewMode()`, `clickProduct()`
+- **Helpers deben usar queries asíncronas cuando sea necesario:**
+  - **Usar `findBy*`** cuando el elemento puede no estar disponible inmediatamente (requiere fetch, renderizado tras operación asíncrona)
+  - **Usar `getBy*`** solo cuando el elemento ya está garantizado en el DOM
+  - Ejemplo:
+    ```typescript
+    // ✅ Correcto - espera a que el elemento aparezca
+    export const clickProduct = async (user: UserEvent, name: string) => {
+      const productCard = await screen.findByRole('article', { name })
+      await user.click(productCard)
+    }
+
+    // ❌ Incorrecto - falla si el elemento no está inmediatamente
+    export const clickProduct = async (user: UserEvent, name: string) => {
+      const productCard = screen.getByRole('article', { name })
+      await user.click(productCard)
+    }
+    ```
+- **Verificar datos de fixtures antes de escribir assertions:** Antes de escribir `expect(screen.getByText('2,00 €'))`, verificar el precio real en los datos de fixtures para evitar tests que fallan por datos incorrectos
 - **Usar patrón Object Mother** para fixtures de datos
 
 #### Simular navegación directa a URL
@@ -337,21 +502,111 @@ it('should handle 404 for invalid URL', async () => {
 - El refactor es una fase explícita del ciclo (Rojo-Verde-**Refactor**)
 - Solo refactorizar cuando los tests están en verde
 - Tests deben seguir pasando después del refactor
+- **NO preoptimizar:** Solo refactorizar cuando hay duplicación REAL o código sucio, nunca por anticipación
+- **Esperar a la duplicación:** Si una lógica solo existe en un lugar, no extraer hooks/helpers "por si acaso"
+- **Regla de tres:** Considera refactorizar cuando veas la misma lógica repetida 2-3 veces, no antes
+
+## Convenciones de Estructura y Organización
+
+### Nombres de Directorios
+
+**IMPORTANTE:** Los directorios de componentes y páginas usan **kebab-case**, NO PascalCase:
+
+- ✅ `src/components/product-card/`
+- ✅ `src/components/product-detail/`
+- ✅ `src/pages/category-detail/`
+- ❌ `src/components/ProductCard/` (incorrecto)
+- ❌ `src/components/ProductDetail/` (incorrecto)
+
+**Razón:** Consistencia con convenciones estándar y evitar problemas de case-sensitivity en diferentes sistemas operativos.
+
+### Colocation (co-ubicación)
+
+Cada componente debe vivir en su propio directorio junto con sus archivos relacionados:
+
+```
+src/components/product-card/
+├── ProductCard.tsx          # Componente (PascalCase)
+├── ProductCard.css          # Estilos
+├── ProductCard.test.tsx     # Tests (si los hay)
+└── index.ts                 # Barrel export
+```
+
+**Barrel export (`index.ts`):**
+```typescript
+export { ProductCard } from './ProductCard'
+```
+
+**Beneficios:**
+- Todos los archivos relacionados agrupados
+- Fácil localizar componente + estilos + tests
+- Import limpio: `import { ProductCard } from 'components/product-card'`
+- No necesitas especificar el archivo: el barrel export lo resuelve automáticamente
+
+### Uso de classnames
+
+**Usar librería `classnames`** para manejar clases CSS con lógica condicional:
+
+```typescript
+import classNames from 'classnames'
+
+// ✅ Correcto - uso de classnames para clases condicionales
+<NavLink
+  className={({ isActive }) =>
+    classNames('navigation__link', {
+      'navigation__link--active': isActive
+    })
+  }
+>
+
+// ❌ Evitar - template strings manuales
+className={`navigation__link${isActive ? ' navigation__link--active' : ''}`}
+```
 
 ## Estructura de Archivos Esperada
 
 ```
 src/
 ├── components/
-│   ├── Layout/
-│   ├── Navigation/
-│   ├── Toggle/
-│   ├── ProductCard/
-│   └── ProductDetail/
+│   ├── layout/
+│   │   ├── Layout.tsx
+│   │   ├── Layout.css
+│   │   └── index.ts
+│   ├── navigation/
+│   │   ├── Navigation.tsx
+│   │   ├── Navigation.css
+│   │   └── index.ts
+│   ├── toggle/
+│   │   ├── Toggle.tsx
+│   │   ├── Toggle.css
+│   │   └── index.ts
+│   ├── product-card/
+│   │   ├── ProductCard.tsx
+│   │   ├── ProductCard.css
+│   │   └── index.ts
+│   └── product-detail/
+│       ├── ProductDetail.tsx
+│       ├── ProductDetail.css
+│       └── index.ts
 ├── pages/
-│   ├── Home/
-│   ├── CategoryDetail/
-│   └── NotFound/
+│   ├── home/
+│   │   ├── Home.tsx
+│   │   ├── Home.css
+│   │   ├── __tests__/
+│   │   │   └── Home.test.tsx
+│   │   └── index.ts
+│   ├── category-detail/
+│   │   ├── CategoryDetail.tsx
+│   │   ├── CategoryDetail.css
+│   │   ├── __tests__/
+│   │   │   └── CategoryDetail.test.tsx
+│   │   └── index.ts
+│   └── not-found/
+│       ├── NotFound.tsx
+│       ├── NotFound.css
+│       ├── __tests__/
+│       │   └── NotFound.test.tsx
+│       └── index.ts
 ├── hooks/
 │   ├── useCategories.ts
 │   ├── useProducts.ts

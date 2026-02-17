@@ -506,20 +506,107 @@ it('should handle 404 for invalid URL', async () => {
 - **Esperar a la duplicación:** Si una lógica solo existe en un lugar, no extraer hooks/helpers "por si acaso"
 - **Regla de tres:** Considera refactorizar cuando veas la misma lógica repetida 2-3 veces, no antes
 
+## Convenciones de Estructura y Organización
+
+### Nombres de Directorios
+
+**IMPORTANTE:** Los directorios de componentes y páginas usan **kebab-case**, NO PascalCase:
+
+- ✅ `src/components/product-card/`
+- ✅ `src/components/product-detail/`
+- ✅ `src/pages/category-detail/`
+- ❌ `src/components/ProductCard/` (incorrecto)
+- ❌ `src/components/ProductDetail/` (incorrecto)
+
+**Razón:** Consistencia con convenciones estándar y evitar problemas de case-sensitivity en diferentes sistemas operativos.
+
+### Colocation (co-ubicación)
+
+Cada componente debe vivir en su propio directorio junto con sus archivos relacionados:
+
+```
+src/components/product-card/
+├── ProductCard.tsx          # Componente (PascalCase)
+├── ProductCard.css          # Estilos
+├── ProductCard.test.tsx     # Tests (si los hay)
+└── index.ts                 # Barrel export
+```
+
+**Barrel export (`index.ts`):**
+```typescript
+export { ProductCard } from './ProductCard'
+```
+
+**Beneficios:**
+- Todos los archivos relacionados agrupados
+- Fácil localizar componente + estilos + tests
+- Import limpio: `import { ProductCard } from 'components/product-card'`
+- No necesitas especificar el archivo: el barrel export lo resuelve automáticamente
+
+### Uso de classnames
+
+**Usar librería `classnames`** para manejar clases CSS con lógica condicional:
+
+```typescript
+import classNames from 'classnames'
+
+// ✅ Correcto - uso de classnames para clases condicionales
+<NavLink
+  className={({ isActive }) =>
+    classNames('navigation__link', {
+      'navigation__link--active': isActive
+    })
+  }
+>
+
+// ❌ Evitar - template strings manuales
+className={`navigation__link${isActive ? ' navigation__link--active' : ''}`}
+```
+
 ## Estructura de Archivos Esperada
 
 ```
 src/
 ├── components/
-│   ├── Layout/
-│   ├── Navigation/
-│   ├── Toggle/
-│   ├── ProductCard/
-│   └── ProductDetail/
+│   ├── layout/
+│   │   ├── Layout.tsx
+│   │   ├── Layout.css
+│   │   └── index.ts
+│   ├── navigation/
+│   │   ├── Navigation.tsx
+│   │   ├── Navigation.css
+│   │   └── index.ts
+│   ├── toggle/
+│   │   ├── Toggle.tsx
+│   │   ├── Toggle.css
+│   │   └── index.ts
+│   ├── product-card/
+│   │   ├── ProductCard.tsx
+│   │   ├── ProductCard.css
+│   │   └── index.ts
+│   └── product-detail/
+│       ├── ProductDetail.tsx
+│       ├── ProductDetail.css
+│       └── index.ts
 ├── pages/
-│   ├── Home/
-│   ├── CategoryDetail/
-│   └── NotFound/
+│   ├── home/
+│   │   ├── Home.tsx
+│   │   ├── Home.css
+│   │   ├── __tests__/
+│   │   │   └── Home.test.tsx
+│   │   └── index.ts
+│   ├── category-detail/
+│   │   ├── CategoryDetail.tsx
+│   │   ├── CategoryDetail.css
+│   │   ├── __tests__/
+│   │   │   └── CategoryDetail.test.tsx
+│   │   └── index.ts
+│   └── not-found/
+│       ├── NotFound.tsx
+│       ├── NotFound.css
+│       ├── __tests__/
+│       │   └── NotFound.test.tsx
+│       └── index.ts
 ├── hooks/
 │   ├── useCategories.ts
 │   ├── useProducts.ts

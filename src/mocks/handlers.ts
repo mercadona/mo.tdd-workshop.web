@@ -29,4 +29,16 @@ export const handlers = [
       products: categoryProducts,
     })
   }),
+  http.get('/products/:id', ({ params }) => {
+    const { id } = params
+    const product = (productsFixtures as Product[]).find(
+      (product) => product.id === Number(id),
+    )
+
+    if (!product) {
+      return new HttpResponse(null, { status: 404 })
+    }
+
+    return HttpResponse.json(product)
+  }),
 ]

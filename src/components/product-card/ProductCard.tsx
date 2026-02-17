@@ -6,6 +6,7 @@ import './ProductCard.css'
 
 interface ProductCardProps {
   product: Product
+  onClick?: () => void
 }
 
 const formatPrice = (price: number): string => {
@@ -15,7 +16,7 @@ const formatPrice = (price: number): string => {
   }).format(price)
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   const { id, displayName, price, image, nutriscore, description } = product
   const { viewMode } = useViewMode()
   const headingId = `product-heading-${id}`
@@ -28,6 +29,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         'product-card--list': viewMode === 'list',
       })}
       aria-labelledby={headingId}
+      onClick={onClick}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
       <div className="product-card__image-wrapper">
         <img className="product-card__image" src={image} alt={displayName} />

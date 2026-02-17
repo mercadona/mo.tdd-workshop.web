@@ -2,7 +2,7 @@ import { screen, render, within } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
 import { App } from 'app'
-import { toggleViewMode } from 'test/helpers'
+import { clickProduct, toggleViewMode } from 'test/helpers'
 
 it('should render the list of categories in the navigation', async () => {
   render(<App />)
@@ -84,4 +84,32 @@ it('should hide product descriptions and nutriscore when switching back to card 
   expect(
     within(productCard).queryByText(/Nutriscore: D/),
   ).not.toBeInTheDocument()
+})
+
+it('should open a dialog with product details when clicking a product', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  await clickProduct(user, 'Aceitunas verdes rellenas de anchoa Hacendado')
+
+  const dialog = await screen.findByRole('dialog')
+  expect(dialog).toBeVisible()
+  expect(
+    within(dialog).getByText('Aceitunas verdes rellenas de anchoa Hacendado'),
+  ).toBeVisible()
+  expect(within(dialog).getByText('3,00 €')).toBeVisible()
+})
+
+it('should close the dialog when clicking close button', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  await clickProduct(user, 'Aceitunas verdes rellenas de anchoa Hacendado')
+
+  await screen.findByRole('dialog')
+
+  const closeButton = screen.getByRole('button', { name: /cerrar/i })
+  await user.click(closeButton)
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 })

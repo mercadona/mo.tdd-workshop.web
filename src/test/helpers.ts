@@ -10,3 +10,8 @@ export const toggleViewMode = async (user: UserEvent) => {
   const toggle = screen.getByRole('switch')
   await user.click(toggle)
 }
+
+export const clickProduct = async (user: UserEvent, name: string) => {
+  const productCard = await screen.findByRole('article', { name })
+  await user.click(productCard)
+}

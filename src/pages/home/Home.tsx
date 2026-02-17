@@ -2,6 +2,7 @@ import { ProductCard } from 'components/product-card'
 import { ProductDetail } from 'components/ProductDetail'
 import { useProducts } from 'hooks/useProducts'
 import { useProductDialog } from 'hooks/useProductDialog'
+import './Home.css'
 
 const Home = () => {
   const { products } = useProducts()
@@ -10,7 +11,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="products-grid">
+      <div className="home__products-grid">
         {products.map((product) => (
           <ProductCard
             key={product.id}

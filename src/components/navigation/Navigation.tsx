@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import classNames from 'classnames'
 import { useCategories } from 'hooks/useCategories'
 import './Navigation.css'
 
@@ -9,12 +10,19 @@ export const Navigation = () => {
     <nav className="navigation">
       <div className="navigation__container">
         <h1 className="navigation__title">TDD Workshop</h1>
-        <ul>
+        <ul className="navigation__list">
           {categories.map((category) => (
-            <li key={category.id}>
-              <Link to={`/categories/${category.slug}`}>
+            <li key={category.id} className="navigation__list-item">
+              <NavLink
+                to={`/categories/${category.slug}`}
+                className={({ isActive }) =>
+                  classNames('navigation__link', {
+                    'navigation__link--active': isActive,
+                  })
+                }
+              >
                 {category.displayName}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

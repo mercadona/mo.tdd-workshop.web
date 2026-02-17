@@ -28,7 +28,7 @@ export const CategoryDetail = () => {
       <div className="category-detail__header">
         <h1 className="category-detail__title">{category.displayName}</h1>
       </div>
-      <div className="category-detail__products">
+      <div className="category-detail__products-grid">
         {category.products.map((product) => (
           <ProductCard
             key={product.id}

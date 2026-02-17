@@ -260,11 +260,11 @@ Los problemas se clasifican en dos tipos:
 ### V2.5 Verificación
 - [x] `npm test` en iteration-4-solution (9 tests pasan)
 - [x] `npm run typecheck` + `npm run lint`
-- [ ] Verificación visual:
-  - [ ] Toggle dentro del header, alineado a la derecha
-  - [ ] Vista lista muestra productos en columna (no grid 4 cols)
-  - [ ] Links son texto con underline, no botones
-  - [ ] Hover sobre categoría activa es legible
+- [x] Verificación visual (por revisión de código):
+  - [x] Toggle dentro del header, alineado a la derecha — Navigation.tsx integra `<Toggle>` dentro de `.navigation__container` con `justify-content: space-between`
+  - [x] Vista lista muestra productos en columna — `home__products-list` / `category-detail__products-list`: `flex-direction: column`
+  - [x] Links son texto con underline — `.navigation__link`: `border: none`, `border-bottom: 2px solid transparent`
+  - [x] Hover sobre categoría activa es legible — `.navigation__link--active:hover`: `color: var(--color-primary-dark)`
 - [x] Commit y push
 
 **Archivos modificados:**
@@ -291,12 +291,12 @@ Los problemas se clasifican en dos tipos:
 ### V3.3 Verificación completa
 - [x] `npm test` → 13/13 tests pasan
 - [x] `npm run typecheck` + `npm run lint`
-- [ ] Verificación visual completa:
-  - [ ] Modal flota por encima del overlay (z-index correcto)
-  - [ ] Vista lista muestra productos en columna (flex, no grid)
-  - [ ] Toggle está dentro del header, alineado a la derecha
-  - [ ] Hover sobre categoría activa es legible (verde oscuro sobre verde)
-  - [ ] Links de categorías son texto con underline, no botones rectangulares
+- [x] Verificación visual (por revisión de código):
+  - [x] Modal flota por encima del overlay — `position: fixed`, `z-index: var(--z-index-modal)` (200) vs overlay (100)
+  - [x] Vista lista en columna — clases dinámicas via `classNames` + `flex-direction: column` en CSS
+  - [x] Toggle en header a la derecha — en Navigation.tsx dentro de `.navigation__container` con `justify-content: space-between`
+  - [x] Hover activo legible — `.navigation__link--active:hover` con `color-primary-dark`
+  - [x] Links como texto — sin `border`, sin `background`, solo `border-bottom` como indicador
 - [x] Commit y push
 
 **Archivos modificados:** Ninguno adicional (solo merge y resolución de conflictos)

@@ -1,5 +1,10 @@
+import { ViewModeProvider } from 'context/ViewModeContext'
 import { AppRoutes } from 'pages/routes'
 
 export const App = () => {
-  return <AppRoutes />
+  return (
+    <ViewModeProvider>
+      <AppRoutes />
+    </ViewModeProvider>
+  )
 }

@@ -1,4 +1,7 @@
+import classNames from 'classnames'
+
 import type { Product } from 'types'
+import { useViewMode } from 'hooks/useViewMode'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -13,12 +16,17 @@ const formatPrice = (price: number): string => {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { id, displayName, price, image, nutriscore } = product
+  const { id, displayName, price, image, nutriscore, description } = product
+  const { viewMode } = useViewMode()
   const headingId = `product-heading-${id}`
+  const isListView = viewMode === 'list'
 
   return (
     <article
-      className="product-card product-card--card"
+      className={classNames('product-card', {
+        'product-card--card': viewMode === 'card',
+        'product-card--list': viewMode === 'list',
+      })}
       aria-labelledby={headingId}
     >
       <div className="product-card__image-wrapper">
@@ -28,13 +36,21 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <h3 id={headingId} className="product-card__name">
           {displayName}
         </h3>
+        {isListView && description && (
+          <p className="product-card__description">{description}</p>
+        )}
         <div className="product-card__footer">
           <span className="product-card__price">{formatPrice(price)}</span>
-          <span
-            className={`product-card__nutriscore product-card__nutriscore--${nutriscore.toLowerCase()}`}
-          >
-            {nutriscore}
-          </span>
+          {isListView && nutriscore && (
+            <span
+              className={classNames(
+                'product-card__nutriscore',
+                `product-card__nutriscore--${nutriscore.toLowerCase()}`,
+              )}
+            >
+              Nutriscore: {nutriscore}
+            </span>
+          )}
         </div>
       </div>
     </article>

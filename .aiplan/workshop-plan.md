@@ -301,55 +301,34 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 **Concepto:** Context API, testing user-oriented (NO implementation details)
 **Ramas:** `iteration-4-start`, `iteration-4-solution`
 
-### 4.0 Crear rama `iteration-4-start`
-- [ ] Desde iteration-3-solution
-- [ ] Push rama (snapshot limpio, sin tests ni implementación de esta iteración)
+### 4.0 Crear rama `iteration-4-start` ✅ COMPLETADO
+- [x] Desde iteration-3-solution
+- [x] Push rama (snapshot limpio, sin tests ni implementación de esta iteración)
 
-### 4.1 Crear helper de testing — solo en `iteration-4-solution`
-- [ ] `toggleViewMode()` en `src/test/helpers.ts`
+### 4.1 Crear helper de testing — solo en `iteration-4-solution` ✅ COMPLETADO
+- [x] `toggleViewMode()` en `src/test/helpers.ts`
 
-### 4.2 Tests (ROJO) — User-oriented — solo en `iteration-4-solution`
-- [ ] ```typescript
-  it('should display product descriptions when switching to list view', async () => {
-    render(<App />)
-    const user = userEvent.setup()
+### 4.2 Tests (ROJO) — User-oriented — solo en `iteration-4-solution` ✅ COMPLETADO
+- [x] Tests creados verificando comportamiento visible al usuario
+- [x] Inicialmente (modo Card): NO hay descripciones ni nutriscore
+- [x] Después de toggle (modo List): SÍ hay descripciones y nutriscore
+- [x] Toggle de vuelta a Card: oculta descripciones y nutriscore
+- [x] Tests usan `within(productCard)` para contexto específico
+- [x] **Enfoque user-oriented:** Tests verifican presencia/ausencia de descripciones y nutriscore, NO detalles de implementación
 
-    // Navegar a una categoría con productos
-    await clickCategory(user, 'Frutas')
-    await screen.findByText('Manzana Royal Gala')
+### 4.3 Implementación (VERDE) ✅ COMPLETADO
+- [x] `src/context/ViewModeContext.tsx` creado con ViewModeProvider
+- [x] `src/hooks/useViewMode.ts` creado
+- [x] App wrappeado con `<ViewModeProvider>`
+- [x] `<Toggle />` conectado al context en RootLayout
+- [x] En `<ProductCard />`: renderizado condicional de `description` y `nutriscore` según viewMode
+- [x] Uso de `classnames` para clases CSS dinámicas
+- [x] Indicador visual/textual del modo actual en el toggle ("Vista como tarjeta" / "Vista como lista")
+- [x] Campo `description` añadido a todos los productos en fixtures
 
-    // Inicialmente NO hay descripciones (modo Card)
-    expect(screen.queryByText(/Manzana dulce y crujiente/i)).not.toBeInTheDocument()
-
-    // Toggle a modo List
-    await toggleViewMode(user)
-
-    // Ahora SÍ hay descripciones
-    expect(screen.getByText(/Manzana dulce y crujiente/i)).toBeVisible()
-  })
-
-  it('should hide product descriptions when switching back to card view', async () => {
-    // Similar pero toggle 2 veces
-  })
-  ```
-- [ ] **Enfoque:** Lo primario es testear el comportamiento visible para el usuario (presencia/ausencia de descripciones, indicador visual del modo). Tests sobre `aria-checked` o `className` pueden servir como apoyo secundario para desarrollo o auto-documentación, pero no deben ser el foco principal del test
-
-### 4.3 Implementación (VERDE)
-- [ ] `src/context/ViewModeContext.tsx`:
-  ```typescript
-  type ViewMode = 'card' | 'list'
-  const ViewModeContext = createContext(...)
-  export const ViewModeProvider = ({ children }) => { ... }
-  export const useViewMode = () => useContext(ViewModeContext)
-  ```
-- [ ] Wrappear App con `<ViewModeProvider>`
-- [ ] Conectar `<Toggle />` al context
-- [ ] En `<ProductCard />`: renderizado condicional de `description` según viewMode
-- [ ] Indicador visual/textual del modo actual en el toggle
-
-### 4.4 Refactor
-- [ ] Extraer `src/hooks/useViewMode.ts` si no se hizo ya
-- [ ] Tests siguen en verde
+### 4.4 Refactor ✅ COMPLETADO
+- [x] Código ya limpio, no requiere refactorización adicional
+- [x] Tests siguen en verde (8/8 passing)
 
 ### 4.5 Crear rama solución
 - [ ] Commit todo el trabajo (context + tests + implementación + refactor)

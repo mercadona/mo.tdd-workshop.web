@@ -1,22 +1,12 @@
-import { useState } from 'react'
 import { ProductCard } from 'components/product-card'
 import { ProductDetail } from 'components/ProductDetail'
 import { useProducts } from 'hooks/useProducts'
-import type { Product } from 'types'
+import { useProductDialog } from 'hooks/useProductDialog'
 
 const Home = () => {
   const { products } = useProducts()
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-
-  const handleProductClick = async (productId: number) => {
-    const response = await fetch(`/products/${productId}`)
-    const product = await response.json()
-    setSelectedProduct(product)
-  }
-
-  const handleClose = () => {
-    setSelectedProduct(null)
-  }
+  const { selectedProduct, handleProductClick, handleClose } =
+    useProductDialog()
 
   return (
     <div>

@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { App } from 'app'
-import { clickCategory } from '../../../test/helpers'
+import { clickCategory, clickProduct } from 'test/helpers'
 
 it('should navigate to the category page and display the category title', async () => {
   render(<App />)
@@ -29,4 +29,32 @@ it('should display a not found message when the category does not exist', async 
   expect(
     await screen.findByText(/categoría no encontrada|category not found/i),
   ).toBeVisible()
+})
+
+it('should open a dialog with product details when clicking a product from category', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  await clickCategory(user, 'Fruta y verdura')
+  await clickProduct(user, 'Aguacate')
+
+  const dialog = await screen.findByRole('dialog')
+  expect(dialog).toBeVisible()
+  expect(within(dialog).getByText('Aguacate')).toBeVisible()
+  expect(within(dialog).getByText('1,20 €')).toBeVisible()
+})
+
+it('should close the dialog when clicking close button from category', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  await clickCategory(user, 'Fruta y verdura')
+  await clickProduct(user, 'Aguacate')
+
+  await screen.findByRole('dialog')
+
+  const closeButton = screen.getByRole('button', { name: /cerrar/i })
+  await user.click(closeButton)
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 })

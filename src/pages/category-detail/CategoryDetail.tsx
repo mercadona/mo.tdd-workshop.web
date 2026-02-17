@@ -1,11 +1,15 @@
 import { useParams } from 'react-router-dom'
 import { ProductCard } from 'components/product-card'
+import { ProductDetail } from 'components/ProductDetail'
 import { useCategoryWithProducts } from 'hooks/useCategoryWithProducts'
+import { useProductDialog } from 'hooks/useProductDialog'
 import './CategoryDetail.css'
 
 export const CategoryDetail = () => {
   const { slug } = useParams<{ slug: string }>()
   const { category, notFound } = useCategoryWithProducts(slug)
+  const { selectedProduct, handleProductClick, handleClose } =
+    useProductDialog()
 
   if (notFound) {
     return (
@@ -26,9 +30,16 @@ export const CategoryDetail = () => {
       </div>
       <div className="category-detail__products">
         {category.products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            onClick={() => handleProductClick(product.id)}
+          />
         ))}
       </div>
+      {selectedProduct && (
+        <ProductDetail product={selectedProduct} onClose={handleClose} />
+      )}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useCategories } from 'hooks/useCategories'
 import './Navigation.css'
 
@@ -10,7 +11,11 @@ export const Navigation = () => {
         <h1 className="navigation__title">TDD Workshop</h1>
         <ul>
           {categories.map((category) => (
-            <li key={category.id}>{category.displayName}</li>
+            <li key={category.id}>
+              <Link to={`/categories/${category.slug}`}>
+                {category.displayName}
+              </Link>
+            </li>
           ))}
         </ul>
       </div>

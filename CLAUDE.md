@@ -74,6 +74,56 @@ Ver `CONTEXT.md` para el detalle completo de cada iteración.
 - **Context API** para estado global (sin Redux ni Zustand)
 - **APIs Nativas:** `Intl.NumberFormat`, `<dialog>`, etc.
 
+### Estructura de React Router
+
+**Patrón estándar con layout routes:**
+
+```typescript
+// App.tsx - punto de entrada simple
+export const App = () => <AppRoutes />
+
+// Routes.tsx - contiene el Router y define rutas
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
+export const AppRoutes = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route element={<RootLayout />}>  {/* Layout compartido */}
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
+}
+
+// RootLayout.tsx - layout con Outlet para rutas hijas
+import { Outlet } from 'react-router-dom'
+
+export const RootLayout = () => {
+  return (
+    <>
+      <header><Navigation /></header>
+      <main>
+        <Layout>
+          <Outlet />  {/* Aquí se renderizan las páginas */}
+        </Layout>
+      </main>
+    </>
+  )
+}
+```
+
+**Beneficios:**
+- Layout compartido (header/footer) en un solo lugar
+- Páginas individuales no duplican estructura
+- Provider contexts se pueden anidar en el layout route
+
+**Convención de imports:**
+- **SIEMPRE importar de `react-router-dom`**, nunca de `react-router`
+- Ejemplo: `import { Link, useParams, BrowserRouter, Outlet } from 'react-router-dom'`
+
 ## Estrategia de Ramas
 
 ### Rama `master`
@@ -129,6 +179,22 @@ iteration-5-solution
 4. Master se mantiene limpio como punto de partida para los asistentes
 5. Cada rama `-start` es un snapshot limpio (sin código nuevo, solo hereda de soluciones anteriores)
 
+## TDD Estricto
+
+**Principio fundamental: NO anticipar código que no pide ningún test**
+
+- **Incrementalidad:** Implementar solo lo que el test actual requiere
+- **Orden correcto:**
+  1. Test del caso feliz → implementación mínima para ese caso
+  2. Test del caso de error → añadir manejo del error
+- **Ejemplo práctico (Handler MSW con 404):**
+  - ❌ **Incorrecto:** Implementar el handler completo con manejo de 404 desde el inicio
+  - ✅ **Correcto:**
+    1. Test que espera categoría válida → Handler que devuelve la categoría
+    2. Test que espera 404 para slug inexistente → Añadir `if (!category) return 404`
+
+**Regla de oro:** Si no hay un test rojo que lo requiera, no lo implementes todavía.
+
 ## Prácticas de Código
 
 ### Data Fetching
@@ -147,8 +213,19 @@ iteration-5-solution
   ```
 
 ### Testing
+
+#### Filosofía: Tests agnósticos de implementación
+
+- **Los tests no deben saber sobre detalles de implementación:** No deben conocer sobre routers, providers, contexts, o estructura interna de componentes
+- **Un `<Link>` es un anchor para el test:** Se renderiza como `<a>` y se clickea normalmente, sin conocer que usa React Router
+- **`render(<App />)` debe funcionar tal cual:** NO crear custom renders con wrappers de Router/Context/Provider
+- **Simular comportamiento de usuario real:** Si el usuario hace click en un link, el test hace `user.click()`. Si el usuario abre una URL directamente, el test usa `window.history.pushState()`
+
+#### Prácticas de testing
+
 - **Renderizar siempre `<App />` completo** (no aislar componentes)
 - **No usar `data-testid`** → usar roles semánticos y queries accesibles
+- **NO usar `describe` cuando el test está en su propio archivo:** El nombre del archivo ya indica qué se testea (`CategoryDetail.test.tsx`). Solo usar `describe` cuando múltiples componentes/funciones se testean en un mismo archivo.
 - **Verificar ejemplos representativos, no todos los datos:**
   - Verificar la cantidad total (ej: `expect(items).toHaveLength(3)`)
   - Verificar 1-2 ejemplos representativos para confirmar el contenido
@@ -160,6 +237,23 @@ iteration-5-solution
     ```
 - **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
 - **Usar patrón Object Mother** para fixtures de datos
+
+#### Simular navegación directa a URL
+
+Para testear que el usuario abre directamente una URL (ej: caso 404, deep links):
+
+```typescript
+it('should handle 404 for invalid URL', async () => {
+  // Simula que el usuario escribió la URL directamente en el navegador
+  window.history.pushState({}, '', '/categories/non-existent')
+
+  render(<App />)
+
+  expect(await screen.findByText(/not found/i)).toBeVisible()
+})
+```
+
+**NO usar custom wrappers con `MemoryRouter`** ni parámetros como `initialEntries` en el render. El test debe funcionar con la app real tal como la usa el usuario.
 
 ### Testing Semántico y Accesibilidad
 - **Usar atributos ARIA para vincular elementos relacionados:**

@@ -8,9 +8,11 @@ export const Navigation = () => {
     <nav className="navigation">
       <div className="navigation__container">
         <h1 className="navigation__title">TDD Workshop</h1>
-        <ul>
+        <ul className="navigation__list">
           {categories.map((category) => (
-            <li key={category.id}>{category.displayName}</li>
+            <li key={category.id} className="navigation__list-item">
+              {category.displayName}
+            </li>
           ))}
         </ul>
       </div>

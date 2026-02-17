@@ -75,11 +75,11 @@ master (CSS puro) → merge cascade lineal por todas las ramas
 ## Fase P1: Merge a `iteration-1-solution` + Nav classNames
 
 ### P1.1 Merge
-- [ ] `git checkout iteration-1-solution && git merge master`
-- [ ] Resolver conflictos si los hay (CSS merge debería ser limpio)
+- [x] `git checkout iteration-1-solution && git merge master`
+- [x] Resolver conflictos si los hay (CSS merge debería ser limpio)
 
 ### P1.2 Fix Navigation.tsx (classNames BEM)
-- [ ] Añadir classNames a la lista de categorías:
+- [x] Añadir classNames a la lista de categorías:
   ```tsx
   <ul className="navigation__list">
     <li className="navigation__list-item">
@@ -89,8 +89,8 @@ master (CSS puro) → merge cascade lineal por todas las ramas
   ```
 
 ### P1.3 Verificación
-- [ ] `npm test` → tests pasan
-- [ ] Commit y push
+- [x] `npm test` → tests pasan
+- [x] Commit y push
 
 **Archivos modificados:** `src/components/navigation/Navigation.tsx`
 

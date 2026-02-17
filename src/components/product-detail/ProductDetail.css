@@ -6,11 +6,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-index-overlay);
 }
 
 .product-detail {
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-index-modal);
   border: none;
   border-radius: var(--border-radius-lg);
   padding: 0;

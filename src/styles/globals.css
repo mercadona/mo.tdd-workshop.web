@@ -35,6 +35,9 @@
   --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
 
   --max-width-container: 1200px;
+
+  --z-index-overlay: 100;
+  --z-index-modal: 200;
 }
 
 *,

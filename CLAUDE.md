@@ -320,6 +320,30 @@ Para componentes tipo modal/dialog, seguir este patrón:
 - No requiere mocks en tests (no hay `showModal()` ni `close()`)
 - El dialog no está en el DOM cuando no se usa
 
+### Convenciones de Imports
+
+**Preferir imports absolutos desde `src` sobre imports relativos con `../`:**
+
+```typescript
+// ✅ Correcto - import absoluto desde src
+import { clickCategory, clickProduct } from 'test/helpers'
+import { ProductCard } from 'components/product-card'
+import { useProducts } from 'hooks/useProducts'
+import type { Product } from 'types'
+
+// ❌ Evitar - imports relativos con múltiples niveles
+import { clickCategory } from '../../../test/helpers'
+import { ProductCard } from '../../components/product-card'
+```
+
+**Beneficios:**
+- Código más limpio y legible
+- Fácil de mover archivos entre directorios sin romper imports
+- Más fácil de entender la estructura del proyecto
+- Evita errores por contar mal los niveles de `../`
+
+**Nota:** El proyecto tiene configurado el path alias para que `src` sea la raíz de imports absolutos.
+
 ### Data Fetching
 - **Usar async/await** en lugar de Promise.then()
 - **No usar try/catch** si no vamos a manejar el error (código más limpio)
@@ -375,7 +399,25 @@ Para componentes tipo modal/dialog, seguir este patrón:
     expect(categories).toHaveLength(3)
     expect(screen.getByText('Fruta y verdura')).toBeVisible() // Solo 1 ejemplo
     ```
-- **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleVAT()`, `clickProduct()`
+- **Crear helpers de testing (DSL)** para mejorar legibilidad: `clickCategory()`, `toggleViewMode()`, `clickProduct()`
+- **Helpers deben usar queries asíncronas cuando sea necesario:**
+  - **Usar `findBy*`** cuando el elemento puede no estar disponible inmediatamente (requiere fetch, renderizado tras operación asíncrona)
+  - **Usar `getBy*`** solo cuando el elemento ya está garantizado en el DOM
+  - Ejemplo:
+    ```typescript
+    // ✅ Correcto - espera a que el elemento aparezca
+    export const clickProduct = async (user: UserEvent, name: string) => {
+      const productCard = await screen.findByRole('article', { name })
+      await user.click(productCard)
+    }
+
+    // ❌ Incorrecto - falla si el elemento no está inmediatamente
+    export const clickProduct = async (user: UserEvent, name: string) => {
+      const productCard = screen.getByRole('article', { name })
+      await user.click(productCard)
+    }
+    ```
+- **Verificar datos de fixtures antes de escribir assertions:** Antes de escribir `expect(screen.getByText('2,00 €'))`, verificar el precio real en los datos de fixtures para evitar tests que fallan por datos incorrectos
 - **Usar patrón Object Mother** para fixtures de datos
 
 #### Simular navegación directa a URL

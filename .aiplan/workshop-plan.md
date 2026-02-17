@@ -330,12 +330,14 @@ Siempre en `-solution`, nunca en `-start`. Son parte del aprendizaje TDD.
 - [x] Código ya limpio, no requiere refactorización adicional
 - [x] Tests siguen en verde (8/8 passing)
 
-### 4.5 Crear rama solución
-- [ ] Commit todo el trabajo (context + tests + implementación + refactor)
-- [ ] `git checkout -b iteration-4-solution` → Push
+### 4.5 Crear rama solución ✅ COMPLETADO
+- [x] Commit todo el trabajo (context + tests + implementación + refactor)
+- [x] Push rama `iteration-4-solution`
 
-### 4.6 Verificación
-- [ ] Tests, typecheck, lint → OK
+### 4.6 Verificación ✅ COMPLETADO
+- [x] Tests → 8/8 passing
+- [x] Typecheck → OK
+- [x] Lint → OK
 
 ---
 

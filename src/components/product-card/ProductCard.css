@@ -124,39 +124,3 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-light);
 }
-
-/* Nutriscore badge */
-.product-card__nutriscore {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  height: auto;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  color: var(--color-white);
-  text-transform: uppercase;
-}
-
-.product-card__nutriscore--a {
-  background-color: #038141;
-}
-
-.product-card__nutriscore--b {
-  background-color: #85bb2f;
-}
-
-.product-card__nutriscore--c {
-  background-color: #fecb02;
-  color: var(--color-text);
-}
-
-.product-card__nutriscore--d {
-  background-color: #ee8100;
-}
-
-.product-card__nutriscore--e {
-  background-color: #e63e11;
-}

@@ -1,4 +1,5 @@
 import type { Product } from 'types'
+import { NutriScore } from 'components/nutri-score'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -30,11 +31,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </h3>
         <div className="product-card__footer">
           <span className="product-card__price">{formatPrice(price)}</span>
-          <span
-            className={`product-card__nutriscore product-card__nutriscore--${nutriscore.toLowerCase()}`}
-          >
-            {nutriscore}
-          </span>
+          <NutriScore score={nutriscore} />
         </div>
       </div>
     </article>

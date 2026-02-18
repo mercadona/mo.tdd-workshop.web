@@ -4,7 +4,11 @@ export const Navigation = () => {
   return (
     <nav className="navigation">
       <div className="navigation__container">
-        <h1 className="navigation__title">TDD Workshop</h1>
+        <img
+          src="/mercadona-logo.svg"
+          alt="Mercadona"
+          className="navigation__logo"
+        />
       </div>
     </nav>
   )

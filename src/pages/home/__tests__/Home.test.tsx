@@ -98,6 +98,12 @@ it('should open a dialog with product details when clicking a product', async ()
     within(dialog).getByText('Aceitunas verdes rellenas de anchoa Hacendado'),
   ).toBeVisible()
   expect(within(dialog).getByText('3,00 €')).toBeVisible()
+  expect(
+    within(dialog).getByText(
+      'Aceitunas verdes rellenas con anchoas de calidad. Perfectas para el aperitivo.',
+    ),
+  ).toBeVisible()
+  expect(within(dialog).getByText(/Nutriscore: D/)).toBeVisible()
 })
 
 it('should close the dialog when clicking close button', async () => {

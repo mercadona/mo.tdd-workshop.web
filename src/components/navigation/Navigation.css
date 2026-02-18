@@ -16,11 +16,9 @@
   flex-wrap: wrap;
 }
 
-.navigation__title {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  margin: 0;
-  color: var(--color-primary);
+.navigation__logo {
+  max-width: 230px;
+  height: auto;
 }
 
 .navigation__list {

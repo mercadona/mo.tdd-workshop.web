@@ -94,3 +94,10 @@ img {
   height: auto;
   display: block;
 }
+
+.disclaimer {
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-md);
+}

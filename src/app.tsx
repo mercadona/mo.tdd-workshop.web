@@ -13,6 +13,10 @@ export const App = () => {
           <AppRoutes />
         </Layout>
       </main>
+      <footer className="disclaimer">
+        La información de los productos ha sido generada con IA y no refleja
+        datos reales. Solo con fines de testing.
+      </footer>
     </>
   )
 }

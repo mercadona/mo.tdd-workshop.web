@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { Toggle } from 'components/toggle'
 import { useCategories } from 'hooks/useCategories'
@@ -12,11 +12,13 @@ export const Navigation = () => {
   return (
     <nav className="navigation">
       <div className="navigation__container">
-        <img
-          src="/mercadona-logo.svg"
-          alt="Mercadona"
-          className="navigation__logo"
-        />
+        <Link to="/" className="navigation__logo-link">
+          <img
+            src="/mercadona-logo.svg"
+            alt="Mercadona"
+            className="navigation__logo"
+          />
+        </Link>
         <Toggle
           checked={viewMode === 'list'}
           onChange={toggleViewMode}

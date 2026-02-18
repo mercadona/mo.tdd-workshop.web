@@ -42,7 +42,9 @@ it('should navigate to home when clicking the logo', async () => {
   const logo = screen.getByRole('link', { name: 'Mercadona' })
   await user.click(logo)
 
-  expect(screen.queryByRole('heading', { name: 'Fruta y verdura' })).not.toBeInTheDocument()
+  expect(
+    screen.queryByRole('heading', { name: 'Fruta y verdura' }),
+  ).not.toBeInTheDocument()
   expect(await screen.findByText('Fruta y verdura')).toBeVisible()
 })
 

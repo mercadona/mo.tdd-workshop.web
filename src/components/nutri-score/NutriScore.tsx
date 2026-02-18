@@ -7,7 +7,9 @@ interface NutriScoreProps {
 }
 
 export const NutriScore = ({ score, showLabel = false }: NutriScoreProps) => (
-  <span className={classNames('nutri-score', `nutri-score--${score.toLowerCase()}`)}>
+  <span
+    className={classNames('nutri-score', `nutri-score--${score.toLowerCase()}`)}
+  >
     {showLabel && 'Nutriscore: '}
     {score}
   </span>

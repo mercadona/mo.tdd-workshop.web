@@ -359,6 +359,17 @@ import { ProductCard } from '../../components/product-card'
   }, [])
   ```
 
+### Variables CSS para z-index
+
+- **Usar variables CSS semánticas**, nunca valores hardcoded ni relativos (`z-index: 1001`)
+- Definir en `globals.css` con nombres que expresen la capa, no el número:
+  ```css
+  --z-index-overlay: 100;
+  --z-index-modal: 200;
+  ```
+- Los valores tienen margen entre capas para intercalar nuevas sin renumerar
+- Si se necesita una capa nueva (tooltip, toast, dropdown), añadir su variable con nombre apropiado
+
 ### Clases CSS Dinámicas
 - **Usar librería `classnames`** para manejar clases CSS con lógica condicional
 - **NO usar template literals** para clases dinámicas

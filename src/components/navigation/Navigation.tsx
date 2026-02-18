@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { useCategories } from 'hooks/useCategories'
 import './Navigation.css'
@@ -9,11 +9,13 @@ export const Navigation = () => {
   return (
     <nav className="navigation">
       <div className="navigation__container">
-        <img
-          src="/mercadona-logo.svg"
-          alt="Mercadona"
-          className="navigation__logo"
-        />
+        <Link to="/" className="navigation__logo-link">
+          <img
+            src="/mercadona-logo.svg"
+            alt="Mercadona"
+            className="navigation__logo"
+          />
+        </Link>
         <ul className="navigation__list">
           {categories.map((category) => (
             <li key={category.id} className="navigation__list-item">

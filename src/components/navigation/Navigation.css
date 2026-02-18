@@ -16,6 +16,11 @@
   flex-wrap: wrap;
 }
 
+.navigation__logo-link {
+  display: inline-flex;
+  align-items: center;
+}
+
 .navigation__logo {
   max-width: 230px;
   height: auto;

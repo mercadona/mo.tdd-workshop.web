@@ -31,6 +31,21 @@ it('should display a not found message when the category does not exist', async 
   ).toBeVisible()
 })
 
+it('should navigate to home when clicking the logo', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  await screen.findByText('Fruta y verdura')
+  await clickCategory(user, 'Fruta y verdura')
+  await screen.findByRole('heading', { name: 'Fruta y verdura' })
+
+  const logo = screen.getByRole('link', { name: 'Mercadona' })
+  await user.click(logo)
+
+  expect(screen.queryByRole('heading', { name: 'Fruta y verdura' })).not.toBeInTheDocument()
+  expect(await screen.findByText('Fruta y verdura')).toBeVisible()
+})
+
 it('should highlight the active category in the navigation', async () => {
   const user = userEvent.setup()
   render(<App />)

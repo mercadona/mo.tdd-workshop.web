@@ -2,6 +2,7 @@ import classNames from 'classnames'
 
 import type { Product } from 'types'
 import { useViewMode } from 'hooks/useViewMode'
+import { NutriScore } from 'components/nutri-score'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -42,14 +43,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <div className="product-card__footer">
           <span className="product-card__price">{formatPrice(price)}</span>
           {isListView && nutriscore && (
-            <span
-              className={classNames(
-                'product-card__nutriscore',
-                `product-card__nutriscore--${nutriscore.toLowerCase()}`,
-              )}
-            >
-              Nutriscore: {nutriscore}
-            </span>
+            <NutriScore score={nutriscore} showLabel />
           )}
         </div>
       </div>

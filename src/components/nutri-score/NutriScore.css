@@ -1,0 +1,17 @@
+.nutri-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-white);
+  text-transform: uppercase;
+}
+
+.nutri-score--a { background-color: #038141; }
+.nutri-score--b { background-color: #85bb2f; }
+.nutri-score--c { background-color: #fecb02; color: var(--color-text); }
+.nutri-score--d { background-color: #ee8100; }
+.nutri-score--e { background-color: #e63e11; }

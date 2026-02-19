@@ -3,12 +3,13 @@ import './NutriScore.css'
 
 interface NutriScoreProps {
   score: string
-  showLabel?: boolean
 }
 
-export const NutriScore = ({ score, showLabel = false }: NutriScoreProps) => (
-  <span className={classNames('nutri-score', `nutri-score--${score.toLowerCase()}`)}>
-    {showLabel && 'Nutriscore: '}
+export const NutriScore = ({ score }: NutriScoreProps) => (
+  <span
+    className={classNames('nutri-score', `nutri-score--${score.toLowerCase()}`)}
+    aria-label={`Nutriscore: ${score}`}
+  >
     {score}
   </span>
 )

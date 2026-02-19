@@ -1,5 +1,4 @@
 import type { Product } from 'types'
-import { NutriScore } from 'components/nutri-score'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -14,7 +13,7 @@ const formatPrice = (price: number): string => {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { id, displayName, price, image, nutriscore } = product
+  const { id, displayName, price, image } = product
   const headingId = `product-heading-${id}`
 
   return (
@@ -31,7 +30,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </h3>
         <div className="product-card__footer">
           <span className="product-card__price">{formatPrice(price)}</span>
-          <NutriScore score={nutriscore} />
         </div>
       </div>
     </article>

@@ -20,7 +20,8 @@ export const ProductDetail = () => {
           </h2>
           <p className="product-detail__price">3,00 €</p>
           <p className="product-detail__description">
-            Aceitunas verdes rellenas con anchoas de calidad. Perfectas para el aperitivo.
+            Aceitunas verdes rellenas con anchoas de calidad. Perfectas para el
+            aperitivo.
           </p>
           <div className="product-detail__nutriscore">
             <NutriScore score="D" />

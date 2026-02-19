@@ -9,26 +9,25 @@
 2. **TODO** el trabajo TDD va en la rama `-solution`
 3. **NUNCA** modificar master después de la Fase 0
 4. Master se mantiene limpio como punto de partida para los asistentes
-5. Cada rama `-start` es un snapshot limpio (hereda de la solution anterior)
 
 ## Nomenclatura
 
 ```
-iteration-1-start / iteration-1-solution
-iteration-2-start / iteration-2-solution
-iteration-3-start / iteration-3-solution
-iteration-4-start / iteration-4-solution
-iteration-5-start / iteration-5-solution
+iteration-1-solution
+iteration-2-solution
+iteration-3-solution
+iteration-4-solution
+iteration-5-solution
 ```
 
 ## Cascade merge (propagar cambios de master a todas las ramas)
 
 Cuando se hacen cambios en master, propagar en orden lineal:
-`master → iter-1-start → iter-1-solution → iter-2-start → ... → iter-5-solution`
+`master → iter-1-solution → iter-2-solution → iter-3-solution → iter-4-solution → iter-5-solution`
 
 **Antes de empezar:** crear backup tags:
 ```bash
-for branch in iteration-{1..5}-{start,solution}; do
+for branch in iteration-{1..5}-solution; do
   git tag backup/$branch $branch
 done
 ```
@@ -50,7 +49,7 @@ git add <archivos-resueltos> && git commit
 
 **Verificar tras el cascade completo:**
 ```bash
-for branch in master iteration-{1..5}-{start,solution}; do
+for branch in master iteration-{1..5}-solution; do
   git checkout $branch -q
   npm test -- --run 2>&1 | grep "Tests"
 done

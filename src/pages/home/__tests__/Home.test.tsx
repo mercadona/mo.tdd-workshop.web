@@ -22,3 +22,14 @@ it('should display the products with their prices correctly formatted', async ()
 
   expect(within(productCard).getByText('3,00 €')).toBeVisible()
 })
+
+describe('Iteración 4 - Toggle card/list view', () => {
+  it.todo('should not display product descriptions and nutriscore in card view')
+  it.todo('should display product descriptions and nutriscore when switching to list view')
+  it.todo('should hide product descriptions and nutriscore when switching back to card view')
+})
+
+describe('Iteración 5 - Modal de producto', () => {
+  it.todo('should open a dialog with product details when clicking a product')
+  it.todo('should close the dialog when clicking close button')
+})

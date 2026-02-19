@@ -62,6 +62,8 @@ it('should highlight the active category in the navigation', async () => {
 })
 
 describe('Iteración 5 - Modal de producto desde categoría', () => {
-  it.todo('should open a dialog with product details when clicking a product from category')
+  it.todo(
+    'should open a dialog with product details when clicking a product from category',
+  )
   it.todo('should close the dialog when clicking close button from category')
 })

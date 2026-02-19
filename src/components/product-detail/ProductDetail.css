@@ -23,12 +23,6 @@
   box-shadow: var(--shadow-lg);
 }
 
-.product-detail__header {
-  position: relative;
-  padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--color-border);
-}
-
 .product-detail__close {
   position: absolute;
   top: var(--spacing-md);
@@ -59,22 +53,9 @@
   gap: var(--spacing-lg);
 }
 
-.product-detail__image-wrapper {
-  text-align: center;
-  background-color: var(--color-background);
-  border-radius: var(--border-radius-md);
-  padding: var(--spacing-lg);
-}
-
 .product-detail__image {
   max-width: 300px;
   margin: 0 auto;
-}
-
-.product-detail__info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
 }
 
 .product-detail__name {
@@ -90,23 +71,14 @@
   line-height: 1.6;
 }
 
-.product-detail__meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-md);
-  background-color: var(--color-background);
-  border-radius: var(--border-radius-md);
-}
-
 .product-detail__price {
   font-size: var(--font-size-xxl);
   font-weight: 700;
   color: var(--color-primary);
 }
 
-.product-detail__reference {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+.product-detail__nutriscore {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
 }
-

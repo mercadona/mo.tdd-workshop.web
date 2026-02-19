@@ -45,9 +45,7 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
         )}
         <div className="product-card__footer">
           <span className="product-card__price">{formatPrice(price)}</span>
-          {isListView && nutriscore && (
-            <NutriScore score={nutriscore} showLabel />
-          )}
+          {isListView && nutriscore && <NutriScore score={nutriscore} />}
         </div>
       </div>
     </article>

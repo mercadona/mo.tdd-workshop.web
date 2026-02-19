@@ -36,7 +36,9 @@ export const ProductDetail = ({ product, onClose }: ProductDetailProps) => {
             <p className="product-detail__description">{product.description}</p>
           )}
           {product.nutriscore && (
-            <NutriScore score={product.nutriscore} showLabel />
+            <div className="product-detail__nutriscore">
+              <NutriScore score={product.nutriscore} />
+            </div>
           )}
         </div>
       </dialog>

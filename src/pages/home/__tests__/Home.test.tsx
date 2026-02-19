@@ -35,7 +35,7 @@ it('should not display product descriptions and nutriscore in card view', async 
   expect(
     screen.queryByText(/Aceitunas verdes rellenas con anchoas de calidad/),
   ).not.toBeInTheDocument()
-  expect(screen.queryByText(/Nutriscore: D/)).not.toBeInTheDocument()
+  expect(screen.queryByLabelText(/Nutriscore: D/i)).not.toBeInTheDocument()
 })
 
 it('should display product descriptions and nutriscore when switching to list view', async () => {
@@ -50,7 +50,7 @@ it('should display product descriptions and nutriscore when switching to list vi
     screen.queryByText(/Aceitunas verdes rellenas con anchoas de calidad/),
   ).not.toBeInTheDocument()
   expect(
-    within(productCard).queryByText(/Nutriscore: D/),
+    within(productCard).queryByLabelText(/Nutriscore: D/i),
   ).not.toBeInTheDocument()
 
   await toggleViewMode(user)
@@ -58,7 +58,7 @@ it('should display product descriptions and nutriscore when switching to list vi
   expect(
     screen.getByText(/Aceitunas verdes rellenas con anchoas de calidad/),
   ).toBeVisible()
-  expect(within(productCard).getByText(/Nutriscore: D/)).toBeVisible()
+  expect(within(productCard).getByLabelText(/Nutriscore: D/i)).toBeVisible()
 })
 
 it('should hide product descriptions and nutriscore when switching back to card view', async () => {
@@ -74,7 +74,7 @@ it('should hide product descriptions and nutriscore when switching back to card 
   expect(
     screen.getByText(/Aceitunas verdes rellenas con anchoas de calidad/),
   ).toBeVisible()
-  expect(within(productCard).getByText(/Nutriscore: D/)).toBeVisible()
+  expect(within(productCard).getByLabelText(/Nutriscore: D/i)).toBeVisible()
 
   await toggleViewMode(user)
 
@@ -82,6 +82,11 @@ it('should hide product descriptions and nutriscore when switching back to card 
     screen.queryByText(/Aceitunas verdes rellenas con anchoas de calidad/),
   ).not.toBeInTheDocument()
   expect(
-    within(productCard).queryByText(/Nutriscore: D/),
+    within(productCard).queryByLabelText(/Nutriscore: D/i),
   ).not.toBeInTheDocument()
+})
+
+describe('Iteración 5 - Modal de producto', () => {
+  it.todo('should open a dialog with product details when clicking a product')
+  it.todo('should close the dialog when clicking close button')
 })

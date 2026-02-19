@@ -39,11 +39,11 @@ Este repositorio es la base para un workshop práctico de TDD con React. **NO es
 4. Estado global con Context API (Toggle Card/List view)
 5. Modal con `<dialog>` nativo
 
-Ver `CONTEXT.md` para el detalle completo de cada iteración.
+Ver @docs/rules/iterations.md para el detalle completo de cada iteración.
 
 ## Estrategia de Ramas
 
-`master` es el punto de partida para los asistentes. Las ramas de soluciones siguen el patrón `iteration-X-start` / `iteration-X-solution`.
+`master` es el punto de partida para los asistentes. Las ramas de soluciones siguen el patrón `iteration-X-solution`.
 
 Ver @.claude/rules/branching.md para el flujo completo y el proceso de cascade merge.
 
@@ -74,6 +74,5 @@ Antes de trabajar, leer los archivos relevantes según la tarea:
 
 ## Referencias
 
-- `CONTEXT.md` → detalle completo de cada iteración y patrón Object Mother
 - `package.json` → scripts disponibles
 - `src/mocks/` → configuración de MSW

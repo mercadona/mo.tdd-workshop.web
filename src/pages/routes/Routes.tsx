@@ -4,14 +4,17 @@ import { CategoryDetail } from '../category-detail'
 import { Home } from '../home'
 import { NotFound } from '../not-found'
 import { PATHS } from '../paths'
+import { RootLayout } from './RootLayout'
 
 export const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route index path={PATHS.HOME} element={<Home />} />
-        <Route path={PATHS.CATEGORY_DETAIL} element={<CategoryDetail />} />
-        <Route path={PATHS.NOT_FOUND} element={<NotFound />} />
+        <Route element={<RootLayout />}>
+          <Route index path={PATHS.HOME} element={<Home />} />
+          <Route path={PATHS.CATEGORY_DETAIL} element={<CategoryDetail />} />
+          <Route path={PATHS.NOT_FOUND} element={<NotFound />} />
+        </Route>
       </Routes>
     </Router>
   )

@@ -190,11 +190,15 @@ it('should navigate to home when clicking the logo', async () => {
 
 ### Ciclo TDD esperado
 
-1. **Test 1 (navegar a categoría) — Verde mínimo:** añadir `<Link>` en Navigation, crear ruta `/categories/:slug`, crear `CategoryDetail` con fetch directo en el componente usando `useEffect`/`useState` + `useParams`
-2. **Test 2 (404) — Verde:** añadir manejo de error 404 directamente en `CategoryDetail`
-3. **Refactor:** extraer `useCategoryWithProducts()` hook (fetch + manejo 404) — igual que en iter-1 se extrajo `useCategories` y en iter-2 `useProducts`
-4. **Test 3 (navlink activo):** cambiar `<Link>` a `<NavLink>` — `aria-current="page"` lo pone React Router automáticamente
-5. **Test 4 (logo a home):** añadir `<Link>` en el logo
+1. **Test 1 — Rojo:** falla porque no hay ruta `/categories/:slug` ni `CategoryDetail`
+   **Verde mínimo:** handler MSW + añadir `<Link>` en Navigation + crear ruta + crear `CategoryDetail` con fetch directo usando `useEffect`/`useState` + `useParams`
+2. **Test 2 — Rojo:** falla porque no hay manejo de 404
+   **Verde:** añadir comprobación de `response.ok` en `CategoryDetail` + renderizar mensaje de error
+   **Refactor:** extraer `useCategoryWithProducts()` hook (fetch + 404) — igual que en iter-1 se extrajo `useCategories` y en iter-2 `useProducts`
+3. **Test 3 — Rojo:** falla porque `Navigation` usa `<Link>` sin `aria-current`
+   **Verde:** cambiar `<Link>` a `<NavLink>` — `aria-current="page"` lo pone React Router automáticamente
+4. **Test 4 — Rojo:** falla porque el logo no es un enlace
+   **Verde:** añadir `<Link>` en el logo
 
 ### Puntos clave a remarcar
 
@@ -285,9 +289,10 @@ it('should hide product descriptions and nutriscore when switching back to card 
 
 ### Ciclo TDD esperado
 
-1. **Test 1 (card view sin descripción/nutriscore):** puede pasar si ProductCard ya no los renderiza — verificar el estado actual
-2. **Test 2 (list view con descripción/nutriscore):** crear Context + Provider + `useViewMode()` + integrar Toggle + renderizado condicional en ProductCard
-3. **Test 3 (volver a card view):** si el Context ya funciona, este test pasa solo
+1. **Test 1 — Rojo (o verde de facto):** si `ProductCard` no renderiza descripción ni NutriScore desde iter-3, este test pasa directamente — es una confirmación del comportamiento esperado, no hay nada que implementar
+2. **Test 2 — Rojo:** falla porque no existe el Toggle ni mecanismo para cambiar a list view
+   **Verde:** crear `ViewModeContext` + `ViewModeProvider` + `useViewMode()` + integrar `Toggle` + renderizado condicional en `ProductCard`
+3. **Test 3 — Verde de facto:** pasa automáticamente al completar el test 2 si el Context funciona correctamente
 
 ### Puntos clave a remarcar
 
@@ -390,9 +395,11 @@ it('should close the dialog when clicking close button', async () => {
 
 ### Ciclo TDD esperado
 
-1. **Test 1 (abrir dialog):** añadir `onClick` a `ProductCard`, estado `selectedProduct` en `Home`, handler MSW `/products/:id`, dinamizar `ProductDetail`
-2. **Test 2 (cerrar dialog):** añadir `onClose` prop y botón cerrar en `ProductDetail`
-3. **Repetir para CategoryDetail:** misma lógica, test similar
+1. **Test 1 — Rojo:** falla porque no hay `onClick` en `ProductCard` ni `ProductDetail` dinámico
+   **Verde:** añadir `onClick` a `ProductCard` + estado `selectedProduct` en `Home` + handler MSW `/products/:id` + dinamizar `ProductDetail`
+2. **Test 2 — Rojo:** falla porque el dialog no se puede cerrar
+   **Verde:** añadir `onClose` prop + botón cerrar en `ProductDetail`
+3. **Repetir Rojo-Verde para `CategoryDetail`:** misma lógica con sus propios tests
 
 ### Puntos clave a remarcar
 

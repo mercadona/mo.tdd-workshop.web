@@ -91,7 +91,7 @@ Archivos clave:
 
 ### Qué van a construir
 
-Handler MSW para `/products`. Dinamizar el `ProductCard` estático que ya existe para recibir props. Formatear precio con `Intl.NumberFormat`. Crear un `ProductMother` para los tests.
+Handler MSW para `/products`. Dinamizar el `ProductCard` estático que ya existe para recibir props. Formatear precio con `Intl.NumberFormat`.
 
 El `ProductCard` estático ya está en `src/components/product-card/ProductCard.tsx` — el asistente lo modifica para aceptar una prop `product`.
 
@@ -110,8 +110,8 @@ it('should display the products with their prices correctly formatted', async ()
 ### Ciclo TDD esperado
 
 1. **Rojo:** test falla porque no hay products en la app
-2. **Verde:** handler MSW + hook `useProducts()` + dinamizar `ProductCard` con props
-3. **Refactor:** extraer función `formatPrice()` si hay duplicación; crear `ProductMother`
+2. **Verde mínimo:** handler MSW + fetch directo en `Home` con `useEffect`/`useState` + dinamizar `ProductCard` con props
+3. **Refactor:** extraer `useProducts()` hook (igual que en iter-1 se extrajo `useCategories`); extraer `formatPrice()` si hay duplicación
 
 ### Puntos clave a remarcar
 
@@ -128,7 +128,6 @@ it('should display the products with their prices correctly formatted', async ()
   new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(price)
   // → "3,00 €"
   ```
-- **Object Mother** vs fixtures JSON: el Mother permite crear productos con overrides para tests específicos.
 - **Card view:** sin descripción, sin NutriScore. Solo imagen + nombre + precio.
 
 ### Solución de referencia
@@ -138,7 +137,6 @@ Rama: `iteration-2-solution`
 Archivos clave:
 - `src/components/product-card/ProductCard.tsx`
 - `src/hooks/useProducts.ts`
-- `src/test/mothers/ProductMother.ts`
 - `src/mocks/handlers.ts` (añadir handler `/products`)
 
 ### Errores frecuentes

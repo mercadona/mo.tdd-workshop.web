@@ -1,16 +1,23 @@
 # Estrategia de Ramas
 
+## Ramas del proyecto
+
+| Rama | Propósito | Visible para asistentes |
+|------|-----------|------------------------|
+| `master` | Punto de partida del workshop — código limpio sin instrucciones | Sí |
+| `instructor` | Rama de trabajo: contiene `CLAUDE.md`, `.claude/`, `INSTRUCTOR.md`, `.aiplan/` | No |
+| `iteration-X-solution` | Soluciones de referencia acumulativas | Solo si el instructor lo muestra |
+
+**⚠️ Trabajar siempre desde `instructor`**, no desde `master`. Las instrucciones para Claude solo existen en esta rama.
+
 ## Flujo de trabajo (CRÍTICO)
 
-1. **SIEMPRE** crear la rama `-solution` ANTES de escribir código:
-   ```bash
-   git checkout -b iteration-X-solution
-   ```
-2. **TODO** el trabajo TDD va en la rama `-solution`
-3. **NUNCA** modificar master después de la Fase 0
-4. Master se mantiene limpio como punto de partida para los asistentes
+1. **SIEMPRE** trabajar en la rama `instructor` al interactuar con Claude
+2. Los cambios de código base van en `master` y se propagan por cascade
+3. Los cambios a `INSTRUCTOR.md`, `.aiplan/` o `.claude/` van solo en `instructor`
+4. `master` solo recibe cambios de código — nunca archivos de instrucciones
 
-## Nomenclatura
+## Nomenclatura de ramas solución
 
 ```
 iteration-1-solution
@@ -20,14 +27,14 @@ iteration-4-solution
 iteration-5-solution
 ```
 
-## Cascade merge (propagar cambios de master a todas las ramas)
+## Cascade merge (propagar cambios de master)
 
 Cuando se hacen cambios en master, propagar en orden lineal:
-`master → iter-1-solution → iter-2-solution → iter-3-solution → iter-4-solution → iter-5-solution`
+`master → instructor → iter-1-solution → iter-2-solution → iter-3-solution → iter-4-solution → iter-5-solution`
 
 **Antes de empezar:** crear backup tags:
 ```bash
-for branch in iteration-{1..5}-solution; do
+for branch in instructor iteration-{1..5}-solution; do
   git tag backup/$branch $branch
 done
 ```

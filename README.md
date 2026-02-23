@@ -27,7 +27,7 @@ Abre el proyecto en CodeSandbox y empieza directamente.
 Requisitos: Node.js 20+ y npm 10+
 
 ```bash
-git clone <repo-url>
+git clone git@github.com:mercadona/mo.tdd-workshop.web.git
 cd mo.tdd-workshop.web
 npm install
 npm test       # los tests en watch mode

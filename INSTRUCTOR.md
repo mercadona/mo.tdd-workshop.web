@@ -110,8 +110,8 @@ it('should display the products with their prices correctly formatted', async ()
 ### Ciclo TDD esperado
 
 1. **Rojo:** test falla porque no hay products en la app
-2. **Verde:** handler MSW + hook `useProducts()` + dinamizar `ProductCard` con props
-3. **Refactor:** extraer función `formatPrice()` si hay duplicación
+2. **Verde mínimo:** handler MSW + fetch directo en `Home` con `useEffect`/`useState` + dinamizar `ProductCard` con props
+3. **Refactor:** extraer `useProducts()` hook (igual que en iter-1 se extrajo `useCategories`); extraer `formatPrice()` si hay duplicación
 
 ### Puntos clave a remarcar
 

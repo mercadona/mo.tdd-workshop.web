@@ -151,7 +151,7 @@ Archivos clave:
 
 ### Qué van a construir
 
-Handler MSW para `/categories/:slug`. React Router con `Link`, `NavLink` y `useParams`. La página `CategoryDetail` con su hook `useCategoryWithProducts`. Helper DSL `clickCategory()`.
+Handler MSW para `/categories/:slug`. React Router con `Link`, `NavLink` y `useParams`. La página `CategoryDetail`. Helper DSL `clickCategory()`.
 
 ### Tests de referencia
 
@@ -190,10 +190,11 @@ it('should navigate to home when clicking the logo', async () => {
 
 ### Ciclo TDD esperado
 
-1. **Test 1 (navegar a categoría):** añadir `<Link>` en Navigation, crear ruta `/categories/:slug`, crear `CategoryDetail` básico
-2. **Test 2 (404):** añadir manejo de error 404 en `useCategoryWithProducts`
-3. **Test 3 (navlink activo):** cambiar `<Link>` a `<NavLink>` — `aria-current="page"` lo pone React Router automáticamente
-4. **Test 4 (logo a home):** añadir `<Link>` en el logo
+1. **Test 1 (navegar a categoría) — Verde mínimo:** añadir `<Link>` en Navigation, crear ruta `/categories/:slug`, crear `CategoryDetail` con fetch directo en el componente usando `useEffect`/`useState` + `useParams`
+2. **Test 2 (404) — Verde:** añadir manejo de error 404 directamente en `CategoryDetail`
+3. **Refactor:** extraer `useCategoryWithProducts()` hook (fetch + manejo 404) — igual que en iter-1 se extrajo `useCategories` y en iter-2 `useProducts`
+4. **Test 3 (navlink activo):** cambiar `<Link>` a `<NavLink>` — `aria-current="page"` lo pone React Router automáticamente
+5. **Test 4 (logo a home):** añadir `<Link>` en el logo
 
 ### Puntos clave a remarcar
 

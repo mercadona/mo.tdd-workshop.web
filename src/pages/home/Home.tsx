@@ -6,13 +6,11 @@ const Home = () => {
   const { products } = useProducts()
 
   return (
-    <div>
-      <div className="home__products-grid">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    </div>
+    <section className="home__products-grid">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </section>
   )
 }
 

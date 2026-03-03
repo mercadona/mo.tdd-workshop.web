@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { Category, Product } from 'types'
 
-type CategoryWithProducts = Category & { products: Product[] }
-
 export const useCategoryWithProducts = (slug: string | undefined) => {
-  const [category, setCategory] = useState<CategoryWithProducts | null>(null)
+  const [category, setCategory] = useState<Category | null>(null)
+  const [products, setProducts] = useState<Product[]>([])
   const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
@@ -18,10 +17,14 @@ export const useCategoryWithProducts = (slug: string | undefined) => {
 
       const data = await response.json()
       setCategory(data)
+
+      const productsResponse = await fetch(`/categories/${slug}/products`)
+      const productsData = await productsResponse.json()
+      setProducts(productsData)
     }
 
     fetchCategory()
   }, [slug])
 
-  return { category, notFound }
+  return { category, products, notFound }
 }

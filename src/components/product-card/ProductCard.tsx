@@ -2,7 +2,6 @@ import classNames from 'classnames'
 
 import type { Product } from 'types'
 import { useViewMode } from 'hooks/useViewMode'
-import { NutriScore } from 'components/nutri-score'
 import './ProductCard.css'
 
 interface ProductCardProps {
@@ -17,7 +16,7 @@ const formatPrice = (price: number): string => {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { id, displayName, price, image, nutriscore, description } = product
+  const { id, displayName, price, image, description } = product
   const { viewMode } = useViewMode()
   const headingId = `product-heading-${id}`
   const isListView = viewMode === 'list'
@@ -42,7 +41,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         )}
         <div className="product-card__footer">
           <span className="product-card__price">{formatPrice(price)}</span>
-          {isListView && nutriscore && <NutriScore score={nutriscore} />}
         </div>
       </div>
     </article>

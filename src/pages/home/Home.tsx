@@ -9,18 +9,16 @@ const Home = () => {
   const { viewMode } = useViewMode()
 
   return (
-    <div>
-      <div
-        className={classNames({
-          'home__products-grid': viewMode === 'card',
-          'home__products-list': viewMode === 'list',
-        })}
-      >
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    </div>
+    <section
+      className={classNames({
+        'home__products-grid': viewMode === 'card',
+        'home__products-list': viewMode === 'list',
+      })}
+    >
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </section>
   )
 }
 

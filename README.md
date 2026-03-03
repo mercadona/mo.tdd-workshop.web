@@ -122,6 +122,61 @@ Dialog nativo del navegador para mostrar el detalle de un producto.
 
 ---
 
+## API mock (MSW)
+
+Los endpoints están mockeados con MSW y se activan iteración a iteración. No hay servidor real.
+
+### `GET /categories`
+
+Devuelve la lista de categorías.
+
+```json
+[
+  { "id": 1, "displayName": "Fruta y verdura", "slug": "fruta-y-verdura" }
+]
+```
+
+### `GET /products`
+
+Devuelve todos los productos.
+
+```json
+[
+  {
+    "id": 22910,
+    "slug": "aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3",
+    "displayName": "Aceitunas verdes rellenas de anchoa Hacendado",
+    "description": "...",
+    "nutriscore": "D",
+    "image": "/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910.jpg",
+    "thumbnail": "/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910_thumb.jpg",
+    "price": 3,
+    "referenceFormat": "kg",
+    "categoryId": 15
+  }
+]
+```
+
+### `GET /categories/:slug`
+
+Devuelve una categoría por su slug. Devuelve `404` si no existe.
+
+```json
+{ "id": 1, "displayName": "Fruta y verdura", "slug": "fruta-y-verdura" }
+```
+
+### `GET /categories/:slug/products`
+
+Devuelve los productos de una categoría. Devuelve `404` si la categoría no existe.
+
+```json
+[
+  { "id": 22910, "displayName": "...", "price": 3, "categoryId": 15, ... }
+]
+```
+
+---
+
 ## Stack
 
 - React 19 + TypeScript

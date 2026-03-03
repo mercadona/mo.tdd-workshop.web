@@ -1,5 +1,5 @@
 import { screen, render, within } from '@testing-library/react'
-
+// import { userEvent } from '@testing-library/user-event'
 import { App } from 'app'
 
 it('should render the list of categories in the navigation', async () => {
@@ -24,16 +24,13 @@ it('should display the products with their prices correctly formatted', async ()
 })
 
 describe('Iteración 4 - Toggle card/list view', () => {
-  it.todo('should not display product descriptions and nutriscore in card view')
-  it.todo(
-    'should display product descriptions and nutriscore when switching to list view',
-  )
-  it.todo(
-    'should hide product descriptions and nutriscore when switching back to card view',
-  )
+  it.todo('should display product descriptions when switching to list view')
+  it.todo('should hide product descriptions when switching back to card view')
 })
 
 describe('Iteración 5 - Modal de producto', () => {
   it.todo('should open a dialog with product details when clicking a product')
   it.todo('should close the dialog when clicking close button')
+  it.todo('should close the dialog when clicking outside the modal [OPTIONAL]')
+  it.todo('should close the dialog when pressing ESC key [OPTIONAL]')
 })

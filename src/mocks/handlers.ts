@@ -9,4 +9,15 @@ export const handlers = [
   http.get('/products', () => {
     return HttpResponse.json(productsFixtures)
   }),
+  // Iteración 3
+  // http.get('/categories/:slug', ({ params }) => {
+  //   ...
+  // }),
+  // http.get('/categories/:slug/products', ({ params }) => {
+  //   ...
+  // }),
+  // Iteración 5
+  // http.get('/products/:id', ({ params }) => {
+  //   ...
+  // }),
 ]

@@ -51,7 +51,7 @@ describe('Iteración 2 - Listado de productos', () => {
 // ...
 ```
 
-Cada `it.todo` es un test que tienes que implementar. Para hacerlo:
+Para implementar un test:
 
 1. Cambia `it.todo('...')` por `it('...', async () => { ... })` y escribe el test
 2. Ejecuta los tests — debe fallar en rojo
@@ -72,19 +72,54 @@ Fetch de categorías desde la API y renderizado en la navegación.
 ✓ should render the list of categories in the navigation
 ```
 
+<details>
+<summary>¿Necesitas más ayuda?</summary>
+
+El HTML esperado en la navegación:
+
+```html
+<ul class="navigation__list">
+  <li class="navigation__list-item">Fruta y verdura</li>
+  <li class="navigation__list-item">Cereales</li>
+  <li class="navigation__list-item">Aperitivos</li>
+</ul>
+```
+
+</details>
+
+---
+
 ### Iteración 2 — Listado de productos
 
 Productos en la home con precios formateados en euros.
 
-**Se proporciona:** `ProductCard` como componente estático en `src/components/product-card/` — solo hay que dinamizarlo para que acepte props.
+**Se proporciona:** `ProductCard` como componente estático en `src/components/product-card/` — solo hay que dinamizarlo para que acepte props. En `src/mocks/` tienes `products-fixtures.json` con los datos que usará tu handler.
+
+En card view **no** deben aparecer la descripción del producto.
 
 ```
 ✓ should display the products with their prices correctly formatted
 ```
 
+<details>
+<summary>¿Necesitas más ayuda?</summary>
+
+Para formatear el precio en euros con `Intl`:
+
+```ts
+new Intl.NumberFormat('es-ES', {
+  style: 'currency',
+  currency: 'EUR',
+}).format(price)
+```
+
+</details>
+
+---
+
 ### Iteración 3 — Navegación y routing
 
-Navegación entre categorías con React Router. Manejo de rutas no encontradas.
+Navegación entre categorías con React Router.
 
 **Se proporciona:** estructura de rutas con `RootLayout` y `AppRoutes` en `src/pages/routes/`, y la página `CategoryDetail` vacía en `src/pages/category-detail/`.
 
@@ -96,22 +131,119 @@ Navegación entre categorías con React Router. Manejo de rutas no encontradas.
 ✓ should display a not found message when the category does not exist [OPTIONAL]
 ```
 
+<details>
+<summary>¿Necesitas más ayuda?</summary>
+
+Para enlazar a una categoría desde la navegación:
+
+```tsx
+// Opción simple
+to={`/categories/${category.slug}`}
+
+// Opción con generatePath (más robusta)
+to={generatePath(PATHS.CATEGORY_DETAIL, { slug: category.slug })}
+```
+
+Para que el link activo tenga estilos, usa `NavLink` con `classNames`:
+
+```tsx
+<NavLink
+  to={`/categories/${category.slug}`}
+  className={({ isActive }) =>
+    classNames('navigation__link', {
+      'navigation__link--active': isActive,
+    })
+  }
+>
+  {category.displayName}
+</NavLink>
+```
+
+Para navegar directamente a una URL en un test sin pasar por la home:
+
+```ts
+window.history.pushState({}, '', '/categories/fruta-y-verdura')
+render(<App />)
+```
+
+Para manejar el `404` correctamente, comprueba `response.ok` antes de parsear el body:
+
+```ts
+const response = await fetch(`/categories/${slug}`)
+if (!response.ok) // manejar error
+const data = await response.json()
+```
+
+</details>
+
+---
+
 ### Iteración 4 — Toggle card/list view
 
 Estado global con Context API para alternar entre vista tarjeta y vista lista.
 
 **Se proporciona:** componente `Toggle` listo para usar en `src/components/toggle/`.
 
+En list view deben aparecer las descripciones de los productos. En card view no.
+
 ```
 ✓ should display product descriptions when switching to list view
 ✓ should hide product descriptions when switching back to card view
 ```
 
+<details>
+<summary>¿Necesitas más ayuda?</summary>
+
+El `ViewModeProvider` que necesitas crear:
+
+```tsx
+type ViewMode = 'card' | 'list'
+
+interface ViewModeContextType {
+  viewMode: ViewMode
+  toggleViewMode: () => void
+}
+
+const ViewModeContext = createContext<ViewModeContextType | null>(null)
+
+export const ViewModeProvider = ({ children }: { children: React.ReactNode }) => {
+  const [viewMode, setViewMode] = useState<ViewMode>('card')
+  const toggleViewMode = () =>
+    setViewMode((prev) => (prev === 'card' ? 'list' : 'card'))
+
+  return (
+    <ViewModeContext.Provider value={{ viewMode, toggleViewMode }}>
+      {children}
+    </ViewModeContext.Provider>
+  )
+}
+
+export const useViewMode = () => {
+  const context = useContext(ViewModeContext)
+  if (!context) throw new Error('useViewMode must be used within a ViewModeProvider')
+  return context
+}
+```
+
+Cuando el viewMode es `list`, la clase del contenedor de productos cambia:
+
+```tsx
+// card view
+<section className="home__products-grid">
+
+// list view
+<section className="home__products-list">
+```
+
+</details>
+
+---
+
 ### Iteración 5 — Modal de producto
 
 Dialog nativo del navegador para mostrar el detalle de un producto.
 
-**Se proporciona:** `ProductDetail` como componente estático en `src/components/product-detail/` — igual que con `ProductCard` en la iteración 2, solo hay que dinamizarlo.
+**Se proporciona:** `ProductDetail` como componente estático en `src/components/product-detail/` — igual que con `ProductCard` en la iteración 2, solo hay que dinamizarlo para que reciba un `Product` como prop.
 
 ```
 ✓ should open a dialog with product details when clicking a product
@@ -120,60 +252,73 @@ Dialog nativo del navegador para mostrar el detalle de un producto.
 ✓ should close the dialog when pressing ESC key [OPTIONAL]
 ```
 
+<details>
+<summary>¿Necesitas más ayuda?</summary>
+
+El modal solo debe renderizarse cuando hay un producto seleccionado — nunca con una prop `isOpen`:
+
+```tsx
+{selectedProduct && (
+  <ProductDetail product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+)}
+```
+
+Para cerrar el modal al pulsar ESC:
+
+```tsx
+useEffect(() => {
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') onClose()
+  }
+  window.addEventListener('keydown', handleKeyDown)
+  return () => window.removeEventListener('keydown', handleKeyDown)
+}, [onClose])
+```
+
+</details>
+
+---
+
+## Tipos
+
+```ts
+interface Category {
+  id: number
+  displayName: string
+  slug: string
+}
+
+interface Product {
+  id: number
+  displayName: string
+  image: string
+  price: number
+  categoryId: number
+  description?: string
+}
+```
+
 ---
 
 ## API mock (MSW)
 
-Los endpoints están mockeados con MSW y se activan iteración a iteración. No hay servidor real.
+Los endpoints están mockeados con MSW. No hay servidor real.
 
-### `GET /categories`
+### Pre-cocinado
 
-Devuelve la lista de categorías.
+| Endpoint | Respuesta | Disponible desde |
+|----------|-----------|-----------------|
+| `GET /categories` | `Category[]` | master (ya funciona) |
 
-```json
-[
-  { "id": 1, "displayName": "Fruta y verdura", "slug": "fruta-y-verdura" }
-]
-```
+### Por implementar
 
-### `GET /products`
+| Endpoint | Respuesta | Iteración |
+|----------|-----------|-----------|
+| `GET /products` | `Product[]` | 2 |
+| `GET /categories/:slug` | `Category` o `404` | 3 |
+| `GET /categories/:slug/products` | `Product[]` o `404` | 3 |
 
-Devuelve todos los productos.
-
-```json
-[
-  {
-    "id": 22910,
-    "slug": "aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3",
-    "displayName": "Aceitunas verdes rellenas de anchoa Hacendado",
-    "description": "...",
-    "nutriscore": "D",
-    "image": "/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910.jpg",
-    "thumbnail": "/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910_thumb.jpg",
-    "price": 3,
-    "referenceFormat": "kg",
-    "categoryId": 15
-  }
-]
-```
-
-### `GET /categories/:slug`
-
-Devuelve una categoría por su slug. Devuelve `404` si no existe.
-
-```json
-{ "id": 1, "displayName": "Fruta y verdura", "slug": "fruta-y-verdura" }
-```
-
-### `GET /categories/:slug/products`
-
-Devuelve los productos de una categoría. Devuelve `404` si la categoría no existe.
-
-```json
-[
-  { "id": 22910, "displayName": "...", "price": 3, "categoryId": 15, ... }
-]
-```
+Los fixtures están en `src/mocks/`: `categories-fixtures.json` (3 categorías) y `products-fixtures.json` (24 productos, 8 por categoría).
 
 ---
 

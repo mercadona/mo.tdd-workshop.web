@@ -143,6 +143,10 @@ Archivos clave:
 - `src/hooks/useProducts.ts`
 - `src/mocks/handlers.ts` (añadir handler `/products`)
 
+### El test "Hello World"
+
+Al dinamizar `Home` para mostrar productos, el `<h1>Hello World!</h1>` desaparecerá y el test `should render correctly the home` fallará. Es esperado — el asistente puede borrarlo sin problema.
+
 ### Errores frecuentes
 
 - Olvidar `aria-labelledby` → `findByRole('article', { name })` no encuentra el elemento

@@ -63,6 +63,7 @@ Para implementar un test:
 ## Las 5 iteraciones
 
 ### Iteración 1 — Listado de categorías
+<img width="1230" height="1046" alt="image" src="https://github.com/user-attachments/assets/5471c519-8f42-49eb-aa05-a43bf0f2351a" />
 
 Fetch de categorías desde la API y renderizado en la navegación.
 
@@ -90,6 +91,8 @@ El HTML esperado en la navegación:
 ---
 
 ### Iteración 2 — Listado de productos
+<img width="1183" height="1006" alt="image" src="https://github.com/user-attachments/assets/cdadcc73-2002-4fe1-b7f4-e25dd76a81d8" />
+
 
 Productos en la home con precios formateados en euros.
 
@@ -118,6 +121,7 @@ new Intl.NumberFormat('es-ES', {
 ---
 
 ### Iteración 3 — Navegación y routing
+<img width="1244" height="1046" alt="image" src="https://github.com/user-attachments/assets/65e3eaa4-1b6f-4504-bd8c-36b553891602" />
 
 Navegación entre categorías con React Router.
 
@@ -179,6 +183,9 @@ const data = await response.json()
 ---
 
 ### Iteración 4 — Toggle card/list view
+<img width="1226" height="1047" alt="image" src="https://github.com/user-attachments/assets/ae34e1e7-63c3-4b52-ab2e-47c33552d87a" />
+<img width="1231" height="1048" alt="image" src="https://github.com/user-attachments/assets/65941d26-260c-4e66-8c4d-97151f0b209e" />
+
 
 Estado global con Context API para alternar entre vista tarjeta y vista lista.
 
@@ -240,6 +247,8 @@ Cuando el viewMode es `list`, la clase del contenedor de productos cambia:
 ---
 
 ### Iteración 5 — Modal de producto
+<img width="1183" height="1008" alt="image" src="https://github.com/user-attachments/assets/66119000-3828-4f99-9d40-7477cf8809c5" />
+
 
 Dialog nativo del navegador para mostrar el detalle de un producto.
 

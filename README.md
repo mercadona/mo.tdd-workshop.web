@@ -38,15 +38,20 @@ npm start      # la app en localhost:5173
 
 ## Cómo trabajar
 
-Abre `src/pages/home/__tests__/Home.test.tsx` y `src/pages/category-detail/__tests__/CategoryDetail.test.tsx`. Verás algo así:
+Abre `src/pages/home/__tests__/Home.test.tsx` y `src/pages/category-detail/__tests__/CategoryDetail.test.tsx`. Verás los tests agrupados por iteración:
 
 ```ts
-it.todo('should render the list of categories in the navigation')
-it.todo('should display the products with their prices correctly formatted')
+describe('Iteración 1 - Listado de categorías', () => {
+  it.todo('should render the list of categories in the navigation')
+})
+
+describe('Iteración 2 - Listado de productos', () => {
+  it.todo('should display the products with their prices correctly formatted')
+})
 // ...
 ```
 
-Cada `it.todo` es una iteración. Para implementarlo:
+Cada `it.todo` es un test que tienes que implementar. Para hacerlo:
 
 1. Cambia `it.todo('...')` por `it('...', async () => { ... })` y escribe el test
 2. Ejecuta los tests — debe fallar en rojo
@@ -85,9 +90,10 @@ Navegación entre categorías con React Router. Manejo de rutas no encontradas.
 
 ```
 ✓ should navigate to the category page and display the category title
-✓ should display a not found message when the category does not exist
-✓ should highlight the active category in the navigation
-✓ should navigate to home when clicking the logo
+✓ should show the category products
+✓ should navigate to home when clicking the logo [OPTIONAL]
+✓ should highlight the active category in the navigation [OPTIONAL]
+✓ should display a not found message when the category does not exist [OPTIONAL]
 ```
 
 ### Iteración 4 — Toggle card/list view
@@ -97,9 +103,8 @@ Estado global con Context API para alternar entre vista tarjeta y vista lista.
 **Se proporciona:** componente `Toggle` listo para usar en `src/components/toggle/`.
 
 ```
-✓ should not display product descriptions and nutriscore in card view
-✓ should display product descriptions and nutriscore when switching to list view
-✓ should hide product descriptions and nutriscore when switching back to card view
+✓ should display product descriptions when switching to list view
+✓ should hide product descriptions when switching back to card view
 ```
 
 ### Iteración 5 — Modal de producto
@@ -111,8 +116,8 @@ Dialog nativo del navegador para mostrar el detalle de un producto.
 ```
 ✓ should open a dialog with product details when clicking a product
 ✓ should close the dialog when clicking close button
-✓ should open a dialog with product details when clicking a product from category
-✓ should close the dialog when clicking close button from category
+✓ should close the dialog when clicking outside the modal [OPTIONAL]
+✓ should close the dialog when pressing ESC key [OPTIONAL]
 ```
 
 ---

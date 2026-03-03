@@ -304,14 +304,16 @@ describe('Iteración 4 - Toggle card/list view', () => {
   }
   ```
 
-- **No testear detalles de implementación:**
+- **No SOLO testear detalles de implementación:**
   ```typescript
-  // ❌ MAL — depende de la implementación del Toggle
-  expect(toggle).toHaveAttribute('aria-checked', 'false')
-  expect(productCard).toHaveClass('product--list')
-
   // ✅ BIEN — verifica lo que ve el usuario
   expect(screen.queryByText(/descripción/)).not.toBeInTheDocument()
+
+  // ADICIONAL — comprobar el estado accesible del Toggle
+  expect(toggle).toHaveAttribute('aria-checked', 'false')
+
+  // ❌ MAL — Testear la clase del ProductCard en lugar del contenido
+  expect(productCard).toHaveClass('product--list')
   ```
 
 - **`toggleViewMode` como helper DSL:**

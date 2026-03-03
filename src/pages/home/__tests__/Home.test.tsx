@@ -2,15 +2,17 @@ import { screen, render, within } from '@testing-library/react'
 // import { userEvent } from '@testing-library/user-event'
 import { App } from 'app'
 
-it('should render the list of categories in the navigation', async () => {
-  render(<App />)
+describe('Iteración 1 - Listado de categorías', () => {
+  it('should render the list of categories in the navigation', async () => {
+    render(<App />)
 
-  const nav = screen.getByRole('navigation')
-  const categoryList = await within(nav).findByRole('list')
-  const categories = within(categoryList).getAllByRole('listitem')
+    const nav = screen.getByRole('navigation')
+    const categoryList = await within(nav).findByRole('list')
+    const categories = within(categoryList).getAllByRole('listitem')
 
-  expect(categories).toHaveLength(3)
-  expect(within(nav).getByText('Fruta y verdura')).toBeVisible()
+    expect(categories).toHaveLength(3)
+    expect(within(nav).getByText('Fruta y verdura')).toBeVisible()
+  })
 })
 
 describe('Iteración 2 - Listado de productos', () => {

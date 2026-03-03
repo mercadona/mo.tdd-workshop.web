@@ -16,8 +16,4 @@ export const handlers = [
   // http.get('/categories/:slug/products', ({ params }) => {
   //   ...
   // }),
-  // Iteración 5
-  // http.get('/products/:id', ({ params }) => {
-  //   ...
-  // }),
 ]

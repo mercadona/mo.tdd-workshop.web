@@ -56,9 +56,7 @@ describe('Iteración 3 - Navegación y routing', () => {
     window.history.pushState({}, '', '/categories/non-existent-slug')
     render(<App />)
 
-    expect(
-      await screen.findByText(/categoría no encontrada/i),
-    ).toBeVisible()
+    expect(await screen.findByText(/categoría no encontrada/i)).toBeVisible()
   })
 })
 

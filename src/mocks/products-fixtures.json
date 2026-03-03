@@ -1,290 +1,194 @@
 [
   {
     "id": 22910,
-    "slug": "aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3",
     "displayName": "Aceitunas verdes rellenas de anchoa Hacendado",
-    "description": "Aceitunas verdes rellenas con anchoas de calidad. Perfectas para el aperitivo.",
-    "nutriscore": "D",
     "image": "/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910.jpg",
-    "thumbnail": "/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910_thumb.jpg",
     "price": 3,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Aceitunas verdes rellenas con anchoas de calidad. Perfectas para el aperitivo."
   },
   {
     "id": 33053,
-    "slug": "aceitunas-manzanilla-hacendado-sin-hueso-tarro",
     "displayName": "Aceitunas verdes sin hueso Hacendado",
-    "description": "Aceitunas verdes deshuesadas, listas para consumir. Ideales para ensaladas.",
-    "nutriscore": "B",
     "image": "/images/aceitunas-manzanilla-hacendado-sin-hueso-tarro-33053.jpg",
-    "thumbnail": "/images/aceitunas-manzanilla-hacendado-sin-hueso-tarro-33053_thumb.jpg",
     "price": 2.8,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Aceitunas verdes deshuesadas, listas para consumir. Ideales para ensaladas."
   },
   {
     "id": 33168,
-    "slug": "aceitunas-chupadedos-huerta-barros-partidas-alinadas-con-hueso-tarro",
     "displayName": "Aceitunas verdes Chupadedos Huerta de Barros partidas aliñadas",
-    "description": "Aceitunas partidas y aliñadas al estilo tradicional extremeño. Sabor intenso.",
-    "nutriscore": "A",
     "image": "/images/aceitunas-chupadedos-huerta-barros-partidas-alinadas-con-hueso-tarro-33168.jpg",
-    "thumbnail": "/images/aceitunas-chupadedos-huerta-barros-partidas-alinadas-con-hueso-tarro-33168_thumb.jpg",
     "price": 3.4,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Aceitunas partidas y aliñadas al estilo tradicional extremeño. Sabor intenso."
   },
   {
     "id": 52734,
-    "slug": "aceitunas-negras-hacendado-sin-hueso-bote",
     "displayName": "Aceitunas negras sin hueso Hacendado",
-    "description": "Aceitunas negras deshuesadas, perfectas para pizzas y ensaladas.",
-    "nutriscore": "A",
     "image": "/images/aceitunas-negras-hacendado-sin-hueso-bote-52734.jpg",
-    "thumbnail": "/images/aceitunas-negras-hacendado-sin-hueso-bote-52734_thumb.jpg",
     "price": 1.05,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Aceitunas negras deshuesadas, perfectas para pizzas y ensaladas."
   },
   {
     "id": 33235,
-    "slug": "banderillas-picantes-hacendado-tarro",
     "displayName": "Banderillas picantes Hacendado",
-    "description": "Banderillas de encurtidos con toque picante. Ideal para aperitivos.",
-    "nutriscore": "B",
     "image": "/images/banderillas-picantes-hacendado-tarro-33235.jpg",
-    "thumbnail": "/images/banderillas-picantes-hacendado-tarro-33235_thumb.jpg",
     "price": 1.7,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Banderillas de encurtidos con toque picante. Ideal para aperitivos."
   },
   {
     "id": 73331,
-    "slug": "mix-encurtidos-hacendado-tarro",
     "displayName": "Mix de encurtidos Hacendado",
-    "description": "Variedad de encurtidos en vinagre: pepinillos, cebollitas y zanahorias.",
-    "nutriscore": "A",
     "image": "/images/mix-encurtidos-hacendado-tarro-73331.jpg",
-    "thumbnail": "/images/mix-encurtidos-hacendado-tarro-73331_thumb.jpg",
     "price": 2.65,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Variedad de encurtidos en vinagre: pepinillos, cebollitas y zanahorias."
   },
   {
     "id": 29540,
-    "slug": "pepinillos-pequenos-hacendado-tarro",
     "displayName": "Pepinillos pequeños Hacendado",
-    "description": "Pepinillos encurtidos de tamaño pequeño, crujientes y sabrosos.",
-    "nutriscore": "D",
     "image": "/images/pepinillos-pequenos-hacendado-tarro-29540.jpg",
-    "thumbnail": "/images/pepinillos-pequenos-hacendado-tarro-29540_thumb.jpg",
     "price": 1.55,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Pepinillos encurtidos de tamaño pequeño, crujientes y sabrosos."
   },
   {
     "id": 33136,
-    "slug": "altramuces-hacendado-tarro",
     "displayName": "Altramuces Hacendado",
-    "description": "Altramuces en salmuera, snack tradicional rico en proteínas.",
-    "nutriscore": "C",
     "image": "/images/altramuces-hacendado-tarro-33136.jpg",
-    "thumbnail": "/images/altramuces-hacendado-tarro-33136_thumb.jpg",
     "price": 1.75,
-    "referenceFormat": "kg",
-    "categoryId": 15
+    "categoryId": 15,
+    "description": "Altramuces en salmuera, snack tradicional rico en proteínas."
   },
   {
     "id": 9264,
-    "slug": "cereales-rellenos-leche-hacendado-caja",
     "displayName": "Cereales rellenos de leche Hacendado",
-    "description": "Cereales crujientes con relleno cremoso de leche. Desayuno delicioso.",
-    "nutriscore": "C",
     "image": "/images/cereales-rellenos-leche-hacendado-caja-9264.jpg",
-    "thumbnail": "/images/cereales-rellenos-leche-hacendado-caja-9264_thumb.jpg",
     "price": 2.4,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Cereales crujientes con relleno cremoso de leche. Desayuno delicioso."
   },
   {
     "id": 9377,
-    "slug": "cereales-rellenos-chocolate-avellana-hacendado-paquete",
     "displayName": "Cereales rellenos de chocolate y avellana Hacendado",
-    "description": "Cereales con delicioso relleno de chocolate y avellana. Para los más golosos.",
-    "nutriscore": "A",
     "image": "/images/cereales-rellenos-chocolate-avellana-hacendado-paquete-9377.jpg",
-    "thumbnail": "/images/cereales-rellenos-chocolate-avellana-hacendado-paquete-9377_thumb.jpg",
     "price": 2.1,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Cereales con delicioso relleno de chocolate y avellana. Para los más golosos."
   },
   {
     "id": 22966,
-    "slug": "cereales-copos-maiz-corn-flakes-hacendado-0-azucares-anadidos-caja",
     "displayName": "Cereales copos de maíz Corn Flakes Hacendado 0% azúcares añadidos",
-    "description": "Copos de maíz tostado sin azúcares añadidos. Desayuno saludable.",
-    "nutriscore": "C",
     "image": "/images/cereales-copos-maiz-corn-flakes-hacendado-0-azucares-anadidos-caja-22966.jpg",
-    "thumbnail": "/images/cereales-copos-maiz-corn-flakes-hacendado-0-azucares-anadidos-caja-22966_thumb.jpg",
     "price": 1.5,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Copos de maíz tostado sin azúcares añadidos. Desayuno saludable."
   },
   {
     "id": 9210,
-    "slug": "cereales-copos-maiz-corn-flakes-kelloggs-caja",
     "displayName": "Cereales copos de maíz Corn Flakes Kellogg's",
-    "description": "Los clásicos Corn Flakes de Kellogg's. Crujientes y deliciosos.",
-    "nutriscore": "C",
     "image": "/images/cereales-copos-maiz-corn-flakes-kelloggs-caja-9210.jpg",
-    "thumbnail": "/images/cereales-copos-maiz-corn-flakes-kelloggs-caja-9210_thumb.jpg",
     "price": 3,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Los clásicos Corn Flakes de Kellogg's. Crujientes y deliciosos."
   },
   {
     "id": 35987,
-    "slug": "cereales-arroz-inflado-choco-krispies-kelloggs-con-chocolate-caja",
     "displayName": "Cereales de arroz inflado Choco Krispies Kellogg's con chocolate",
-    "description": "Arroz inflado con chocolate que cruje al comer. Favorito de los niños.",
-    "nutriscore": "B",
     "image": "/images/cereales-arroz-inflado-choco-krispies-kelloggs-con-chocolate-caja-35987.jpg",
-    "thumbnail": "/images/cereales-arroz-inflado-choco-krispies-kelloggs-con-chocolate-caja-35987_thumb.jpg",
     "price": 3.65,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Arroz inflado con chocolate que cruje al comer. Favorito de los niños."
   },
   {
     "id": 86368,
-    "slug": "copos-avena-hacendado-paquete",
     "displayName": "Copos de avena sin gluten Hacendado",
-    "description": "Copos de avena certificados sin gluten. Alto contenido en fibra.",
-    "nutriscore": "C",
     "image": "/images/copos-avena-hacendado-paquete-86368.jpg",
-    "thumbnail": "/images/copos-avena-hacendado-paquete-86368_thumb.jpg",
     "price": 2.1,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Copos de avena certificados sin gluten. Alto contenido en fibra."
   },
   {
     "id": 9355,
-    "slug": "muesli-crunchy-hacendado-con-chocolate-15-chocolate-paquete",
     "displayName": "Muesli Crunchy Hacendado con chocolate",
-    "description": "Muesli crujiente con trozos de chocolate y frutos secos.",
-    "nutriscore": "C",
     "image": "/images/muesli-crunchy-hacendado-con-chocolate-15-chocolate-paquete-9355.jpg",
-    "thumbnail": "/images/muesli-crunchy-hacendado-con-chocolate-15-chocolate-paquete-9355_thumb.jpg",
     "price": 2.35,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Muesli crujiente con trozos de chocolate y frutos secos."
   },
   {
     "id": 9350,
-    "slug": "barritas-cereales-hacendado-chocolate-con-leche-caja",
     "displayName": "Barritas de cereales Hacendado chocolate con leche",
-    "description": "Barritas de cereales bañadas en chocolate con leche. Prácticas y energéticas.",
-    "nutriscore": "D",
     "image": "/images/barritas-cereales-hacendado-chocolate-con-leche-caja-9350.jpg",
-    "thumbnail": "/images/barritas-cereales-hacendado-chocolate-con-leche-caja-9350_thumb.jpg",
     "price": 1.55,
-    "referenceFormat": "kg",
-    "categoryId": 7
+    "categoryId": 7,
+    "description": "Barritas de cereales bañadas en chocolate con leche. Prácticas y energéticas."
   },
   {
     "id": 3819,
-    "slug": "platano-canarias-igp-pieza",
     "displayName": "Plátano de Canarias IGP",
-    "description": "Plátano de Canarias con Indicación Geográfica Protegida. Dulce y aromático.",
-    "nutriscore": "C",
     "image": "/images/platano-canarias-igp-pieza-3819.jpg",
-    "thumbnail": "/images/platano-canarias-igp-pieza-3819_thumb.jpg",
     "price": 0.37,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Plátano de Canarias con Indicación Geográfica Protegida. Dulce y aromático."
   },
   {
     "id": 3824,
-    "slug": "banana-pieza",
     "displayName": "Banana",
-    "description": "Banana tropical, rica en potasio. Ideal para deportistas.",
-    "nutriscore": "A",
     "image": "/images/banana-pieza-3824.jpg",
-    "thumbnail": "/images/banana-pieza-3824_thumb.jpg",
     "price": 0.28,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Banana tropical, rica en potasio. Ideal para deportistas."
   },
   {
     "id": 3313,
-    "slug": "uva-blanca-sin-semillas-bandeja",
     "displayName": "Uva blanca sin semillas",
-    "description": "Uva blanca sin pepitas, dulce y jugosa. Perfecta para picar.",
-    "nutriscore": "A",
     "image": "/images/uva-blanca-sin-semillas-bandeja-3313.jpg",
-    "thumbnail": "/images/uva-blanca-sin-semillas-bandeja-3313_thumb.jpg",
     "price": 3.3,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Uva blanca sin pepitas, dulce y jugosa. Perfecta para picar."
   },
   {
     "id": 3028,
-    "slug": "manzana-golden-pieza",
     "displayName": "Manzana Golden",
-    "description": "Manzana Golden dulce y crujiente. Excelente para comer o cocinar.",
-    "nutriscore": "D",
     "image": "/images/manzana-golden-pieza-3028.jpg",
-    "thumbnail": "/images/manzana-golden-pieza-3028_thumb.jpg",
     "price": 0.46,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Manzana Golden dulce y crujiente. Excelente para comer o cocinar."
   },
   {
     "id": 3119,
-    "slug": "pera-conferencia-pieza",
     "displayName": "Pera Conferencia",
-    "description": "Pera Conferencia jugosa y dulce. Ideal para toda la familia.",
-    "nutriscore": "D",
     "image": "/images/pera-conferencia-pieza-3119.jpg",
-    "thumbnail": "/images/pera-conferencia-pieza-3119_thumb.jpg",
     "price": 0.42,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Pera Conferencia jugosa y dulce. Ideal para toda la familia."
   },
   {
     "id": 3236,
-    "slug": "limones-malla",
     "displayName": "Limones",
-    "description": "Limones frescos y ácidos. Ricos en vitamina C.",
-    "nutriscore": "C",
     "image": "/images/limones-malla-3236.jpg",
-    "thumbnail": "/images/limones-malla-3236_thumb.jpg",
     "price": 2.2,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Limones frescos y ácidos. Ricos en vitamina C."
   },
   {
     "id": 3820,
-    "slug": "kiwi-verde-pieza",
     "displayName": "Kiwi verde",
-    "description": "Kiwi verde con sabor ácido y refrescante. Alto contenido en vitamina C.",
-    "nutriscore": "B",
     "image": "/images/kiwi-verde-pieza-3820.jpg",
-    "thumbnail": "/images/kiwi-verde-pieza-3820_thumb.jpg",
     "price": 0.39,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Kiwi verde con sabor ácido y refrescante. Alto contenido en vitamina C."
   },
   {
     "id": 3830,
-    "slug": "aguacate-pieza",
     "displayName": "Aguacate",
-    "description": "Aguacate cremoso y nutritivo. Rico en grasas saludables.",
-    "nutriscore": "B",
     "image": "/images/aguacate-pieza-3830.jpg",
-    "thumbnail": "/images/aguacate-pieza-3830_thumb.jpg",
     "price": 1.2,
-    "referenceFormat": "kg",
-    "categoryId": 1
+    "categoryId": 1,
+    "description": "Aguacate cremoso y nutritivo. Rico en grasas saludables."
   }
 ]

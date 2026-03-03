@@ -9,9 +9,8 @@ import './CategoryDetail.css'
 
 export const CategoryDetail = () => {
   const { slug } = useParams<{ slug: string }>()
-  const { category, notFound } = useCategoryWithProducts(slug)
-  const { selectedProduct, handleProductClick, handleClose } =
-    useProductDialog()
+  const { category, products, notFound } = useCategoryWithProducts(slug)
+  const { selectedProduct, handleProductClick, handleClose } = useProductDialog()
   const { viewMode } = useViewMode()
 
   if (notFound) {
@@ -37,11 +36,11 @@ export const CategoryDetail = () => {
           'category-detail__products-list': viewMode === 'list',
         })}
       >
-        {category.products.map((product) => (
+        {products.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
-            onClick={() => handleProductClick(product.id)}
+            onClick={() => handleProductClick(product)}
           />
         ))}
       </div>

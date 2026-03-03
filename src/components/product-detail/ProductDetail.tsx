@@ -1,5 +1,4 @@
 import type { Product } from 'types'
-import { NutriScore } from 'components/nutri-score'
 import './ProductDetail.css'
 
 interface ProductDetailProps {
@@ -34,11 +33,6 @@ export const ProductDetail = ({ product, onClose }: ProductDetailProps) => {
           <p className="product-detail__price">{formattedPrice}</p>
           {product.description && (
             <p className="product-detail__description">{product.description}</p>
-          )}
-          {product.nutriscore && (
-            <div className="product-detail__nutriscore">
-              <NutriScore score={product.nutriscore} />
-            </div>
           )}
         </div>
       </dialog>

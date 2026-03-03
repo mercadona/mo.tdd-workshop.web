@@ -15,30 +15,18 @@ export const handlers = [
     const category = (categoriesFixtures as Category[]).find(
       (cat) => cat.slug === slug,
     )
-
-    if (!category) {
-      return new HttpResponse(null, { status: 404 })
-    }
-
-    const categoryProducts = (productsFixtures as Product[]).filter(
-      (product) => product.categoryId === category.id,
-    )
-
-    return HttpResponse.json({
-      ...category,
-      products: categoryProducts,
-    })
+    if (!category) return new HttpResponse(null, { status: 404 })
+    return HttpResponse.json(category)
   }),
-  http.get('/products/:id', ({ params }) => {
-    const { id } = params
-    const product = (productsFixtures as Product[]).find(
-      (product) => product.id === Number(id),
+  http.get('/categories/:slug/products', ({ params }) => {
+    const { slug } = params
+    const category = (categoriesFixtures as Category[]).find(
+      (cat) => cat.slug === slug,
     )
-
-    if (!product) {
-      return new HttpResponse(null, { status: 404 })
-    }
-
-    return HttpResponse.json(product)
+    if (!category) return new HttpResponse(null, { status: 404 })
+    const products = (productsFixtures as Product[]).filter(
+      (p) => p.categoryId === category.id,
+    )
+    return HttpResponse.json(products)
   }),
 ]

@@ -8,13 +8,12 @@ import './Home.css'
 
 const Home = () => {
   const { products } = useProducts()
-  const { selectedProduct, handleProductClick, handleClose } =
-    useProductDialog()
+  const { selectedProduct, handleProductClick, handleClose } = useProductDialog()
   const { viewMode } = useViewMode()
 
   return (
-    <div>
-      <div
+    <>
+      <section
         className={classNames({
           'home__products-grid': viewMode === 'card',
           'home__products-list': viewMode === 'list',
@@ -24,14 +23,14 @@ const Home = () => {
           <ProductCard
             key={product.id}
             product={product}
-            onClick={() => handleProductClick(product.id)}
+            onClick={() => handleProductClick(product)}
           />
         ))}
-      </div>
+      </section>
       {selectedProduct && (
         <ProductDetail product={selectedProduct} onClose={handleClose} />
       )}
-    </div>
+    </>
   )
 }
 

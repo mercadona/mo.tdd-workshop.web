@@ -1,1 +1,0 @@
-export { NutriScore } from './NutriScore'

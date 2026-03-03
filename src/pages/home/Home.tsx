@@ -1,5 +1,11 @@
+import './Home.css'
+
 const Home = () => {
-  return <h1>Hello World!</h1>
+  return (
+    <section className="home__products-grid">
+      <h1>Hello World!</h1>
+    </section>
+  )
 }
 
 export { Home }

@@ -1,4 +1,3 @@
-import { NutriScore } from 'components/nutri-score'
 import './ProductDetail.css'
 
 export const ProductDetail = () => {
@@ -11,21 +10,15 @@ export const ProductDetail = () => {
             ×
           </button>
           <img
-            src="/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910.jpg"
-            alt="Aceitunas verdes rellenas de anchoa Hacendado"
+            src="/images/aguacate-pieza-3830.jpg"
+            alt="Aguacate"
             className="product-detail__image"
           />
-          <h2 className="product-detail__name">
-            Aceitunas verdes rellenas de anchoa Hacendado
-          </h2>
-          <p className="product-detail__price">3,00 €</p>
+          <h2 className="product-detail__name">Aguacate</h2>
+          <p className="product-detail__price">1,20 €</p>
           <p className="product-detail__description">
-            Aceitunas verdes rellenas con anchoas de calidad. Perfectas para el
-            aperitivo.
+            Aguacate cremoso y nutritivo. Rico en grasas saludables.
           </p>
-          <div className="product-detail__nutriscore">
-            <NutriScore score="D" />
-          </div>
         </div>
       </dialog>
     </>

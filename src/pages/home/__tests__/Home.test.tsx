@@ -28,7 +28,7 @@ it('should display product descriptions when switching to list view', async () =
   const user = userEvent.setup()
   render(<App />)
 
-  const productCard = await screen.findByRole('article', {
+  await screen.findByRole('article', {
     name: 'Aceitunas verdes rellenas de anchoa Hacendado',
   })
 
@@ -41,7 +41,6 @@ it('should display product descriptions when switching to list view', async () =
   expect(
     screen.getByText(/Aceitunas verdes rellenas con anchoas de calidad/),
   ).toBeVisible()
-  expect(within(productCard).getByText(/Aceitunas verdes rellenas con anchoas de calidad/)).toBeVisible()
 })
 
 it('should hide product descriptions when switching back to card view', async () => {

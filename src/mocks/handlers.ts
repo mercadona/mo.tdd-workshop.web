@@ -29,8 +29,4 @@ export const handlers = [
     )
     return HttpResponse.json(products)
   }),
-  // Iteración 5
-  // http.get('/products/:id', ({ params }) => {
-  //   ...
-  // }),
 ]

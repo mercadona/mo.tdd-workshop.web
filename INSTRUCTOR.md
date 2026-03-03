@@ -30,7 +30,7 @@ Los asistentes trabajan en su propia rama desde `master`. **No modificar master 
 
 ### Explicar los it.todo() como guía
 
-Al arrancar, mostrar `src/pages/home/__tests__/Home.test.tsx` y `src/pages/category-detail/__tests__/CategoryDetail.test.tsx`. Los `it.todo()` son el mapa del workshop: cada test que pasarán de TODO a verde.
+Al arrancar, mostrar `src/pages/home/__tests__/Home.test.tsx` y `src/pages/category-detail/__tests__/CategoryDetail.test.tsx`. Los `it.todo()` están agrupados en `describe` por iteración — son el mapa del workshop: cada test que pasarán de TODO a verde.
 
 Ejecutar `npm test` para mostrar la lista de todos pendientes desde el inicio.
 
@@ -48,13 +48,15 @@ El handler MSW para `/categories` ya está pre-cocinado en `src/mocks/handlers.t
 
 ```tsx
 // src/pages/home/__tests__/Home.test.tsx
-it('should render the list of categories in the navigation', async () => {
-  render(<App />)
-  const nav = screen.getByRole('navigation')
-  const categoryList = await within(nav).findByRole('list')
-  const categories = within(categoryList).getAllByRole('listitem')
-  expect(categories).toHaveLength(3)
-  expect(within(nav).getByText('Fruta y verdura')).toBeVisible()
+describe('Iteración 1 - Listado de categorías', () => {
+  it('should render the list of categories in the navigation', async () => {
+    render(<App />)
+    const nav = screen.getByRole('navigation')
+    const categoryList = await within(nav).findByRole('list')
+    const categories = within(categoryList).getAllByRole('listitem')
+    expect(categories).toHaveLength(3)
+    expect(within(nav).getByText('Fruta y verdura')).toBeVisible()
+  })
 })
 ```
 
@@ -98,12 +100,14 @@ El `ProductCard` estático ya está en `src/components/product-card/ProductCard.
 ### Test de referencia
 
 ```tsx
-it('should display the products with their prices correctly formatted', async () => {
-  render(<App />)
-  const productCard = await screen.findByRole('article', {
-    name: 'Aceitunas verdes rellenas de anchoa Hacendado',
+describe('Iteración 2 - Listado de productos', () => {
+  it('should display the products with their prices correctly formatted', async () => {
+    render(<App />)
+    const productCard = await screen.findByRole('article', {
+      name: 'Aceitunas verdes rellenas de anchoa Hacendado',
+    })
+    expect(within(productCard).getByText('3,00 €')).toBeVisible()
   })
-  expect(within(productCard).getByText('3,00 €')).toBeVisible()
 })
 ```
 
@@ -128,7 +132,7 @@ it('should display the products with their prices correctly formatted', async ()
   new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(price)
   // → "3,00 €"
   ```
-- **Card view:** sin descripción, sin NutriScore. Solo imagen + nombre + precio.
+- **Card view:** sin descripción. Solo imagen + nombre + precio.
 
 ### Solución de referencia
 
@@ -143,7 +147,6 @@ Archivos clave:
 
 - Olvidar `aria-labelledby` → `findByRole('article', { name })` no encuentra el elemento
 - Usar `toLocaleString()` en vez de `Intl.NumberFormat` → resultado puede variar por entorno
-- Añadir NutriScore en card view (se corrige en iteración 4)
 
 ---
 
@@ -151,66 +154,67 @@ Archivos clave:
 
 ### Qué van a construir
 
-Handler MSW para `/categories/:slug`. React Router con `Link`, `NavLink` y `useParams`. La página `CategoryDetail`. Helper DSL `clickCategory()`.
+Dos handlers MSW (`/categories/:slug` y `/categories/:slug/products`). React Router con `Link`, `NavLink` y `useParams`. La página `CategoryDetail`. El hook `useCategoryWithProducts`. Helper DSL `clickCategory()`.
 
 ### Tests de referencia
 
 ```tsx
 // src/pages/category-detail/__tests__/CategoryDetail.test.tsx
-
-it('should navigate to the category page and display the category title', async () => {
-  render(<App />)
-  const user = userEvent.setup()
-  await screen.findByText('Fruta y verdura')
-  await clickCategory(user, 'Fruta y verdura')
-  expect(await screen.findByRole('heading', { name: 'Fruta y verdura' })).toBeVisible()
-})
-
-it('should display a not found message when the category does not exist', async () => {
-  window.history.pushState({}, '', '/categories/non-existent-slug')
-  render(<App />)
-  expect(await screen.findByText(/categoría no encontrada/i)).toBeVisible()
-})
-
-it('should highlight the active category in the navigation', async () => {
-  render(<App />)
-  const user = userEvent.setup()
-  await clickCategory(user, 'Fruta y verdura')
-  expect(screen.getByRole('link', { name: 'Fruta y verdura', current: 'page' })).toBeVisible()
-})
-
-it('should navigate to home when clicking the logo', async () => {
-  render(<App />)
-  const user = userEvent.setup()
-  await clickCategory(user, 'Fruta y verdura')
-  await user.click(screen.getByRole('link', { name: 'Mercadona' }))
-  expect(screen.queryByRole('heading', { name: 'Fruta y verdura' })).not.toBeInTheDocument()
+describe('Iteración 3 - Navegación y routing', () => {
+  it('should navigate to the category page and display the category title', ...)
+  it('should show the category products', ...)
+  it('should navigate to home when clicking the logo [OPTIONAL]', ...)
+  it('should highlight the active category in the navigation [OPTIONAL]', ...)
+  it('should display a not found message when the category does not exist [OPTIONAL]', ...)
 })
 ```
 
 ### Ciclo TDD esperado
 
 1. **Test 1 — Rojo:** falla porque no hay ruta `/categories/:slug` ni `CategoryDetail`
-   **Verde mínimo:** handler MSW + añadir `<Link>` en Navigation + crear ruta + crear `CategoryDetail` con fetch directo usando `useEffect`/`useState` + `useParams`
-2. **Test 2 — Rojo:** falla porque no hay manejo de 404
-   **Verde:** añadir comprobación de `response.ok` en `CategoryDetail` + renderizar mensaje de error
-   **Refactor:** extraer `useCategoryWithProducts()` hook (fetch + 404) — igual que en iter-1 se extrajo `useCategories` y en iter-2 `useProducts`
-3. **Test 3 — Rojo:** falla porque `Navigation` usa `<Link>` sin `aria-current`
-   **Verde:** cambiar `<Link>` a `<NavLink>` — `aria-current="page"` lo pone React Router automáticamente
-4. **Test 4 — Rojo:** falla porque el logo no es un enlace
-   **Verde:** añadir `<Link>` en el logo
+   **Verde mínimo:** dos handlers MSW + añadir `<Link>` en Navigation + crear ruta + crear `CategoryDetail` con `useCategoryWithProducts` + `useParams`
+2. **Test 2 — Rojo:** falla porque `CategoryDetail` no muestra productos
+   **Verde:** `useCategoryWithProducts` hace dos fetches: primero `GET /categories/:slug`, luego `GET /categories/:slug/products`
+   **Refactor:** el hook ya encapsula ambos fetches y el manejo de 404
+3. **Test 3 OPTIONAL:** añadir `<Link>` en el logo
+4. **Test 4 OPTIONAL:** cambiar `<Link>` a `<NavLink>` — `aria-current="page"` lo pone React Router automáticamente
+5. **Test 5 OPTIONAL:** añadir comprobación de `response.ok` → renderizar mensaje de error
 
 ### Puntos clave a remarcar
 
-- **`clickCategory` como helper DSL:**
+- **Dos endpoints separados** — la categoría y sus productos son recursos distintos:
   ```typescript
-  // src/test/helpers.ts
+  http.get('/categories/:slug', ({ params }) => {
+    const category = categoriesFixtures.find(c => c.slug === params.slug)
+    if (!category) return new HttpResponse(null, { status: 404 })
+    return HttpResponse.json(category)
+  }),
+  http.get('/categories/:slug/products', ({ params }) => {
+    const category = categoriesFixtures.find(c => c.slug === params.slug)
+    if (!category) return new HttpResponse(null, { status: 404 })
+    const products = productsFixtures.filter(p => p.categoryId === category.id)
+    return HttpResponse.json(products)
+  }),
+  ```
+
+- **`useCategoryWithProducts`** hace los dos fetches en secuencia:
+  ```typescript
+  const fetchCategory = async () => {
+    const response = await fetch(`/categories/${slug}`)
+    if (!response.ok) { setNotFound(true); return }
+    setCategory(await response.json())
+    const productsResponse = await fetch(`/categories/${slug}/products`)
+    setProducts(await productsResponse.json())
+  }
+  ```
+
+- **`clickCategory` como helper DSL** — usa `findByRole` (async) porque las categorías cargan vía MSW:
+  ```typescript
   export const clickCategory = async (user: UserEvent, name: string) => {
-    const link = screen.getByRole('link', { name })
+    const link = await screen.findByRole('link', { name })
     await user.click(link)
   }
   ```
-  Hace los tests más legibles y el nombre del helper documenta la intención.
 
 - **Simular navegación directa** (test del 404):
   ```typescript
@@ -220,16 +224,6 @@ it('should navigate to home when clicking the logo', async () => {
   NO usar `MemoryRouter` ni `initialEntries` — el test funciona con la app real.
 
 - **NavLink y `aria-current`:** React Router pone `aria-current="page"` automáticamente en el link activo. Testing Library lo consulta con `{ current: 'page' }`.
-
-- **Handler MSW para slug:**
-  ```typescript
-  http.get('/categories/:slug', ({ params }) => {
-    const category = categoriesFixtures.find(c => c.slug === params.slug)
-    if (!category) return new HttpResponse(null, { status: 404 })
-    const products = productsFixtures.filter(p => p.categoryId === category.id)
-    return HttpResponse.json({ ...category, products })
-  })
-  ```
 
 ### Solución de referencia
 
@@ -245,8 +239,9 @@ Archivos clave:
 ### Errores frecuentes
 
 - Usar `<Link>` en vez de `<NavLink>` → el test de `aria-current` falla
-- No esperar `await screen.findByText('Fruta y verdura')` antes de `clickCategory` → click en elemento que aún no existe
+- Usar `getByRole` en vez de `findByRole` en el helper → click en elemento que aún no existe
 - Usar `MemoryRouter` en tests → rompe el patrón agnóstico de implementación
+- Devolver `{ ...category, products }` en un solo endpoint → no coincide con la arquitectura esperada
 
 ---
 
@@ -254,45 +249,38 @@ Archivos clave:
 
 ### Qué van a construir
 
-`ViewModeContext` con `ViewModeProvider` + `useViewMode()`. Integrar el componente `Toggle` pre-cocinado. Renderizado condicional en `ProductCard`: descripción y NutriScore solo en list view.
+`ViewModeContext` con `ViewModeProvider` + `useViewMode()`. Integrar el componente `Toggle` pre-cocinado. Renderizado condicional en `ProductCard`: descripción solo en list view.
 
 ### Tests de referencia
 
 ```tsx
-it('should not display product descriptions and nutriscore in card view', async () => {
-  render(<App />)
-  await screen.findByRole('article', { name: /aceitunas/i })
-  expect(screen.queryByText(/aceitunas verdes rellenas con anchoas/i)).not.toBeInTheDocument()
-  expect(screen.queryByLabelText(/Nutriscore: D/i)).not.toBeInTheDocument()
-})
+describe('Iteración 4 - Toggle card/list view', () => {
+  it('should display product descriptions when switching to list view', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await screen.findByRole('article', { name: 'Aceitunas verdes rellenas de anchoa Hacendado' })
+    expect(screen.queryByText(/Aceitunas verdes rellenas con anchoas de calidad/)).not.toBeInTheDocument()
+    await toggleViewMode(user)
+    expect(screen.getByText(/Aceitunas verdes rellenas con anchoas de calidad/)).toBeVisible()
+  })
 
-it('should display product descriptions and nutriscore when switching to list view', async () => {
-  const user = userEvent.setup()
-  render(<App />)
-  const productCard = await screen.findByRole('article', { name: /aceitunas/i })
-  await toggleViewMode(user)
-  expect(screen.getByText(/aceitunas verdes rellenas con anchoas/i)).toBeVisible()
-  expect(within(productCard).getByLabelText(/Nutriscore: D/i)).toBeVisible()
-})
-
-it('should hide product descriptions and nutriscore when switching back to card view', async () => {
-  const user = userEvent.setup()
-  render(<App />)
-  await screen.findByRole('article', { name: /aceitunas/i })
-  await toggleViewMode(user)
-  expect(screen.getByText(/aceitunas verdes rellenas con anchoas/i)).toBeVisible()
-  await toggleViewMode(user)
-  expect(screen.queryByText(/aceitunas verdes rellenas con anchoas/i)).not.toBeInTheDocument()
-  expect(screen.queryByLabelText(/Nutriscore: D/i)).not.toBeInTheDocument()
+  it('should hide product descriptions when switching back to card view', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await screen.findByRole('article', { name: 'Aceitunas verdes rellenas de anchoa Hacendado' })
+    await toggleViewMode(user)
+    expect(screen.getByText(/Aceitunas verdes rellenas con anchoas de calidad/)).toBeVisible()
+    await toggleViewMode(user)
+    expect(screen.queryByText(/Aceitunas verdes rellenas con anchoas de calidad/)).not.toBeInTheDocument()
+  })
 })
 ```
 
 ### Ciclo TDD esperado
 
-1. **Test 1 — Rojo (o verde de facto):** si `ProductCard` no renderiza descripción ni NutriScore desde iter-3, este test pasa directamente — es una confirmación del comportamiento esperado, no hay nada que implementar
-2. **Test 2 — Rojo:** falla porque no existe el Toggle ni mecanismo para cambiar a list view
+1. **Test 1 — Rojo:** falla porque no existe el Toggle ni mecanismo para cambiar a list view
    **Verde:** crear `ViewModeContext` + `ViewModeProvider` + `useViewMode()` + integrar `Toggle` + renderizado condicional en `ProductCard`
-3. **Test 3 — Verde de facto:** pasa automáticamente al completar el test 2 si el Context funciona correctamente
+2. **Test 2 — Verde de facto:** pasa automáticamente al completar el test 1 si el Context funciona correctamente
 
 ### Puntos clave a remarcar
 
@@ -305,7 +293,7 @@ it('should hide product descriptions and nutriscore when switching back to card 
   export const ViewModeProvider = ({ children }: { children: ReactNode }) => {
     const [viewMode, setViewMode] = useState<ViewMode>('card')
     return (
-      <ViewModeContext.Provider value={{ viewMode, toggle: () => setViewMode(v => v === 'card' ? 'list' : 'card') }}>
+      <ViewModeContext.Provider value={{ viewMode, toggleViewMode: () => setViewMode(v => v === 'card' ? 'list' : 'card') }}>
         {children}
       </ViewModeContext.Provider>
     )
@@ -319,7 +307,7 @@ it('should hide product descriptions and nutriscore when switching back to card 
   expect(productCard).toHaveClass('product--list')
 
   // ✅ BIEN — verifica lo que ve el usuario
-  expect(screen.queryByLabelText(/Nutriscore: D/i)).not.toBeInTheDocument()
+  expect(screen.queryByText(/descripción/)).not.toBeInTheDocument()
   ```
 
 - **`toggleViewMode` como helper DSL:**
@@ -330,16 +318,9 @@ it('should hide product descriptions and nutriscore when switching back to card 
   }
   ```
 
-- **NutriScore usa `aria-label`, no texto visible:**
-  ```tsx
-  <span aria-label={`Nutriscore: ${score}`} className={...}>{score}</span>
-  ```
-  Por eso se testea con `getByLabelText(/Nutriscore: D/i)`, no con `getByText`.
-
 - **Renderizado condicional consistente:**
   ```tsx
-  {isListView && description && <p>{description}</p>}
-  {isListView && nutriscore && <NutriScore score={nutriscore} />}
+  {isListView && description && <p className="product-card__description">{description}</p>}
   ```
 
 ### Solución de referencia
@@ -355,9 +336,7 @@ Archivos clave:
 ### Errores frecuentes
 
 - Testear `aria-checked` del Toggle en vez de la visibilidad del contenido
-- Añadir NutriScore fuera del bloque `{isListView && ...}`
 - No envolver `<App />` con el Provider (error: context es null)
-- Usar `getByText(/Nutriscore/)` en vez de `getByLabelText(/Nutriscore/)` → el texto no está en el DOM
 
 ---
 
@@ -365,43 +344,54 @@ Archivos clave:
 
 ### Qué van a construir
 
-Handler MSW para `/products/:id`. Dinamizar el `ProductDetail` estático. El padre (`Home`, `CategoryDetail`) controla la visibilidad con estado. Helper DSL `clickProduct()`.
+Dinamizar el `ProductDetail` estático. El padre (`Home`, `CategoryDetail`) controla la visibilidad con estado local — sin fetch adicional, el producto ya está disponible. Helper DSL `clickProduct()`.
 
 El `ProductDetail` estático ya está en `src/components/product-detail/ProductDetail.tsx` — igual que con `ProductCard` en iter 2.
 
 ### Tests de referencia
 
 ```tsx
-// Home.test.tsx
-it('should open a dialog with product details when clicking a product', async () => {
-  const user = userEvent.setup()
-  render(<App />)
-  await clickProduct(user, 'Aceitunas verdes rellenas de anchoa Hacendado')
-  const dialog = await screen.findByRole('dialog')
-  expect(within(dialog).getByText('Aceitunas verdes rellenas de anchoa Hacendado')).toBeVisible()
-  expect(within(dialog).getByText('3,00 €')).toBeVisible()
-  expect(within(dialog).getByLabelText(/Nutriscore: D/i)).toBeVisible()
-})
+describe('Iteración 5 - Modal de producto', () => {
+  it('should open a dialog with product details when clicking a product', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await clickProduct(user, 'Aceitunas verdes rellenas de anchoa Hacendado')
+    const dialog = await screen.findByRole('dialog')
+    expect(within(dialog).getByText('Aceitunas verdes rellenas de anchoa Hacendado')).toBeVisible()
+    expect(within(dialog).getByText('3,00 €')).toBeVisible()
+    expect(within(dialog).getByText(/Aceitunas verdes rellenas con anchoas de calidad/)).toBeVisible()
+  })
 
-it('should close the dialog when clicking close button', async () => {
-  const user = userEvent.setup()
-  render(<App />)
-  await clickProduct(user, 'Aceitunas verdes rellenas de anchoa Hacendado')
-  await screen.findByRole('dialog')
-  await user.click(screen.getByRole('button', { name: /cerrar/i }))
-  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  it('should close the dialog when clicking close button', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await clickProduct(user, 'Aceitunas verdes rellenas de anchoa Hacendado')
+    await screen.findByRole('dialog')
+    await user.click(screen.getByRole('button', { name: /cerrar/i }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
 })
 ```
 
 ### Ciclo TDD esperado
 
 1. **Test 1 — Rojo:** falla porque no hay `onClick` en `ProductCard` ni `ProductDetail` dinámico
-   **Verde:** añadir `onClick` a `ProductCard` + estado `selectedProduct` en `Home` + handler MSW `/products/:id` + dinamizar `ProductDetail`
+   **Verde:** añadir prop `onClick?: () => void` a `ProductCard` + estado `selectedProduct` en `Home` + dinamizar `ProductDetail`
+   No hay endpoint nuevo — `handleProductClick(product)` recibe el objeto ya disponible y lo pone en estado
 2. **Test 2 — Rojo:** falla porque el dialog no se puede cerrar
    **Verde:** añadir `onClose` prop + botón cerrar en `ProductDetail`
-3. **Repetir Rojo-Verde para `CategoryDetail`:** misma lógica con sus propios tests
+3. **Repetir Rojo-Verde para `CategoryDetail`:** mismos tests con `clickCategory` + `clickProduct`
 
 ### Puntos clave a remarcar
+
+- **Sin fetch — el producto ya está disponible:**
+  ```typescript
+  // src/hooks/useProductDialog.ts
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product)  // no fetch — el objeto ya está en el padre
+  }
+  ```
+  El clic en la card pasa el objeto `product` directamente al estado. No se necesita ningún endpoint nuevo.
 
 - **`<dialog open>` sin refs — patrón declarativo:**
   ```tsx
@@ -409,7 +399,7 @@ it('should close the dialog when clicking close button', async () => {
   const dialogRef = useRef<HTMLDialogElement>(null)
   useEffect(() => { if (product) dialogRef.current?.showModal() }, [product])
 
-  // ✅ DO — declarativo, el padre controla con renderizado condicional
+  // ✅ DO — el padre renderiza condicionalmente
   {selectedProduct && <ProductDetail product={selectedProduct} onClose={handleClose} />}
   ```
   El dialog no está en el DOM cuando no se usa → los tests no necesitan mocks.
@@ -423,18 +413,7 @@ it('should close the dialog when clicking close button', async () => {
   ```
   Usa `findByRole` (asíncrono) porque los productos se cargan por fetch.
 
-- **NutriScore en el modal** se testea igual que en list view: `getByLabelText(/Nutriscore: D/i)`.
-
 - **Botón cerrar** necesita nombre accesible: `aria-label="Cerrar"` → se encuentra con `getByRole('button', { name: /cerrar/i })`.
-
-- **MSW handler para producto individual:**
-  ```typescript
-  http.get('/products/:id', ({ params }) => {
-    const product = productsFixtures.find(p => p.id === Number(params.id))
-    if (!product) return new HttpResponse(null, { status: 404 })
-    return HttpResponse.json(product)
-  })
-  ```
 
 ### Solución de referencia
 
@@ -446,7 +425,6 @@ Archivos clave:
 - `src/pages/home/Home.tsx`
 - `src/pages/category-detail/CategoryDetail.tsx`
 - `src/test/helpers.ts` (añadir `clickProduct`)
-- `src/mocks/handlers.ts` (añadir handler `/products/:id`)
 
 ### Errores frecuentes
 
@@ -454,6 +432,7 @@ Archivos clave:
 - No usar `await` en `clickProduct` → falla si los productos no han cargado aún
 - Pasar `isOpen` como prop al dialog en vez de renderizado condicional
 - Olvidar `aria-label="Cerrar"` en el botón → `getByRole('button', { name: /cerrar/i })` no lo encuentra
+- Intentar hacer fetch a `/products/:id` para abrir el modal — innecesario
 
 ---
 

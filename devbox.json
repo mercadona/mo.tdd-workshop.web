@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.2/.schema/devbox.schema.json",
+  "packages": [
+    "nodejs@24.13.1"
+  ],
+  "shell": {
+    "init_hook": [
+      "npm install"
+    ],
+    "scripts": {
+      "start": "npm run start",
+      "test": "npm test",
+      "build": "npm run build"
+    }
+  }
+}

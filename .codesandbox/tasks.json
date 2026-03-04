@@ -1,0 +1,23 @@
+{
+  "version": "0.1",
+  "node": "24",
+  "tasks": {
+    "install": {
+      "name": "Install",
+      "command": "npm install",
+      "runAtStart": true
+    },
+    "start": {
+      "name": "Start",
+      "command": "npm start",
+      "runAtStart": true,
+      "preview": {
+        "port": 5173
+      }
+    },
+    "test": {
+      "name": "Test",
+      "command": "npm test"
+    }
+  }
+}

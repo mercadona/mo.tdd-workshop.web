@@ -3,7 +3,7 @@
   "tasks": {
     "install": {
       "name": "Install",
-      "command": "nvm install 24 && nvm use 24 && npm install",
+      "command": "npm install",
       "runAtStart": true
     },
     "start": {

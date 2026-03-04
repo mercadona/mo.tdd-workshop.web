@@ -1,6 +1,5 @@
 {
   "version": "0.1",
-  "node": "24",
   "tasks": {
     "install": {
       "name": "Install",

@@ -18,9 +18,17 @@ Los tests están escritos de antemano como `it.todo()`. Tu trabajo es implementa
 
 ## Setup
 
-### Opción A — CodeSandbox (sin instalar nada)
+### Opción A — GitHub Codespaces (sin instalar nada)
 
-Abre el proyecto en CodeSandbox y empieza directamente.
+1. Ve a [github.com/mercadona/mo.tdd-workshop.web](https://github.com/mercadona/mo.tdd-workshop.web)
+2. Click en **Code** → **Codespaces** → **Create codespace on master**
+3. Espera a que el entorno arranque (~1-2 min la primera vez)
+4. Ya tienes VS Code en el navegador con Node 24, dependencias instaladas y la app lista
+
+```bash
+npm test    # tests en watch mode
+npm start   # app en el navegador (puerto 5173)
+```
 
 ### Opción B — Local
 

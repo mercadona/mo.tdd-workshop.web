@@ -15,10 +15,10 @@ export const useCategoryWithProducts = (slug: string | undefined) => {
         return
       }
 
-      const data = await response.json()
-      setCategory(data)
+      const category = await response.json()
+      setCategory(category)
 
-      const productsResponse = await fetch(`/categories/${slug}/products`)
+      const productsResponse = await fetch(`/categories/${category.id}/products`)
       const productsData = await productsResponse.json()
       setProducts(productsData)
     }

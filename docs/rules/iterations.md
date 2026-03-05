@@ -8,7 +8,7 @@ Pre-cocinados en master (con stubs comentados como guía):
 Los asistentes crean:
 - `GET /products` → Iteración 2
 - `GET /categories/:slug` → Iteración 3 (devuelve solo el objeto `Category`)
-- `GET /categories/:slug/products` → Iteración 3 (devuelve `Product[]` de esa categoría)
+- `GET /categories/:categoryId/products` → Iteración 3 (devuelve `Product[]` de esa categoría)
 
 La Iteración 5 **no añade ningún endpoint nuevo** — el modal usa el objeto `product` ya disponible en el estado del padre.
 
@@ -25,7 +25,7 @@ La Iteración 5 **no añade ningún endpoint nuevo** — el modal usa el objeto 
 - Test: `should display the products with their prices correctly formatted`
 
 ## Iteración 3 — Navegación y routing
-- Dos handlers MSW: `GET /categories/:slug` y `GET /categories/:slug/products`
+- Dos handlers MSW: `GET /categories/:slug` y `GET /categories/:categoryId/products`
 - `useCategoryWithProducts(slug)` → hace dos fetches separados, devuelve `{ category, products, notFound }`
 - Links con React Router (`Link`, `NavLink`, `useParams`)
 - Helper `clickCategory()` en tests (usa `findByRole` — async, porque las categorías cargan via MSW)

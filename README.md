@@ -1,5 +1,5 @@
 # TDD Workshop — React
-
+.
 Un workshop práctico para aprender Test-Driven Development construyendo una mini-app de Mercadona paso a paso.
 
 ---

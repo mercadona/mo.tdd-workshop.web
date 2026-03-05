@@ -14,7 +14,7 @@ Partirás de una aplicación con una sola página ("Hello World") e irás añadi
 
 Los tests están escritos de antemano como `it.todo()`. Tu trabajo es implementarlos uno a uno.
 
----
+----
 
 ## Setup
 

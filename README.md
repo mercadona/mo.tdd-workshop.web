@@ -32,6 +32,10 @@ npm test    # tests en watch mode
 npm start   # app en el navegador (puerto 5173)
 ```
 
+Desde la terminal, ejecutando el comando `npm start` puedes ver la aplicación en otra pestaña del navegador:
+<img width="1457" height="1217" alt="image" src="https://github.com/user-attachments/assets/e48f05e5-c927-4e49-9ce3-be00de5a97cc" />
+
+
 ### Opción B — Local
 
 Requisitos: Node.js 24+ y npm 11+

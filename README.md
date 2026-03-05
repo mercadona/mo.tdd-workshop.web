@@ -14,11 +14,13 @@ Partirás de una aplicación con una sola página ("Hello World") e irás añadi
 
 Los tests están escritos de antemano como `it.todo()`. Tu trabajo es implementarlos uno a uno.
 
----
+----
 
 ## Setup
 
 ### Opción A — GitHub Codespaces (sin instalar nada)
+<img width="2513" height="1357" alt="image" src="https://github.com/user-attachments/assets/1aa99e0a-dd50-4b21-ab76-507db345762e" />
+
 
 1. Ve a [github.com/mercadona/mo.tdd-workshop.web](https://github.com/mercadona/mo.tdd-workshop.web)
 2. Click en **Code** → **Codespaces** → **Create codespace on master**
@@ -32,7 +34,7 @@ npm start   # app en el navegador (puerto 5173)
 
 ### Opción B — Local
 
-Requisitos: Node.js 20+ y npm 10+
+Requisitos: Node.js 24+ y npm 11+
 
 ```bash
 git clone git@github.com:mercadona/mo.tdd-workshop.web.git

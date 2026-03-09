@@ -6,16 +6,14 @@ export const ProductCard = () => {
       <div className="product-card__image-wrapper">
         <img
           className="product-card__image"
-          src="/images/aceitunas-manzanilla-rellenas-anchoa-hacendado-pack-3-22910.jpg"
-          alt="Aceitunas verdes rellenas de anchoa Hacendado"
+          src="/images/aguacate-pieza-3830.jpg"
+          alt="Aguacate"
         />
       </div>
       <div className="product-card__content">
-        <h3 className="product-card__name">
-          Aceitunas verdes rellenas de anchoa Hacendado
-        </h3>
+        <h3 className="product-card__name">Aguacate</h3>
         <div className="product-card__footer">
-          <span className="product-card__price">3,00 €</span>
+          <span className="product-card__price">1,20 €</span>
         </div>
       </div>
     </article>

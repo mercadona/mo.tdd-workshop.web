@@ -20,11 +20,26 @@ describe('Iteración 2 - Listado de productos', () => {
   it('should display the products with their prices correctly formatted', async () => {
     render(<App />)
 
-    const productCard = await screen.findByRole('article', {
-      name: 'Aceitunas verdes rellenas de anchoa Hacendado',
-    })
+    const products = await screen.findAllByRole('article')
+    const firstProduct = products[0]
+    const lastProduct = products[products.length - 1]
 
-    expect(within(productCard).getByText('3,00 €')).toBeVisible()
+    expect(products).toHaveLength(24)
+    expect(
+      within(firstProduct).getByRole('heading', {
+        name: 'Aceitunas verdes rellenas de anchoa Hacendado',
+        level: 3,
+      }),
+    ).toBeVisible()
+    expect(
+      within(firstProduct).getByRole('img', {
+        name: 'Aceitunas verdes rellenas de anchoa Hacendado',
+      }),
+    ).toBeVisible()
+    expect(within(firstProduct).getByText('3,00 €')).toBeVisible()
+    expect(
+      within(lastProduct).getByRole('heading', { name: 'Aguacate', level: 3 }),
+    ).toBeVisible()
   })
 })
 
